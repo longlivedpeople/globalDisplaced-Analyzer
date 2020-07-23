@@ -135,6 +135,9 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       Float_t DG_ptError[200] = {0};
       Float_t DG_eta[200] = {0};
       Float_t DG_phi[200] = {0};
+      Float_t DG_vx[200] = {0};
+      Float_t DG_vy[200] = {0};
+      Float_t DG_vz[200] = {0};
       Float_t DG_dxy[200] = {0};
       Float_t DG_dxyError[200] = {0};
       Float_t DG_Ixy[200] = {0};
@@ -154,6 +157,9 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       Float_t GM_ptError[200] = {0};
       Float_t GM_eta[200] = {0};
       Float_t GM_phi[200] = {0};
+      Float_t GM_vx[200] = {0};
+      Float_t GM_vy[200] = {0};
+      Float_t GM_vz[200] = {0};
       Float_t GM_dxy[200] = {0};
       Float_t GM_dxyError[200] = {0};
       Float_t GM_Ixy[200] = {0};

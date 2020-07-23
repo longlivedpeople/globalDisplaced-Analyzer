@@ -73,6 +73,9 @@ void DGAnalysis::beginJob()
   tree_out->Branch("GM_ptError", GM_ptError, "GM_ptError[nGM]/F");
   tree_out->Branch("GM_eta", GM_eta, "GM_eta[nGM]/F");
   tree_out->Branch("GM_phi", GM_phi, "GM_phi[nGM]/F");
+  tree_out->Branch("GM_vx", GM_vx, "GM_vx[nGM]/F");
+  tree_out->Branch("GM_vy", GM_vy, "GM_vy[nGM]/F");
+  tree_out->Branch("GM_vz", GM_vz, "GM_vz[nGM]/F");
   tree_out->Branch("GM_dxy", GM_dxy, "GM_dxy[nGM]/F");
   tree_out->Branch("GM_dxyError", GM_dxyError, "GM_dxyError[nGM]/F");
   tree_out->Branch("GM_Ixy", GM_Ixy, "GM_Ixy[nGM]/F");
@@ -91,6 +94,9 @@ void DGAnalysis::beginJob()
   tree_out->Branch("DG_ptError", DG_ptError, "DG_ptError[nDG]/F");
   tree_out->Branch("DG_eta", DG_eta, "DG_eta[nDG]/F");
   tree_out->Branch("DG_phi", DG_phi, "DG_phi[nDG]/F");
+  tree_out->Branch("DG_vx", DG_vx, "DG_vx[nDG]/F");
+  tree_out->Branch("DG_vy", DG_vy, "DG_vy[nDG]/F");
+  tree_out->Branch("DG_vz", DG_vz, "DG_vz[nDG]/F");
   tree_out->Branch("DG_dxy", DG_dxy, "DG_dxy[nDG]/F");
   tree_out->Branch("DG_dxyError", DG_dxyError, "DG_dxyError[nDG]/F");
   tree_out->Branch("DG_Ixy", DG_Ixy, "DG_Ixy[nDG]/F");
@@ -201,6 +207,9 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
      GM_ptError[i] = 0.;
      GM_eta[i] = 0.;
      GM_phi[i] = 0.;
+     GM_vx[i] = 0.;
+     GM_vy[i] = 0.;
+     GM_vz[i] = 0.;
      GM_dxy[i] = 0.;
      GM_dxyError[i] = 0.;
      GM_Ixy[i] = 0.;
@@ -223,6 +232,9 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
      DG_ptError[i] = 0.;
      DG_eta[i] = 0.;
      DG_phi[i] = 0.;
+     DG_vx[i] = 0.;
+     DG_vy[i] = 0.;
+     DG_vz[i] = 0.;
      DG_dxy[i] = 0.;
      DG_dxyError[i] = 0.;
      DG_Ixy[i] = 0.;
@@ -277,6 +289,7 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
    analyzeDisplacedGlobal(iEvent);
    analyzeGlobalMuons(iEvent);
 
+   if (ngenMu < 1 && nDG < 1 && nGM < 1) {return;}
 
    // -> Fill the TTree
 
@@ -368,6 +381,9 @@ void DGAnalysis::analyzeDisplacedGlobal(const edm::Event& iEvent)
       DG_ptError[nDG] = muon.ptError();
       DG_eta[nDG] = muon.eta();
       DG_phi[nDG] = muon.phi();
+      DG_vx[nDG] = muon.vx();
+      DG_vy[nDG] = muon.vy();
+      DG_vz[nDG] = muon.vz();
       DG_q[nDG] = muon.charge();
       DG_numberOfValidHits[nDG] = muon.numberOfValidHits();
       DG_numberOfLostHits[nDG] = muon.numberOfLostHits();
@@ -402,6 +418,9 @@ void DGAnalysis::analyzeGlobalMuons(const edm::Event& iEvent)
       GM_ptError[nGM] = muon.ptError();
       GM_eta[nGM] = muon.eta();
       GM_phi[nGM] = muon.phi();
+      GM_vx[nGM] = muon.vx();
+      GM_vy[nGM] = muon.vy();
+      GM_vz[nGM] = muon.vz();
       GM_q[nGM] = muon.charge();
       GM_numberOfValidHits[nGM] = muon.numberOfValidHits();
       GM_numberOfLostHits[nGM] = muon.numberOfLostHits();
