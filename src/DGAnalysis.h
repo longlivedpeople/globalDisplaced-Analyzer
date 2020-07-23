@@ -25,6 +25,8 @@
 #include "TrackingTools/Records/interface/TransientTrackRecord.h"
 #include "TrackingTools/TransientTrack/interface/TransientTrackBuilder.h"
 #include "TrackingTools/TransientTrack/interface/TransientTrack.h"
+#include "DataFormats/VertexReco/interface/Vertex.h"
+#include "RecoVertex/VertexPrimitives/interface/TransientVertex.h"
 
 // DisplacedGlobal handling
 #include "DataFormats/Common/interface/Handle.h"
@@ -58,6 +60,7 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       virtual void analyzeGenParticles(edm::Event const& e);
       virtual void analyzeDisplacedGlobal(edm::Event const& e);
       virtual void analyzeGlobalMuons(edm::Event const& e);
+      virtual TrajectoryStateClosestToPoint computeTrajectory(const reco::Track &track);
 
 
       edm::ParameterSet parameters;
@@ -66,6 +69,14 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       //
       // --- Tokens and Handles
       //
+
+      // PU summary
+      edm::EDGetTokenT<std::vector<PileupSummaryInfo> >  PUSummaryToken_;
+      edm::Handle<std::vector<PileupSummaryInfo> > puInfoH_;
+
+      // PV
+      edm::EDGetTokenT<edm::View<reco::Vertex> >  PVToken_;
+      edm::Handle<edm::View<reco::Vertex> > PVCollection_;
 
       // MC truth
       edm::EDGetTokenT<edm::View<reco::GenParticle> >  GenParticleToken_;
@@ -81,38 +92,42 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       edm::Handle<edm::View<reco::Track> > GlobalMuonCollection_;
 
 
+      // Transient track builder
+      edm::ESHandle<TransientTrackBuilder> TransientTrackBuilder_;
+
+
       //
       // --- Variables used
       //
 
       // Event info
-      Int_t eventId;
-      Int_t luminosityBlock;
-      Int_t run;
+      Int_t eventId = 0;
+      Int_t luminosityBlock = 0;
+      Int_t run = 0;
 
       // Pileup
-      Int_t nPU;
-      Int_t nPUTrue;
+      Int_t nPU = 0;
+      Int_t nPUTrue = 0;
 
       // Primary vertex
-      Float_t PV_vx;
-      Float_t PV_vy;
-      Float_t PV_vz;
+      Float_t PV_vx = 0.;
+      Float_t PV_vy = 0.;
+      Float_t PV_vz = 0.;
 
       // Generated muons
-      Int_t ngenMu;
-      Float_t genMu_pt[100];
-      Float_t genMu_eta[100];
-      Float_t genMu_phi[100];
-      Float_t genMu_dxy[100];
-      Float_t genMu_vx[100];
-      Float_t genMu_vy[100];
-      Float_t genMu_vz[100];
-      Int_t genMu_pdgId[100];
-      Int_t genMu_motherPdgId[100];
-      Int_t genMu_isPromptFinalState[100];
-      Int_t genMu_isDirectPromptTauDecayProductFinalState[100];
-      Int_t genMu_isDirectHadronDecayProduct[100];
+      Int_t ngenMu = 0;
+      Float_t genMu_pt[100] = {0};
+      Float_t genMu_eta[100] = {0};
+      Float_t genMu_phi[100] = {0};
+      Float_t genMu_dxy[100] = {0};
+      Float_t genMu_vx[100] = {0};
+      Float_t genMu_vy[100] = {0};
+      Float_t genMu_vz[100] = {0};
+      Int_t genMu_pdgId[100] = {0};
+      Int_t genMu_motherPdgId[100] = {0};
+      Int_t genMu_isPromptFinalState[100] = {0};
+      Int_t genMu_isDirectPromptTauDecayProductFinalState[100] = {0};
+      Int_t genMu_isDirectHadronDecayProduct[100] = {0};
 
       // Displaced Global Muons
       Int_t nDG = 0;
@@ -123,6 +138,9 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       Float_t DG_dxy[200] = {0};
       Float_t DG_dxyError[200] = {0};
       Float_t DG_Ixy[200] = {0};
+      Float_t DG_dz[200] = {0};
+      Float_t DG_dzError[200] = {0};
+      Float_t DG_Iz[200] = {0};
       Int_t DG_q[200] = {0};
       Int_t DG_numberOfValidHits[200] = {0};
       Int_t DG_numberOfLostHits[200] = {0};
@@ -139,6 +157,9 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       Float_t GM_dxy[200] = {0};
       Float_t GM_dxyError[200] = {0};
       Float_t GM_Ixy[200] = {0};
+      Float_t GM_dz[200] = {0};
+      Float_t GM_dzError[200] = {0};
+      Float_t GM_Iz[200] = {0};
       Float_t GM_q[200] = {0};
       Int_t GM_numberOfValidHits[200] = {0};
       Int_t GM_numberOfLostHits[200] = {0};
