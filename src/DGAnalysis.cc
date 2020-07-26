@@ -59,6 +59,7 @@ void DGAnalysis::beginJob()
   tree_out->Branch("genMu_eta", genMu_eta, "genMu_eta[ngenMu]/F");
   tree_out->Branch("genMu_phi", genMu_phi, "genMu_phi[ngenMu]/F");
   tree_out->Branch("genMu_dxy", genMu_dxy, "genMu_dxy[ngenMu]/F");
+  tree_out->Branch("genMu_dz", genMu_dz, "genMu_dz[ngenMu]/F");
   tree_out->Branch("genMu_vx", genMu_vx, "genMu_vx[ngenMu]/F");
   tree_out->Branch("genMu_vy", genMu_vy, "genMu_vy[ngenMu]/F");
   tree_out->Branch("genMu_vz", genMu_vz, "genMu_vz[ngenMu]/F");
@@ -188,6 +189,7 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
      genMu_eta[i] = 0.;
      genMu_phi[i] = 0.;
      genMu_dxy[i] = 0.;
+     genMu_dz[i] = 0.;
      genMu_vx[i] = 0.;
      genMu_vy[i] = 0.;
      genMu_vz[i] = 0.;
@@ -331,7 +333,8 @@ void DGAnalysis::analyzeGenParticles(const edm::Event& iEvent)
       genMu_isDirectPromptTauDecayProductFinalState[i] = gp.isDirectPromptTauDecayProductFinalState();
       genMu_isDirectHadronDecayProduct[i] = gp.statusFlags().isDirectHadronDecayProduct();
 
-      std::cout << gp.numberOfMothers() << std::endl;
+      double lambda = 3.14/2. - gp.theta();
+
       // bottom-up to get the real decaying particle:
       if (gp.mother()->pdgId() == gp.pdgId()) {
 
@@ -345,7 +348,8 @@ void DGAnalysis::analyzeGenParticles(const edm::Event& iEvent)
          genMu_vx[i] = m.vx();
          genMu_vy[i] = m.vy();
          genMu_vz[i] = m.vz();
-         genMu_dxy[i] = 0.0; // OJOOOOO
+         genMu_dxy[i] = -(m.vx() - PV_vx)*sin(gp.phi() + (m.vy() - PV_vy)*cos(gp.phi())); // OJOOOOO
+         genMu_dz[i] = 1./cos(lambda)*((m.vz()-PV_vz)*cos(lambda) - ((m.vx() - PV_vx)*cos(gp.phi()) + (m.vy() - PV_vy)*sin(gp.phi()))*sin(lambda)); // OJOOOOO
 
          if (m.numberOfMothers() != 0){
             genMu_motherPdgId[i] = m.motherRef()->pdgId();
@@ -358,7 +362,8 @@ void DGAnalysis::analyzeGenParticles(const edm::Event& iEvent)
          genMu_vx[i] = gp.vx();
          genMu_vy[i] = gp.vy();
          genMu_vz[i] = gp.vz();
-         genMu_dxy[i] = 0.0; // OJOOOOO
+         genMu_dxy[i] = -(gp.vx() - PV_vx)*sin(gp.phi() + (gp.vy() - PV_vy)*cos(gp.phi())); // OJOOOOO
+         genMu_dz[i] = 1./cos(lambda)*((gp.vz()-PV_vz)*cos(lambda) - ((gp.vx() - PV_vx)*cos(gp.phi()) + (gp.vy() - PV_vy)*sin(gp.phi()))*sin(lambda)); // OJOOOOO
          genMu_motherPdgId[i] = gp.motherRef()->pdgId();
 
       }

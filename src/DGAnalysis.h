@@ -120,6 +120,7 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       Float_t genMu_eta[100] = {0};
       Float_t genMu_phi[100] = {0};
       Float_t genMu_dxy[100] = {0};
+      Float_t genMu_dz[100] = {0};
       Float_t genMu_vx[100] = {0};
       Float_t genMu_vy[100] = {0};
       Float_t genMu_vz[100] = {0};
