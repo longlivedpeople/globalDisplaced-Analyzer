@@ -416,15 +416,15 @@ class Canvas:
           ind = hMClist.index(tmp_hMC)
 
           if str(type(tmp_hMC)) == "<class 'ROOT.TEfficiency'>":
-              tmp_num = tmp_hMC.GetTotalHistogram().Clone()
-              tmp_den = hdata.GetTotalHistogram().Clone()
+              tmp_den = tmp_hMC.GetTotalHistogram().Clone()
+              tmp_num = hdata.GetTotalHistogram().Clone()
               for n in range(0,tmp_num.GetNbinsX()):
-                  tmp_num.SetBinContent(n+1, tmp_hMC.GetEfficiency(n+1))
-                  tmp_den.SetBinContent(n+1, hdata.GetEfficiency(n+1))
+                  tmp_den.SetBinContent(n+1, tmp_hMC.GetEfficiency(n+1))
+                  tmp_num.SetBinContent(n+1, hdata.GetEfficiency(n+1))
                   #tmp_num.SetBinErrorUp(n+1, tmp_hMC.GetEfficiencyErrorUp(n+1))
-                  tmp_num.SetBinError(n+1, tmp_hMC.GetEfficiencyErrorLow(n+1))
+                  tmp_den.SetBinError(n+1, tmp_hMC.GetEfficiencyErrorLow(n+1))
                   #tmp_den.SetBinErrorUp(n+1, hdata.GetEfficiencyErrorUp(n+1))
-                  tmp_den.SetBinError(n+1, hdata.GetEfficiencyErrorLow(n+1))
+                  tmp_num.SetBinError(n+1, hdata.GetEfficiencyErrorLow(n+1))
               tmp_ratio = tmp_num.Clone(tmp_hMC.GetName()+'_ratio')
               tmp_ratio.Divide(tmp_den)
           else:
