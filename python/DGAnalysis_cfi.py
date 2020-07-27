@@ -10,6 +10,7 @@ DGAnalysis = cms.EDAnalyzer('DGAnalysis',
     GenParticleCollection = cms.InputTag("prunedGenParticles"),
     GlobalMuonCollection = cms.InputTag("globalMuons"),
     DisplacedGlobalCollection = cms.InputTag("displacedGlobalMuons"),
+    DisplacedStandaloneCollection = cms.InputTag("displacedStandAloneMuons"),
     theGenEventInfoProduct = cms.InputTag("generator"),
 )
 

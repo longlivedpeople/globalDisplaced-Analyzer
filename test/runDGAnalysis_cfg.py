@@ -11,7 +11,7 @@ process.GlobalTag.globaltag = cms.string("94X_mcRun2_asymptotic_v3")
 process.load("Analysis.globalDisplaced-Analyzer.DGAnalysis_cfi")
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(-1)
+    input = cms.untracked.int32(50000)
 )
 
 

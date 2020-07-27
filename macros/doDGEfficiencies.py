@@ -64,7 +64,8 @@ if __name__ == "__main__":
     dxy_sep = np.array([0.0, 1.0, 20.0, 60.0, 110.0])
     Lz_sep = np.array([0.0, 1.0, 60.0, 120.0, 280.0])
     dz_sep = np.array([0.0, 1.0, 60.0, 120.0, 280.0])
-    res_bin = np.linspace(-0.5, 0.5, 61)
+    ptres_bin = np.linspace(-0.5, 0.5, 61)
+    dxyres_bin = np.linspace(0.5, 1.5, 61)
     
 
     ###############################
@@ -127,11 +128,46 @@ if __name__ == "__main__":
     ###################################
     ####   Book Resolution TH1Fs   ####
     ###################################
-    res_GM_pt = r.TH1F("res_GM_pt", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(res_bin)-1, res_bin)
-    res_DG_pt = r.TH1F("res_DG_pt", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(res_bin)-1, res_bin)
+    res_GM_pt = r.TH1F("res_GM_pt", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_GM_pt_Lxybin1 = r.TH1F("res_GM_pt_Lxybin1", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_GM_pt_Lxybin2 = r.TH1F("res_GM_pt_Lxybin2", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_GM_pt_Lxybin3 = r.TH1F("res_GM_pt_Lxybin3", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_GM_pt_Lxybin4 = r.TH1F("res_GM_pt_Lxybin4", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_GM_pt_dxybin1 = r.TH1F("res_GM_pt_dxybin1", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_GM_pt_dxybin2 = r.TH1F("res_GM_pt_dxybin2", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_GM_pt_dxybin3 = r.TH1F("res_GM_pt_dxybin3", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_GM_pt_dxybin4 = r.TH1F("res_GM_pt_dxybin4", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
 
-    res_GM_dxy = r.TH1F("res_GM_dxy", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(res_bin)-1, res_bin)
-    res_DG_dxy = r.TH1F("res_DG_dxy", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(res_bin)-1, res_bin)
+
+    res_DG_pt = r.TH1F("res_DG_pt", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_DG_pt_Lxybin1 = r.TH1F("res_DG_pt_Lxybin1", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_DG_pt_Lxybin2 = r.TH1F("res_DG_pt_Lxybin2", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_DG_pt_Lxybin3 = r.TH1F("res_DG_pt_Lxybin3", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_DG_pt_Lxybin4 = r.TH1F("res_DG_pt_Lxybin4", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_DG_pt_dxybin1 = r.TH1F("res_DG_pt_dxybin1", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_DG_pt_dxybin2 = r.TH1F("res_DG_pt_dxybin2", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_DG_pt_dxybin3 = r.TH1F("res_DG_pt_dxybin3", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_DG_pt_dxybin4 = r.TH1F("res_DG_pt_dxybin4", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+
+    res_GM_dxy = r.TH1F("res_GM_dxy", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
+    res_GM_dxy_Lxybin1 = r.TH1F("res_GM_dxy_Lxybin1", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
+    res_GM_dxy_Lxybin2 = r.TH1F("res_GM_dxy_Lxybin2", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
+    res_GM_dxy_Lxybin3 = r.TH1F("res_GM_dxy_Lxybin3", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
+    res_GM_dxy_Lxybin4 = r.TH1F("res_GM_dxy_Lxybin4", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
+    res_GM_dxy_dxybin1 = r.TH1F("res_GM_dxy_dxybin1", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
+    res_GM_dxy_dxybin2 = r.TH1F("res_GM_dxy_dxybin2", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
+    res_GM_dxy_dxybin3 = r.TH1F("res_GM_dxy_dxybin3", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
+    res_GM_dxy_dxybin4 = r.TH1F("res_GM_dxy_dxybin4", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
+
+    res_DG_dxy = r.TH1F("res_DG_dxy", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
+    res_DG_dxy_Lxybin1 = r.TH1F("res_DG_dxy_Lxybin1", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
+    res_DG_dxy_Lxybin2 = r.TH1F("res_DG_dxy_Lxybin2", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
+    res_DG_dxy_Lxybin3 = r.TH1F("res_DG_dxy_Lxybin3", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
+    res_DG_dxy_Lxybin4 = r.TH1F("res_DG_dxy_Lxybin4", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
+    res_DG_dxy_dxybin1 = r.TH1F("res_DG_dxy_dxybin1", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
+    res_DG_dxy_dxybin2 = r.TH1F("res_DG_dxy_dxybin2", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
+    res_DG_dxy_dxybin3 = r.TH1F("res_DG_dxy_dxybin3", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
+    res_DG_dxy_dxybin4 = r.TH1F("res_DG_dxy_dxybin4", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
 
 
 
@@ -164,6 +200,7 @@ if __name__ == "__main__":
             vy    = _tree.genMu_vy[j]
             vz    = _tree.genMu_vz[j]
             dxy    = _tree.genMu_dxy[j]
+            dxy_abs    = abs(dxy)
             dz    = _tree.genMu_dz[j]
             Lxy = math.sqrt(vx**2 + vy**2)
             Lz = math.sqrt(vz**2)
@@ -178,7 +215,7 @@ if __name__ == "__main__":
             total_genMu_eta.Fill(eta)
             total_genMu_Lxy.Fill(Lxy)
             total_genMu_Lz.Fill(Lz)
-            total_genMu_dxy.Fill(dxy)
+            total_genMu_dxy.Fill(dxy_abs)
             total_genMu_dz.Fill(dz)
 
             #
@@ -202,25 +239,45 @@ if __name__ == "__main__":
                 recoGM_genMu_eta.Fill(eta)
                 recoGM_genMu_Lxy.Fill(Lxy)
                 recoGM_genMu_Lz.Fill(Lz)
-                recoGM_genMu_dxy.Fill(dxy)
+                recoGM_genMu_dxy.Fill(dxy_abs)
                 recoGM_genMu_dz.Fill(dz)
 
                 res_GM_pt.Fill(ptres)
                 res_GM_dxy.Fill(dxyres)
 
                 if Lxy < Lxy_sep[1]:
+                    res_GM_pt_Lxybin1.Fill(ptres)
+                    res_GM_dxy_Lxybin1.Fill(dxyres)
                     eff_GM_pt_Lxybin1.Fill(True, pt)
                 elif Lxy > Lxy_sep[1] and Lxy < Lxy_sep[2]:
+                    res_GM_pt_Lxybin2.Fill(ptres)
+                    res_GM_dxy_Lxybin2.Fill(dxyres)
                     eff_GM_pt_Lxybin2.Fill(True, pt)
                 elif Lxy > Lxy_sep[2] and Lxy < Lxy_sep[3]:
+                    res_GM_pt_Lxybin3.Fill(ptres)
+                    res_GM_dxy_Lxybin3.Fill(dxyres)
                     eff_GM_pt_Lxybin3.Fill(True, pt)
+                elif Lxy > Lxy_sep[3] and Lxy < Lxy_sep[4]:
+                    res_GM_pt_Lxybin4.Fill(ptres)
+                    res_GM_dxy_Lxybin4.Fill(dxyres)
+                    eff_GM_pt_Lxybin4.Fill(True, pt)
 
-                if dxy < dxy_sep[1]:
+                if dxy_abs < dxy_sep[1]:
+                    res_GM_pt_dxybin1.Fill(ptres)
+                    res_GM_dxy_dxybin1.Fill(dxyres)
                     eff_GM_pt_dxybin1.Fill(True, pt)
-                elif dxy > dxy_sep[1] and dxy < dxy_sep[2]:
+                elif dxy_abs > dxy_sep[1] and dxy_abs < dxy_sep[2]:
+                    res_GM_pt_dxybin2.Fill(ptres)
+                    res_GM_dxy_dxybin2.Fill(dxyres)
                     eff_GM_pt_dxybin2.Fill(True, pt)
-                elif dxy > dxy_sep[2] and dxy < dxy_sep[3]:
+                elif dxy_abs > dxy_sep[2] and dxy_abs < dxy_sep[3]:
+                    res_GM_pt_dxybin3.Fill(ptres)
+                    res_GM_dxy_dxybin3.Fill(dxyres)
                     eff_GM_pt_dxybin3.Fill(True, pt)
+                elif dxy_abs > dxy_sep[3] and dxy_abs < dxy_sep[4]:
+                    res_GM_pt_dxybin4.Fill(ptres)
+                    res_GM_dxy_dxybin4.Fill(dxyres)
+                    eff_GM_pt_dxybin4.Fill(True, pt)
 
             else:
 
@@ -230,13 +287,18 @@ if __name__ == "__main__":
                     eff_GM_pt_Lxybin2.Fill(False, pt)
                 elif Lxy > Lxy_sep[2] and Lxy < Lxy_sep[3]:
                     eff_GM_pt_Lxybin3.Fill(False, pt)
+                elif Lxy > Lxy_sep[3] and Lxy < Lxy_sep[4]:
+                    eff_GM_pt_Lxybin4.Fill(False, pt)
 
-                if dxy < dxy_sep[1]:
+
+                if dxy_abs < dxy_sep[1]:
                     eff_GM_pt_dxybin1.Fill(False, pt)
-                elif dxy > dxy_sep[1] and dxy < dxy_sep[2]:
+                elif dxy_abs > dxy_sep[1] and dxy_abs < dxy_sep[2]:
                     eff_GM_pt_dxybin2.Fill(False, pt)
-                elif dxy > dxy_sep[2] and dxy < dxy_sep[3]:
+                elif dxy_abs > dxy_sep[2] and dxy_abs < dxy_sep[3]:
                     eff_GM_pt_dxybin3.Fill(False, pt)
+                elif dxy_abs > dxy_sep[3] and dxy_abs < dxy_sep[4]:
+                    eff_GM_pt_dxybin4.Fill(False, pt)
 
 
             #
@@ -260,25 +322,45 @@ if __name__ == "__main__":
                 recoDG_genMu_eta.Fill(eta)
                 recoDG_genMu_Lxy.Fill(Lxy)
                 recoDG_genMu_Lz.Fill(Lz)
-                recoDG_genMu_dxy.Fill(dxy)
+                recoDG_genMu_dxy.Fill(dxy_abs)
                 recoDG_genMu_dz.Fill(dz)
 
                 res_DG_pt.Fill(ptres)
                 res_DG_dxy.Fill(dxyres)
 
                 if Lxy < Lxy_sep[1]:
+                    res_DG_pt_Lxybin1.Fill(ptres)
+                    res_DG_dxy_Lxybin1.Fill(dxyres)
                     eff_DG_pt_Lxybin1.Fill(True, pt)
                 elif Lxy > Lxy_sep[1] and Lxy < Lxy_sep[2]:
+                    res_DG_pt_Lxybin2.Fill(ptres)
+                    res_DG_dxy_Lxybin2.Fill(dxyres)
                     eff_DG_pt_Lxybin2.Fill(True, pt)
                 elif Lxy > Lxy_sep[2] and Lxy < Lxy_sep[3]:
+                    res_DG_pt_Lxybin3.Fill(ptres)
+                    res_DG_dxy_Lxybin3.Fill(dxyres)
                     eff_DG_pt_Lxybin3.Fill(True, pt)
+                elif Lxy > Lxy_sep[3] and Lxy < Lxy_sep[4]:
+                    res_DG_pt_Lxybin4.Fill(ptres)
+                    res_DG_dxy_Lxybin4.Fill(dxyres)
+                    eff_DG_pt_Lxybin4.Fill(True, pt)
 
-                if dxy < dxy_sep[1]:
+                if dxy_abs < dxy_sep[1]:
+                    res_DG_pt_dxybin1.Fill(ptres)
+                    res_DG_dxy_dxybin1.Fill(dxyres)
                     eff_DG_pt_dxybin1.Fill(True, pt)
-                elif dxy > dxy_sep[1] and dxy < dxy_sep[2]:
+                elif dxy_abs > dxy_sep[1] and dxy_abs < dxy_sep[2]:
+                    res_DG_pt_dxybin2.Fill(ptres)
+                    res_DG_dxy_dxybin2.Fill(dxyres)
                     eff_DG_pt_dxybin2.Fill(True, pt)
-                elif dxy > dxy_sep[2] and dxy < dxy_sep[3]:
+                elif dxy_abs > dxy_sep[2] and dxy_abs < dxy_sep[3]:
+                    res_DG_pt_dxybin3.Fill(ptres)
+                    res_DG_dxy_dxybin3.Fill(dxyres)
                     eff_DG_pt_dxybin3.Fill(True, pt)
+                elif dxy_abs > dxy_sep[3] and dxy_abs < dxy_sep[4]:
+                    res_DG_pt_dxybin4.Fill(ptres)
+                    res_DG_dxy_dxybin4.Fill(dxyres)
+                    eff_DG_pt_dxybin4.Fill(True, pt)
 
             else:
 
@@ -288,13 +370,17 @@ if __name__ == "__main__":
                     eff_DG_pt_Lxybin2.Fill(False, pt)
                 elif Lxy > Lxy_sep[2] and Lxy < Lxy_sep[3]:
                     eff_DG_pt_Lxybin3.Fill(False, pt)
+                elif Lxy > Lxy_sep[3] and Lxy < Lxy_sep[4]:
+                    eff_DG_pt_Lxybin4.Fill(False, pt)
 
-                if dxy < dxy_sep[1]:
+                if dxy_abs < dxy_sep[1]:
                     eff_DG_pt_dxybin1.Fill(False, pt)
-                elif dxy > dxy_sep[1] and dxy < dxy_sep[2]:
+                elif dxy_abs > dxy_sep[1] and dxy_abs < dxy_sep[2]:
                     eff_DG_pt_dxybin2.Fill(False, pt)
-                elif dxy > dxy_sep[2] and dxy < dxy_sep[3]:
+                elif dxy_abs > dxy_sep[2] and dxy_abs < dxy_sep[3]:
                     eff_DG_pt_dxybin3.Fill(False, pt)
+                elif dxy_abs > dxy_sep[3] and dxy_abs < dxy_sep[4]:
+                    eff_DG_pt_dxybin4.Fill(False, pt)
 
 
     #####################################
@@ -341,15 +427,19 @@ if __name__ == "__main__":
     eff_GM_pt_Lxybin1.Write()
     eff_GM_pt_Lxybin2.Write()
     eff_GM_pt_Lxybin3.Write()
+    eff_GM_pt_Lxybin4.Write()
     eff_DG_pt_Lxybin1.Write()
     eff_DG_pt_Lxybin2.Write()
     eff_DG_pt_Lxybin3.Write()
+    eff_DG_pt_Lxybin4.Write()
     eff_GM_pt_dxybin1.Write()
     eff_GM_pt_dxybin2.Write()
     eff_GM_pt_dxybin3.Write()
+    eff_GM_pt_dxybin4.Write()
     eff_DG_pt_dxybin1.Write()
     eff_DG_pt_dxybin2.Write()
     eff_DG_pt_dxybin3.Write()
+    eff_DG_pt_dxybin4.Write()
 
     total_genMu_eta.Write()
     recoGM_genMu_eta.Write()
@@ -382,10 +472,44 @@ if __name__ == "__main__":
     eff_DG_dz.Write()
 
     res_GM_pt.Write()
+    res_GM_pt_Lxybin1.Write()
+    res_GM_pt_Lxybin2.Write()
+    res_GM_pt_Lxybin3.Write()
+    res_GM_pt_Lxybin4.Write()
+    res_GM_pt_dxybin1.Write()
+    res_GM_pt_dxybin2.Write()
+    res_GM_pt_dxybin3.Write()
+    res_GM_pt_dxybin4.Write()
+
     res_DG_pt.Write()
+    res_DG_pt_Lxybin1.Write()
+    res_DG_pt_Lxybin2.Write()
+    res_DG_pt_Lxybin3.Write()
+    res_DG_pt_Lxybin4.Write()
+    res_DG_pt_dxybin1.Write()
+    res_DG_pt_dxybin2.Write()
+    res_DG_pt_dxybin3.Write()
+    res_DG_pt_dxybin4.Write()
 
     res_GM_dxy.Write()
+    res_GM_dxy_Lxybin1.Write()
+    res_GM_dxy_Lxybin2.Write()
+    res_GM_dxy_Lxybin3.Write()
+    res_GM_dxy_Lxybin4.Write()
+    res_GM_dxy_dxybin1.Write()
+    res_GM_dxy_dxybin2.Write()
+    res_GM_dxy_dxybin3.Write()
+    res_GM_dxy_dxybin4.Write()
+
     res_DG_dxy.Write()
+    res_DG_dxy_Lxybin1.Write()
+    res_DG_dxy_Lxybin2.Write()
+    res_DG_dxy_Lxybin3.Write()
+    res_DG_dxy_Lxybin4.Write()
+    res_DG_dxy_dxybin1.Write()
+    res_DG_dxy_dxybin2.Write()
+    res_DG_dxy_dxybin3.Write()
+    res_DG_dxy_dxybin4.Write()
 
 
     outputFile.Close()

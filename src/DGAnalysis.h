@@ -60,6 +60,7 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       virtual void analyzeGenParticles(edm::Event const& e);
       virtual void analyzeDisplacedGlobal(edm::Event const& e);
       virtual void analyzeGlobalMuons(edm::Event const& e);
+      virtual void analyzeDisplacedStandalone(edm::Event const& e);
       virtual TrajectoryStateClosestToPoint computeTrajectory(const reco::Track &track);
 
 
@@ -86,6 +87,9 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       edm::EDGetTokenT<edm::View<reco::Track> > DisplacedGlobalToken_;
       edm::Handle<edm::View<reco::Track> > DisplacedGlobalCollection_;
 
+      // Displaced Global Muons
+      edm::EDGetTokenT<edm::View<reco::Track> > DisplacedStandaloneToken_;
+      edm::Handle<edm::View<reco::Track> > DisplacedStandaloneCollection_;
 
       // Standard Global Muons
       edm::EDGetTokenT<edm::View<reco::Track> > GlobalMuonToken_;
@@ -120,7 +124,9 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       Float_t genMu_eta[100] = {0};
       Float_t genMu_phi[100] = {0};
       Float_t genMu_dxy[100] = {0};
+      Float_t genMu_dxy0[100] = {0};
       Float_t genMu_dz[100] = {0};
+      Float_t genMu_dz0[100] = {0};
       Float_t genMu_vx[100] = {0};
       Float_t genMu_vy[100] = {0};
       Float_t genMu_vz[100] = {0};
@@ -140,10 +146,14 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       Float_t DG_vy[200] = {0};
       Float_t DG_vz[200] = {0};
       Float_t DG_dxy[200] = {0};
+      Float_t DG_dxy0[200] = {0}; 
+      Float_t DG_dxy0Error[200] = {0};
       Float_t DG_dxyError[200] = {0};
       Float_t DG_Ixy[200] = {0};
       Float_t DG_dz[200] = {0};
+      Float_t DG_dz0[200] = {0};
       Float_t DG_dzError[200] = {0};
+      Float_t DG_dz0Error[200] = {0};
       Float_t DG_Iz[200] = {0};
       Int_t DG_q[200] = {0};
       Int_t DG_numberOfValidHits[200] = {0};
@@ -162,10 +172,14 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       Float_t GM_vy[200] = {0};
       Float_t GM_vz[200] = {0};
       Float_t GM_dxy[200] = {0};
+      Float_t GM_dxy0[200] = {0};
+      Float_t GM_dxy0Error[200] = {0};
       Float_t GM_dxyError[200] = {0};
       Float_t GM_Ixy[200] = {0};
       Float_t GM_dz[200] = {0};
+      Float_t GM_dz0[200] = {0};
       Float_t GM_dzError[200] = {0};
+      Float_t GM_dz0Error[200] = {0};
       Float_t GM_Iz[200] = {0};
       Float_t GM_q[200] = {0};
       Int_t GM_numberOfValidHits[200] = {0};
@@ -174,6 +188,31 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       Float_t GM_ndof[200] = {0};
       Float_t GM_normChi2[200] = {0};
       
+      // Displaced Standalone Muons
+      Int_t nDSA = 0;
+      Float_t DSA_pt[200] = {0};
+      Float_t DSA_ptError[200] = {0};
+      Float_t DSA_eta[200] = {0};
+      Float_t DSA_phi[200] = {0};
+      Float_t DSA_vx[200] = {0};
+      Float_t DSA_vy[200] = {0};
+      Float_t DSA_vz[200] = {0};
+      Float_t DSA_dxy[200] = {0};
+      Float_t DSA_dxy0[200] = {0}; 
+      Float_t DSA_dxy0Error[200] = {0};
+      Float_t DSA_dxyError[200] = {0};
+      Float_t DSA_Ixy[200] = {0};
+      Float_t DSA_dz[200] = {0};
+      Float_t DSA_dz0[200] = {0};
+      Float_t DSA_dzError[200] = {0};
+      Float_t DSA_dz0Error[200] = {0};
+      Float_t DSA_Iz[200] = {0};
+      Int_t DSA_q[200] = {0};
+      Int_t DSA_numberOfValidHits[200] = {0};
+      Int_t DSA_numberOfLostHits[200] = {0};
+      Float_t DSA_chi2[200] = {0};
+      Float_t DSA_ndof[200] = {0};
+      Float_t DSA_normChi2[200] = {0};
 
 
       // Output definition

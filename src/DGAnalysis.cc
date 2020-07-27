@@ -13,6 +13,7 @@ DGAnalysis::DGAnalysis(const edm::ParameterSet& iConfig)
    PVToken_ = consumes<edm::View<reco::Vertex> > (parameters.getParameter<edm::InputTag>("PVCollection"));
    GenParticleToken_ = consumes<edm::View<reco::GenParticle> >  (parameters.getParameter<edm::InputTag>("GenParticleCollection"));
    DisplacedGlobalToken_ = consumes<edm::View<reco::Track> >  (parameters.getParameter<edm::InputTag>("DisplacedGlobalCollection"));
+   DisplacedStandaloneToken_ = consumes<edm::View<reco::Track> >  (parameters.getParameter<edm::InputTag>("DisplacedStandaloneCollection"));
    GlobalMuonToken_ = consumes<edm::View<reco::Track> >  (parameters.getParameter<edm::InputTag>("GlobalMuonCollection"));
 
 }
@@ -59,7 +60,9 @@ void DGAnalysis::beginJob()
   tree_out->Branch("genMu_eta", genMu_eta, "genMu_eta[ngenMu]/F");
   tree_out->Branch("genMu_phi", genMu_phi, "genMu_phi[ngenMu]/F");
   tree_out->Branch("genMu_dxy", genMu_dxy, "genMu_dxy[ngenMu]/F");
+  tree_out->Branch("genMu_dxy0", genMu_dxy0, "genMu_dxy0[ngenMu]/F");
   tree_out->Branch("genMu_dz", genMu_dz, "genMu_dz[ngenMu]/F");
+  tree_out->Branch("genMu_dz0", genMu_dz0, "genMu_dz0[ngenMu]/F");
   tree_out->Branch("genMu_vx", genMu_vx, "genMu_vx[ngenMu]/F");
   tree_out->Branch("genMu_vy", genMu_vy, "genMu_vy[ngenMu]/F");
   tree_out->Branch("genMu_vz", genMu_vz, "genMu_vz[ngenMu]/F");
@@ -79,9 +82,13 @@ void DGAnalysis::beginJob()
   tree_out->Branch("GM_vz", GM_vz, "GM_vz[nGM]/F");
   tree_out->Branch("GM_dxy", GM_dxy, "GM_dxy[nGM]/F");
   tree_out->Branch("GM_dxyError", GM_dxyError, "GM_dxyError[nGM]/F");
+  tree_out->Branch("GM_dxy0", GM_dxy0, "GM_dxy0[nGM]/F");
+  tree_out->Branch("GM_dxy0Error", GM_dxy0Error, "GM_dxy0Error[nGM]/F");
   tree_out->Branch("GM_Ixy", GM_Ixy, "GM_Ixy[nGM]/F");
   tree_out->Branch("GM_dz", GM_dz, "GM_dz[nGM]/F");
   tree_out->Branch("GM_dzError", GM_dzError, "GM_dzError[nGM]/F");
+  tree_out->Branch("GM_dz0", GM_dz0, "GM_dz0[nGM]/F");
+  tree_out->Branch("GM_dz0Error", GM_dz0Error, "GM_dz0Error[nGM]/F");
   tree_out->Branch("GM_Iz", GM_Iz, "GM_Iz[nGM]/F");
   tree_out->Branch("GM_q", GM_q, "GM_q[nGM]/I");
   tree_out->Branch("GM_numberOfValidHits", GM_numberOfValidHits, "GM_numberOfValidHits[nGM]/I");
@@ -100,9 +107,13 @@ void DGAnalysis::beginJob()
   tree_out->Branch("DG_vz", DG_vz, "DG_vz[nDG]/F");
   tree_out->Branch("DG_dxy", DG_dxy, "DG_dxy[nDG]/F");
   tree_out->Branch("DG_dxyError", DG_dxyError, "DG_dxyError[nDG]/F");
+  tree_out->Branch("DG_dxy0", DG_dxy0, "DG_dxy0[nDG]/F");
+  tree_out->Branch("DG_dxy0Error", DG_dxy0Error, "DG_dxy0Error[nDG]/F");
   tree_out->Branch("DG_Ixy", DG_Ixy, "DG_Ixy[nDG]/F");
   tree_out->Branch("DG_dz", DG_dz, "DG_dz[nDG]/F");
   tree_out->Branch("DG_dzError", DG_dzError, "DG_dzError[nDG]/F");
+  tree_out->Branch("DG_dz0", DG_dz0, "DG_dz0[nDG]/F");
+  tree_out->Branch("DG_dz0Error", DG_dz0Error, "DG_dz0Error[nDG]/F");
   tree_out->Branch("DG_Iz", DG_Iz, "DG_Iz[nDG]/F");
   tree_out->Branch("DG_q", DG_q, "DG_q[nDG]/I");
   tree_out->Branch("DG_numberOfValidHits", DG_numberOfValidHits, "DG_numberOfValidHits[nDG]/I");
@@ -111,6 +122,31 @@ void DGAnalysis::beginJob()
   tree_out->Branch("DG_ndof", DG_ndof, "DG_ndof[nDG]/F");
   tree_out->Branch("DG_normChi2", DG_normChi2, "DG_normChi2[nDG]/F");
 
+
+  tree_out->Branch("nDSA", &nDSA, "nDSA/I");
+  tree_out->Branch("DSA_pt", DSA_pt, "DSA_pt[nDSA]/F");
+  tree_out->Branch("DSA_ptError", DSA_ptError, "DSA_ptError[nDSA]/F");
+  tree_out->Branch("DSA_eta", DSA_eta, "DSA_eta[nDSA]/F");
+  tree_out->Branch("DSA_phi", DSA_phi, "DSA_phi[nDSA]/F");
+  tree_out->Branch("DSA_vx", DSA_vx, "DSA_vx[nDSA]/F");
+  tree_out->Branch("DSA_vy", DSA_vy, "DSA_vy[nDSA]/F");
+  tree_out->Branch("DSA_vz", DSA_vz, "DSA_vz[nDSA]/F");
+  tree_out->Branch("DSA_dxy", DSA_dxy, "DSA_dxy[nDSA]/F");
+  tree_out->Branch("DSA_dxyError", DSA_dxyError, "DSA_dxyError[nDSA]/F");
+  tree_out->Branch("DSA_dxy0", DSA_dxy0, "DSA_dxy0[nDSA]/F");
+  tree_out->Branch("DSA_dxy0Error", DSA_dxy0Error, "DSA_dxy0Error[nDSA]/F");
+  tree_out->Branch("DSA_Ixy", DSA_Ixy, "DSA_Ixy[nDSA]/F");
+  tree_out->Branch("DSA_dz", DSA_dz, "DSA_dz[nDSA]/F");
+  tree_out->Branch("DSA_dzError", DSA_dzError, "DSA_dzError[nDSA]/F");
+  tree_out->Branch("DSA_dz0", DSA_dz0, "DSA_dz0[nDSA]/F");
+  tree_out->Branch("DSA_dz0Error", DSA_dz0Error, "DSA_dz0Error[nDSA]/F");
+  tree_out->Branch("DSA_Iz", DSA_Iz, "DSA_Iz[nDSA]/F");
+  tree_out->Branch("DSA_q", DSA_q, "DSA_q[nDSA]/I");
+  tree_out->Branch("DSA_numberOfValidHits", DSA_numberOfValidHits, "DSA_numberOfValidHits[nDSA]/I");
+  tree_out->Branch("DSA_numberOfLostHits", DSA_numberOfLostHits, "DSA_numberOfLostHits[nDSA]/I");
+  tree_out->Branch("DSA_chi2", DSA_chi2, "DSA_chi2[nDSA]/F");
+  tree_out->Branch("DSA_ndof", DSA_ndof, "DSA_ndof[nDSA]/F");
+  tree_out->Branch("DSA_normChi2", DSA_normChi2, "DSA_normChi2[nDSA]/F");
 
 }
 
@@ -156,6 +192,9 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
    bool ValidDisplacedGlobal = iEvent.getByToken(DisplacedGlobalToken_, DisplacedGlobalCollection_);
    if (!ValidDisplacedGlobal) { return; }
 
+   bool ValidDisplacedStandalone = iEvent.getByToken(DisplacedStandaloneToken_, DisplacedStandaloneCollection_);
+   if (!ValidDisplacedStandalone) { return; }
+
    bool ValidGlobalMuon = iEvent.getByToken(GlobalMuonToken_, GlobalMuonCollection_);
    if (!ValidGlobalMuon) { return; }
 
@@ -190,6 +229,8 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
      genMu_phi[i] = 0.;
      genMu_dxy[i] = 0.;
      genMu_dz[i] = 0.;
+     genMu_dxy0[i] = 0.;
+     genMu_dz0[i] = 0.;
      genMu_vx[i] = 0.;
      genMu_vy[i] = 0.;
      genMu_vz[i] = 0.;
@@ -214,9 +255,13 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
      GM_vz[i] = 0.;
      GM_dxy[i] = 0.;
      GM_dxyError[i] = 0.;
+     GM_dxy0[i] = 0.;
+     GM_dxy0Error[i] = 0.;
      GM_Ixy[i] = 0.;
      GM_dz[i] = 0.;
      GM_dzError[i] = 0.;
+     GM_dz0[i] = 0.;
+     GM_dz0Error[i] = 0.;
      GM_Iz[i] = 0.;
      GM_q[i] = 0;
      GM_numberOfValidHits[i] = 0;
@@ -239,9 +284,13 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
      DG_vz[i] = 0.;
      DG_dxy[i] = 0.;
      DG_dxyError[i] = 0.;
+     DG_dxy0[i] = 0.;
+     DG_dxy0Error[i] = 0.;
      DG_Ixy[i] = 0.;
      DG_dz[i] = 0.;
      DG_dzError[i] = 0.;
+     DG_dz0[i] = 0.;
+     DG_dz0Error[i] = 0.;
      DG_Iz[i] = 0.;
      DG_q[i] = 0;
      DG_numberOfValidHits[i] = 0;
@@ -252,6 +301,34 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
    }
    nDG = 0;
    
+   // -> Displaced standalone
+   for (Int_t i = 0; i < nDSA; i++) {
+
+     DSA_pt[i] = 0.;
+     DSA_ptError[i] = 0.;
+     DSA_eta[i] = 0.;
+     DSA_phi[i] = 0.;
+     DSA_vx[i] = 0.;
+     DSA_vy[i] = 0.;
+     DSA_vz[i] = 0.;
+     DSA_dxy[i] = 0.;
+     DSA_dxyError[i] = 0.;
+     DSA_dxy0[i] = 0.;
+     DSA_dxy0Error[i] = 0.;
+     DSA_Ixy[i] = 0.;
+     DSA_dz[i] = 0.;
+     DSA_dzError[i] = 0.;
+     DSA_dz0[i] = 0.;
+     DSA_dz0Error[i] = 0.;
+     DSA_Iz[i] = 0.;
+     DSA_q[i] = 0;
+     DSA_numberOfValidHits[i] = 0;
+     DSA_numberOfLostHits[i] = 0;
+     DSA_chi2[i] = 0.;
+     DSA_ndof[i] = 0.;
+     DSA_normChi2[i] = 0.;
+   }
+   nDSA = 0;
 
 
    //
@@ -289,6 +366,7 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
 
    // -> Muon analysis:
    analyzeDisplacedGlobal(iEvent);
+   analyzeDisplacedStandalone(iEvent);
    analyzeGlobalMuons(iEvent);
 
    if (ngenMu < 1 && nDG < 1 && nGM < 1) {return;}
@@ -348,8 +426,10 @@ void DGAnalysis::analyzeGenParticles(const edm::Event& iEvent)
          genMu_vx[i] = m.vx();
          genMu_vy[i] = m.vy();
          genMu_vz[i] = m.vz();
-         genMu_dxy[i] = -(m.vx() - PV_vx)*sin(gp.phi() + (m.vy() - PV_vy)*cos(gp.phi())); // OJOOOOO
+         genMu_dxy[i] = -(m.vx() - PV_vx)*sin(gp.phi()) + (m.vy() - PV_vy)*cos(gp.phi()); // OJOOOOO
          genMu_dz[i] = 1./cos(lambda)*((m.vz()-PV_vz)*cos(lambda) - ((m.vx() - PV_vx)*cos(gp.phi()) + (m.vy() - PV_vy)*sin(gp.phi()))*sin(lambda)); // OJOOOOO
+         genMu_dxy0[i] = -(m.vx())*sin(gp.phi()) + (m.vy())*cos(gp.phi()); // OJOOOOO
+         genMu_dz0[i] = 1./cos(lambda)*((m.vz())*cos(lambda) - ((m.vx())*cos(gp.phi()) + (m.vy())*sin(gp.phi()))*sin(lambda)); // OJOOOOO
 
          if (m.numberOfMothers() != 0){
             genMu_motherPdgId[i] = m.motherRef()->pdgId();
@@ -362,8 +442,10 @@ void DGAnalysis::analyzeGenParticles(const edm::Event& iEvent)
          genMu_vx[i] = gp.vx();
          genMu_vy[i] = gp.vy();
          genMu_vz[i] = gp.vz();
-         genMu_dxy[i] = -(gp.vx() - PV_vx)*sin(gp.phi() + (gp.vy() - PV_vy)*cos(gp.phi())); // OJOOOOO
+         genMu_dxy[i] = -(gp.vx() - PV_vx)*sin(gp.phi()) + (gp.vy() - PV_vy)*cos(gp.phi()); // OJOOOOO
          genMu_dz[i] = 1./cos(lambda)*((gp.vz()-PV_vz)*cos(lambda) - ((gp.vx() - PV_vx)*cos(gp.phi()) + (gp.vy() - PV_vy)*sin(gp.phi()))*sin(lambda)); // OJOOOOO
+         genMu_dxy0[i] = -(gp.vx())*sin(gp.phi()) + (gp.vy())*cos(gp.phi()); // OJOOOOO
+         genMu_dz0[i] = 1./cos(lambda)*((gp.vz())*cos(lambda) - ((gp.vx())*cos(gp.phi()) + (gp.vy())*sin(gp.phi()))*sin(lambda)); // OJOOOOO
          genMu_motherPdgId[i] = gp.motherRef()->pdgId();
 
       }
@@ -400,8 +482,12 @@ void DGAnalysis::analyzeDisplacedGlobal(const edm::Event& iEvent)
       DG_dxy[nDG] = traj.perigeeParameters().transverseImpactParameter();
       DG_dxyError[nDG] = traj.perigeeError().transverseImpactParameterError();
       DG_Ixy[nDG] = fabs(DG_dxy[nDG]/DG_dxyError[nDG]);
+      DG_dxy0[nDG] = muon.dxy();
+      DG_dxy0Error[nDG] = muon.dxyError();
       DG_dz[nDG] = traj.perigeeParameters().longitudinalImpactParameter();
       DG_dzError[nDG] = traj.perigeeError().longitudinalImpactParameterError();
+      DG_dz0[nDG] = muon.dz();
+      DG_dz0Error[nDG] = muon.dzError();
       DG_Iz[nDG] = fabs(DG_dz[nDG]/DG_dzError[nDG]);
 
       nDG++;
@@ -436,9 +522,13 @@ void DGAnalysis::analyzeGlobalMuons(const edm::Event& iEvent)
       TrajectoryStateClosestToPoint traj = computeTrajectory(muon);
       GM_dxy[nGM] = traj.perigeeParameters().transverseImpactParameter();
       GM_dxyError[nGM] = traj.perigeeError().transverseImpactParameterError();
+      GM_dxy0[nGM] = muon.dxy();
+      GM_dxy0Error[nGM] = muon.dxyError();
       GM_Ixy[nGM] = fabs(GM_dxy[nGM]/GM_dxyError[nGM]);
       GM_dz[nGM] = traj.perigeeParameters().longitudinalImpactParameter();
       GM_dzError[nGM] = traj.perigeeError().longitudinalImpactParameterError();
+      GM_dz0[nGM] = muon.dz();
+      GM_dz0Error[nGM] = muon.dzError();
       GM_Iz[nGM] = fabs(GM_dz[nGM]/GM_dzError[nGM]);
     
       nGM++;
@@ -446,6 +536,49 @@ void DGAnalysis::analyzeGlobalMuons(const edm::Event& iEvent)
    }
 
 }
+
+
+void DGAnalysis::analyzeDisplacedStandalone(const edm::Event& iEvent)
+{
+
+   nDSA = 0;
+
+   for (size_t i = 0; i < DisplacedStandaloneCollection_->size(); i++)
+   {
+
+      const reco::Track &muon = (*DisplacedStandaloneCollection_)[i];
+      DSA_pt[nDSA] = muon.pt();
+      DSA_ptError[nDSA] = muon.ptError();
+      DSA_eta[nDSA] = muon.eta();
+      DSA_phi[nDSA] = muon.phi();
+      DSA_vx[nDSA] = muon.vx();
+      DSA_vy[nDSA] = muon.vy();
+      DSA_vz[nDSA] = muon.vz();
+      DSA_q[nDSA] = muon.charge();
+      DSA_numberOfValidHits[nDSA] = muon.numberOfValidHits();
+      DSA_numberOfLostHits[nDSA] = muon.numberOfLostHits();
+      DSA_chi2[nDSA] = muon.chi2();
+      DSA_ndof[nDSA] = muon.ndof();
+      DSA_normChi2[nDSA] = muon.normalizedChi2();
+    
+      TrajectoryStateClosestToPoint traj = computeTrajectory(muon);
+      DSA_dxy[nDSA] = traj.perigeeParameters().transverseImpactParameter();
+      DSA_dxyError[nDSA] = traj.perigeeError().transverseImpactParameterError();
+      DSA_Ixy[nDSA] = fabs(DSA_dxy[nDSA]/DSA_dxyError[nDSA]);
+      DSA_dxy0[nDSA] = muon.dxy();
+      DSA_dxy0Error[nDSA] = muon.dxyError();
+      DSA_dz[nDSA] = traj.perigeeParameters().longitudinalImpactParameter();
+      DSA_dzError[nDSA] = traj.perigeeError().longitudinalImpactParameterError();
+      DSA_dz0[nDSA] = muon.dz();
+      DSA_dz0Error[nDSA] = muon.dzError();
+      DSA_Iz[nDSA] = fabs(DSA_dz[nDSA]/DSA_dzError[nDSA]);
+
+      nDSA++;
+
+   }
+
+}
+
 
 TrajectoryStateClosestToPoint DGAnalysis::computeTrajectory(const reco::Track &track)
 {
