@@ -65,7 +65,7 @@ if __name__ == "__main__":
     Lz_sep = np.array([0.0, 1.0, 60.0, 120.0, 280.0])
     dz_sep = np.array([0.0, 1.0, 60.0, 120.0, 280.0])
     ptres_bin = np.linspace(-0.5, 0.5, 61)
-    dxyres_bin = np.linspace(0.5, 1.5, 61)
+    dxyres_bin = np.linspace(-0.5, 0.5, 61)
     
 
     ###############################
@@ -233,7 +233,7 @@ if __name__ == "__main__":
             if deltaR < MAX_DELTAR:
 
                 ptres = (_tree.GM_pt[index] - pt)/pt
-                dxyres = (_tree.GM_dxy[index] - dxy)/dxy
+                dxyres = (_tree.GM_dxy[index] + dxy)/dxy_abs
 
                 recoGM_genMu_pt.Fill(pt)
                 recoGM_genMu_eta.Fill(eta)
@@ -316,7 +316,7 @@ if __name__ == "__main__":
             if deltaR < MAX_DELTAR:
 
                 ptres = (_tree.DG_pt[index] - pt)/pt
-                dxyres = (_tree.DG_dxy[index] - dxy)/dxy
+                dxyres = (_tree.DG_dxy[index] + dxy)/dxy_abs
 
                 recoDG_genMu_pt.Fill(pt)
                 recoDG_genMu_eta.Fill(eta)
