@@ -207,9 +207,11 @@ if __name__ == "__main__":
                 #ndof     = _tree.DG_ndof[j]
                 normChi2 = _tree.DG_normChi2[j]
 
+                if abs(eta) > 2.4: continue # default
                 if opts.ptmin and pt < opts.ptmin: continue
                 if opts.nhitmin and nvalid < opts.nhitmin: continue
                 if opts.normChi2max and normChi2 > opts.normChi2max: continue
+                if opts.sigmaptmax and ptSig > opts.sigmaptmax: continue
 
                 l = TVector3()
                 l.SetPtEtaPhi(pt, eta, phi)
