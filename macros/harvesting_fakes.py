@@ -42,7 +42,7 @@ def makeOFHisto(h):
 
     return _h
 
-def doFakeStack(matched, unmatched, doOF = True, fakedown = False):
+def doFakeStack(matched, unmatched, doOF = True, fakedown = False, ymin = False, ymax = False):
 
     matched = makeOFHisto(matched)
     unmatched = makeOFHisto(unmatched)
@@ -53,6 +53,7 @@ def doFakeStack(matched, unmatched, doOF = True, fakedown = False):
     matched.SetFillColorAlpha(r.kGreen+2, 0.7)
     matched.SetTitle('True displaced global')
     unmatched.SetTitle('Fake displaced global')
+
 
     Stack = r.THStack("aux_stack", ";"+matched.GetXaxis().GetTitle()+";DG yield")
 
@@ -158,6 +159,8 @@ if __name__ == "__main__":
     SI_matched_DG_normChi2 = getObject('fakes_signal_ptmin10/th1fs.root', 'matched_DG_normChi2')
     SI_unmatched_DG_normChi2 = getObject('fakes_signal_ptmin10/th1fs.root', 'unmatched_DG_normChi2')
     SI_DG_normChi2 = doFakeStack(SI_matched_DG_normChi2, SI_unmatched_DG_normChi2)
+    SI_DG_normChi2.SetMinimum(10)
+    SI_DG_normChi2.SetMaximum(1e7)
     SI_DG_normChi2_ = Canvas.Canvas("SI_DG_normChi2", 'png', 0.52, 0.81, 0.87, 0.9, 1)
     SI_DG_normChi2_.addStack(SI_DG_normChi2, 'HIST', 1, 0)
     SI_DG_normChi2_.addLatex(0.41, 0.75, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.03, align = 11)
@@ -211,3 +214,12 @@ if __name__ == "__main__":
     SI_fake_DG_normChi2_bins_.addLatex(0.9, 0.94, 'p_{T}^{DG} > 10 GeV, |#eta^{DG}| < 2.4', size = 0.03, align = 31)
     SI_fake_DG_normChi2_bins_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
 
+    DY_fake_DG_sigmapt = getObject('fakes_DY2M_ptmin10/th1fs.root', 'total_DG_ptSig_clone')
+    SI_fake_DG_sigmapt = getObject('fakes_signal_ptmin10/th1fs.root', 'total_DG_ptSig_clone')
+    DY_fake_DG_sigmapt.SetTitle(';DG #sigma_{p_{T}}/p_{T};Fake rate')
+    SI_fake_DG_sigmapt.SetTitle(';;')
+    SI_fake_DG_sigmapt_ = Canvas.Canvas("SI_fake_DG_sigmapt_bins", 'png', 0.31, 0.81, 0.53, 0.88, 1)
+    SI_fake_DG_sigmapt_.addRate(DY_fake_DG_sigmapt, 'AP', 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', 'p', r.kRed+2, True, 0, marker = 24)
+    SI_fake_DG_sigmapt_.addRate(SI_fake_DG_sigmapt, 'AP, SAME', 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', 'p', r.kBlue+2, True, 1, marker = 24)
+    SI_fake_DG_sigmapt_.addLatex(0.9, 0.94, 'p_{T}^{DG} > 10 GeV, |#eta^{DG}| < 2.4', size = 0.03, align = 31)
+    SI_fake_DG_sigmapt_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')

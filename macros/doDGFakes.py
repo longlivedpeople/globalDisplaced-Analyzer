@@ -38,6 +38,7 @@ if __name__ == "__main__":
     parser.add_option('-m', '--nmax', action='store', type=int, dest='nmax', default=0, help='Path to file')
     parser.add_option('--ptmin', action='store', type=float, dest='ptmin', default=0.0, help='ptmin')
     parser.add_option('--nhitmin', action='store', type=int, dest='nhitmin', default=0, help='ptmin')
+    parser.add_option('--sigmaptmax', action='store', type=float, dest='sigmaptmax', default=0, help='sigmaptmax')
     parser.add_option('--normChi2max', action='store', type=float, dest='normChi2max', default=0.0, help='ptmin')
     (opts, args) = parser.parse_args()
 
@@ -164,6 +165,9 @@ if __name__ == "__main__":
     unmatched_DG_numberOfValidHits_bin3 = r.TH1F("unmatched_DG_numberOfValidHits_bin3", ";Number of valid hits;Muons", len(nvalid_bin)-1, nvalid_bin)
     unmatched_DG_normChi2_bin3 = r.TH1F("unmatched_DG_normChi2_bin3", ";Muon #chi^{2};Muons", len(normChi2_bin)-1, normChi2_bin)
 
+    #### Predefined qeff rates
+    normChi2_logbin = np.logspace(-1, 2, 60)
+    pfake_DG_normChi2 = r.TEfficiency("pfake_DG_normChi2", ";;Fake rate", len(normChi2_logbin) -1, normChi2_logbin)
     
 
     #########################
@@ -261,6 +265,7 @@ if __name__ == "__main__":
                     matched_DG_dxy.Fill(dxy)
                     matched_DG_numberOfValidHits.Fill(nvalid)
                     matched_DG_normChi2.Fill(normChi2)
+                    pfake_DG_normChi2.Fill(False, normChi2)
 
                     if dxy < dxySep_bin[1]:
                         matched_DG_pt_bin1.Fill(pt)
@@ -287,6 +292,7 @@ if __name__ == "__main__":
                     unmatched_DG_dxy.Fill(dxy)
                     unmatched_DG_numberOfValidHits.Fill(nvalid)
                     unmatched_DG_normChi2.Fill(normChi2)
+                    pfake_DG_normChi2.Fill(True, normChi2)
 
                     if dxy < dxySep_bin[1]:
                         unmatched_DG_pt_bin1.Fill(pt)
@@ -422,6 +428,7 @@ if __name__ == "__main__":
     fake_DG_eta.Write()
     fake_DG_numberOfValidHits.Write()
     fake_DG_normChi2.Write()
+    pfake_DG_normChi2.Write()
     fake_DG_dxy.Write()
 
     fake_DG_pt_bin1.Write()

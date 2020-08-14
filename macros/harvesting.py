@@ -70,10 +70,12 @@ if __name__ == "__main__":
     ########################################
 
     
-    SI_recoDG_genMu_Lxy = getObject('plots_allSignals/th1fs.root', 'recoDG_genMu_Lxy')
-    SI_recoGM_genMu_Lxy = getObject('plots_allSignals/th1fs.root', 'recoGM_genMu_Lxy')
-    SI_total_genMu_Lxy = getObject('plots_allSignals/th1fs.root', 'total_genMu_Lxy')
+    SI_recoDG_genMu_Lxy = getObject('plots_signal/th1fs.root', 'recoDG_genMu_Lxy')
+    SI_recoDGID_genMu_Lxy = getObject('plots_signal/th1fs.root', 'recoDGID_genMu_Lxy')
+    SI_recoGM_genMu_Lxy = getObject('plots_signal/th1fs.root', 'recoGM_genMu_Lxy')
+    SI_total_genMu_Lxy = getObject('plots_signal/th1fs.root', 'total_genMu_Lxy')
     SI_recoDG_genMu_Lxy.Rebin(2)
+    SI_recoDGID_genMu_Lxy.Rebin(2)
     SI_recoGM_genMu_Lxy.Rebin(2)
     SI_total_genMu_Lxy.Rebin(2)
 
@@ -81,53 +83,157 @@ if __name__ == "__main__":
     SI_eff_GM_Lxy.SetTitle(';;')
     SI_eff_DG_Lxy = r.TEfficiency(SI_recoDG_genMu_Lxy, SI_total_genMu_Lxy)
     SI_eff_DG_Lxy.SetTitle(';'+SI_total_genMu_Lxy.GetXaxis().GetTitle()+'; Efficiency')
+    SI_eff_DGID_Lxy = r.TEfficiency(SI_recoDGID_genMu_Lxy, SI_total_genMu_Lxy)
+    SI_eff_DGID_Lxy.SetTitle(';'+SI_total_genMu_Lxy.GetXaxis().GetTitle()+'; Efficiency')
 
-    SI_EFF_Lxy = Canvas.Canvas("SI_EFF_Lxy", 'png', 0.62, 0.81, 0.87, 0.9, 1) 
-    SI_EFF_Lxy.addRate(SI_eff_DG_Lxy, 'AP', 'Displaced Global', 'p', r.kBlue+2, True, 0, marker = 24)
-    SI_EFF_Lxy.addRate(SI_eff_GM_Lxy, 'AP, SAME', 'Standard Global', 'p', r.kRed-7, True, 1, marker = 24)
+    SI_EFF_Lxy = Canvas.Canvas("SI_EFF_Lxy", 'png', 0.55, 0.78, 0.85, 0.9, 1) 
+    SI_EFF_Lxy.addRate(SI_eff_DG_Lxy, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
+    SI_EFF_Lxy.addRate(SI_eff_DGID_Lxy, 'AP, SAME', 'Displaced Global + ID', 'p', r.kBlue+1, True, 1, marker = 24)
+    SI_EFF_Lxy.addRate(SI_eff_GM_Lxy, 'AP, SAME', 'Standard Global', 'p', r.kRed-7, True, 2, marker = 24)
     SI_EFF_Lxy.addLatex(0.9, 0.93, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.032, align = 31)
-    SI_EFF_Lxy.saveRatio(1, 0, 0, '', SI_eff_DG_Lxy, SI_eff_GM_Lxy, r_ymin = 0.5, r_ymax = 4, label = 'DG/GM', outputDir = WORKPATH + 'harvested_'+opts.tag+'/')
+    SI_EFF_Lxy.saveRatio(1, 0, 0, '', SI_eff_DGID_Lxy, SI_eff_GM_Lxy, r_ymin = 0.0, r_ymax = 4, label = 'DG(+ID)/GM', outputDir = WORKPATH + 'harvested_'+opts.tag+'/')
     
-
     ########################################
 
-    SI_eff_GM_pt_Lxybin1 = getObject('plots_allSignals/th1fs.root', 'eff_GM_pt_Lxybin1')
-    SI_eff_DG_pt_Lxybin1 = getObject('plots_allSignals/th1fs.root', 'eff_DG_pt_Lxybin1')
+    SI_recoDG_genMu_dxy = getObject('plots_signal/th1fs.root', 'recoDG_genMu_dxy')
+    SI_recoDGID_genMu_dxy = getObject('plots_signal/th1fs.root', 'recoDGID_genMu_dxy')
+    SI_recoGM_genMu_dxy = getObject('plots_signal/th1fs.root', 'recoGM_genMu_dxy')
+    SI_total_genMu_dxy = getObject('plots_signal/th1fs.root', 'total_genMu_dxy')
+    SI_recoDG_genMu_dxy.Rebin(2)
+    SI_recoDGID_genMu_dxy.Rebin(2)
+    SI_recoGM_genMu_dxy.Rebin(2)
+    SI_total_genMu_dxy.Rebin(2)
 
-    SI_EFF_pt_Lxybin1 = Canvas.Canvas("SI_EFF_pt_Lxybin1", 'png', 0.62, 0.81, 0.87, 0.9, 1) 
-    SI_EFF_pt_Lxybin1.addRate(SI_eff_DG_pt_Lxybin1, 'AP', 'Displaced Global', 'p', r.kBlue+2, True, 0, marker = 24)
-    SI_EFF_pt_Lxybin1.addRate(SI_eff_GM_pt_Lxybin1, 'AP, SAME', 'Standard Global', 'p', r.kRed-7, True, 1, marker = 24)
+    SI_eff_GM_dxy = r.TEfficiency(SI_recoGM_genMu_dxy, SI_total_genMu_dxy)
+    SI_eff_GM_dxy.SetTitle(';;')
+    SI_eff_DG_dxy = r.TEfficiency(SI_recoDG_genMu_dxy, SI_total_genMu_dxy)
+    SI_eff_DG_dxy.SetTitle(';'+SI_total_genMu_dxy.GetXaxis().GetTitle()+'; Efficiency')
+    SI_eff_DGID_dxy = r.TEfficiency(SI_recoDGID_genMu_dxy, SI_total_genMu_dxy)
+    SI_eff_DGID_dxy.SetTitle(';'+SI_total_genMu_dxy.GetXaxis().GetTitle()+'; Efficiency')
+
+    SI_EFF_dxy = Canvas.Canvas("SI_EFF_dxy", 'png', 0.55, 0.78, 0.85, 0.9, 1) 
+    SI_EFF_dxy.addRate(SI_eff_DG_dxy, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
+    SI_EFF_dxy.addRate(SI_eff_DGID_dxy, 'AP, SAME', 'Displaced Global + ID', 'p', r.kBlue+1, True, 1, marker = 24)
+    SI_EFF_dxy.addRate(SI_eff_GM_dxy, 'AP, SAME', 'Standard Global', 'p', r.kRed-7, True, 2, marker = 24)
+    SI_EFF_dxy.addLatex(0.9, 0.93, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.032, align = 31)
+    SI_EFF_dxy.saveRatio(1, 0, 0, '', SI_eff_DGID_dxy, SI_eff_GM_dxy, r_ymin = 0.0, r_ymax = 10, label = 'DG(+ID)/GM', outputDir = WORKPATH + 'harvested_'+opts.tag+'/')
+
+    ########################################
+    
+    SI_eff_GM_pt_Lxybin1 = getObject('plots_signal/th1fs.root', 'eff_GM_pt_Lxybin1')
+    SI_eff_DG_pt_Lxybin1 = getObject('plots_signal/th1fs.root', 'eff_DG_pt_Lxybin1')
+    SI_eff_DGID_pt_Lxybin1 = getObject('plots_signal/th1fs.root', 'eff_DGID_pt_Lxybin1')
+
+    SI_EFF_pt_Lxybin1 = Canvas.Canvas("SI_EFF_pt_Lxybin1", 'png', 0.55, 0.78, 0.87, 0.9, 1) 
+    SI_EFF_pt_Lxybin1.addRate(SI_eff_DG_pt_Lxybin1, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
+    SI_EFF_pt_Lxybin1.addRate(SI_eff_DGID_pt_Lxybin1, 'AP,SAME', 'Displaced Global + ID', 'p', r.kBlue+1, True, 1, marker = 24)
+    SI_EFF_pt_Lxybin1.addRate(SI_eff_GM_pt_Lxybin1, 'AP, SAME', 'Standard Global', 'p', r.kRed-7, True, 2, marker = 24)
     SI_EFF_pt_Lxybin1.addLatex(0.9, 0.93, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.032, align = 31)
-    SI_EFF_pt_Lxybin1.saveRatio(1, 0, 0, '', SI_eff_DG_pt_Lxybin1, SI_eff_GM_pt_Lxybin1, r_ymin = 0.8, r_ymax = 1.2, label = 'DG/GM', outputDir = WORKPATH + 'harvested_'+opts.tag+'/')
+    SI_EFF_pt_Lxybin1.saveRatio(1, 0, 0, '', SI_eff_DGID_pt_Lxybin1, SI_eff_GM_pt_Lxybin1, r_ymin = 0.75, r_ymax = 1.25, label = 'DG(+ID)/GM', outputDir = WORKPATH + 'harvested_'+opts.tag+'/')
 
     ########################################
 
-    SI_eff_GM_pt_Lxybin2 = getObject('plots_allSignals/th1fs.root', 'eff_GM_pt_Lxybin2')
-    SI_eff_DG_pt_Lxybin2 = getObject('plots_allSignals/th1fs.root', 'eff_DG_pt_Lxybin2')
+    SI_eff_GM_pt_Lxybin2 = getObject('plots_signal/th1fs.root', 'eff_GM_pt_Lxybin2')
+    SI_eff_DG_pt_Lxybin2 = getObject('plots_signal/th1fs.root', 'eff_DG_pt_Lxybin2')
+    SI_eff_DGID_pt_Lxybin2 = getObject('plots_signal/th1fs.root', 'eff_DGID_pt_Lxybin2')
 
-    SI_EFF_pt_Lxybin2 = Canvas.Canvas("SI_EFF_pt_Lxybin2", 'png', 0.62, 0.81, 0.87, 0.9, 1) 
-    SI_EFF_pt_Lxybin2.addRate(SI_eff_DG_pt_Lxybin2, 'AP', 'Displaced Global', 'p', r.kBlue+2, True, 0, marker = 24)
-    SI_EFF_pt_Lxybin2.addRate(SI_eff_GM_pt_Lxybin2, 'AP, SAME', 'Standard Global', 'p', r.kRed-7, True, 1, marker = 24)
+    SI_EFF_pt_Lxybin2 = Canvas.Canvas("SI_EFF_pt_Lxybin2", 'png', 0.55, 0.78, 0.87, 0.9, 1) 
+    SI_EFF_pt_Lxybin2.addRate(SI_eff_DG_pt_Lxybin2, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
+    SI_EFF_pt_Lxybin2.addRate(SI_eff_DGID_pt_Lxybin2, 'AP,SAME', 'Displaced Global + ID', 'p', r.kBlue+1, True, 1, marker = 24)
+    SI_EFF_pt_Lxybin2.addRate(SI_eff_GM_pt_Lxybin2, 'AP, SAME', 'Standard Global', 'p', r.kRed-7, True, 2, marker = 24)
     SI_EFF_pt_Lxybin2.addLatex(0.9, 0.93, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.032, align = 31)
-    SI_EFF_pt_Lxybin2.saveRatio(1, 0, 0, '', SI_eff_DG_pt_Lxybin2, SI_eff_GM_pt_Lxybin2, r_ymin = 0.5, r_ymax = 1.5, label = 'DG/GM', outputDir = WORKPATH + 'harvested_'+opts.tag+'/')
+    SI_EFF_pt_Lxybin2.saveRatio(1, 0, 0, '', SI_eff_DGID_pt_Lxybin2, SI_eff_GM_pt_Lxybin2, r_ymin = 0.75, r_ymax = 1.25, label = 'DG(+ID)/GM', outputDir = WORKPATH + 'harvested_'+opts.tag+'/')
 
     ########################################
 
-    SI_eff_GM_pt_Lxybin3 = getObject('plots_allSignals/th1fs.root', 'eff_GM_pt_Lxybin3')
-    SI_eff_DG_pt_Lxybin3 = getObject('plots_allSignals/th1fs.root', 'eff_DG_pt_Lxybin3')
+    SI_eff_GM_pt_Lxybin3 = getObject('plots_signal/th1fs.root', 'eff_GM_pt_Lxybin3')
+    SI_eff_DG_pt_Lxybin3 = getObject('plots_signal/th1fs.root', 'eff_DG_pt_Lxybin3')
+    SI_eff_DGID_pt_Lxybin3 = getObject('plots_signal/th1fs.root', 'eff_DGID_pt_Lxybin3')
 
-    SI_EFF_pt_Lxybin3 = Canvas.Canvas("SI_EFF_pt_Lxybin3", 'png', 0.62, 0.81, 0.87, 0.9, 1) 
-    SI_EFF_pt_Lxybin3.addRate(SI_eff_DG_pt_Lxybin3, 'AP', 'Displaced Global', 'p', r.kBlue+2, True, 0, marker = 24)
-    SI_EFF_pt_Lxybin3.addRate(SI_eff_GM_pt_Lxybin3, 'AP, SAME', 'Standard Global', 'p', r.kRed-7, True, 1, marker = 24)
+    SI_EFF_pt_Lxybin3 = Canvas.Canvas("SI_EFF_pt_Lxybin3", 'png', 0.55, 0.78, 0.87, 0.9, 1) 
+    SI_EFF_pt_Lxybin3.addRate(SI_eff_DG_pt_Lxybin3, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
+    SI_EFF_pt_Lxybin3.addRate(SI_eff_DGID_pt_Lxybin3, 'AP,SAME', 'Displaced Global + ID', 'p', r.kBlue+1, True, 1, marker = 24)
+    SI_EFF_pt_Lxybin3.addRate(SI_eff_GM_pt_Lxybin3, 'AP, SAME', 'Standard Global', 'p', r.kRed-7, True, 2, marker = 24)
     SI_EFF_pt_Lxybin3.addLatex(0.9, 0.93, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.032, align = 31)
-    SI_EFF_pt_Lxybin3.saveRatio(1, 0, 0, '', SI_eff_DG_pt_Lxybin3, SI_eff_GM_pt_Lxybin3, r_ymin = 0.5, r_ymax = 3, label = 'DG/GM', outputDir = WORKPATH + 'harvested_'+opts.tag+'/')
+    SI_EFF_pt_Lxybin3.saveRatio(1, 0, 0, '', SI_eff_DGID_pt_Lxybin3, SI_eff_GM_pt_Lxybin3, r_ymin = 1.0, r_ymax = 3, label = 'DG(+ID)/GM', outputDir = WORKPATH + 'harvested_'+opts.tag+'/')
+
+    
+    ########################################
+
+    SI_eff_GM_pt_Lxybin4 = getObject('plots_signal/th1fs.root', 'eff_GM_pt_Lxybin4')
+    SI_eff_DG_pt_Lxybin4 = getObject('plots_signal/th1fs.root', 'eff_DG_pt_Lxybin4')
+    SI_eff_DGID_pt_Lxybin4 = getObject('plots_signal/th1fs.root', 'eff_DGID_pt_Lxybin4')
+
+    SI_EFF_pt_Lxybin4 = Canvas.Canvas("SI_EFF_pt_Lxybin4", 'png', 0.55, 0.78, 0.87, 0.9, 1) 
+    SI_EFF_pt_Lxybin4.addRate(SI_eff_DG_pt_Lxybin4, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
+    SI_EFF_pt_Lxybin4.addRate(SI_eff_DGID_pt_Lxybin4, 'AP,SAME', 'Displaced Global + ID', 'p', r.kBlue+1, True, 1, marker = 24)
+    SI_EFF_pt_Lxybin4.addRate(SI_eff_GM_pt_Lxybin4, 'AP, SAME', 'Standard Global', 'p', r.kRed-7, True, 2, marker = 24)
+    SI_EFF_pt_Lxybin4.addLatex(0.9, 0.93, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.032, align = 31)
+    SI_EFF_pt_Lxybin4.saveRatio(1, 0, 0, '', SI_eff_DGID_pt_Lxybin4, SI_eff_GM_pt_Lxybin4, r_ymin = 0.5, r_ymax = 3, label = 'DG(+ID)/GM', outputDir = WORKPATH + 'harvested_'+opts.tag+'/')
 
 
     ########################################
 
-    SI_recoDG_genMu_Lz = getObject('plots_allSignals/th1fs.root', 'recoDG_genMu_Lz')
-    SI_recoGM_genMu_Lz = getObject('plots_allSignals/th1fs.root', 'recoGM_genMu_Lz')
-    SI_total_genMu_Lz = getObject('plots_allSignals/th1fs.root', 'total_genMu_Lz')
+    SI_eff_GM_pt_dxybin1 = getObject('plots_signal/th1fs.root', 'eff_GM_pt_dxybin1')
+    SI_eff_DG_pt_dxybin1 = getObject('plots_signal/th1fs.root', 'eff_DG_pt_dxybin1')
+    SI_eff_DGID_pt_dxybin1 = getObject('plots_signal/th1fs.root', 'eff_DGID_pt_dxybin1')
+
+    SI_EFF_pt_dxybin1 = Canvas.Canvas("SI_EFF_pt_dxybin1", 'png', 0.55, 0.78, 0.87, 0.9, 1) 
+    SI_EFF_pt_dxybin1.addRate(SI_eff_DG_pt_dxybin1, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
+    SI_EFF_pt_dxybin1.addRate(SI_eff_DGID_pt_dxybin1, 'AP,SAME', 'Displaced Global + ID', 'p', r.kBlue+1, True, 1, marker = 24)
+    SI_EFF_pt_dxybin1.addRate(SI_eff_GM_pt_dxybin1, 'AP, SAME', 'Standard Global', 'p', r.kRed-7, True, 2, marker = 24)
+    SI_EFF_pt_dxybin1.addLatex(0.9, 0.93, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.032, align = 31)
+    SI_EFF_pt_dxybin1.saveRatio(1, 0, 0, '', SI_eff_DGID_pt_dxybin1, SI_eff_GM_pt_dxybin1, r_ymin = 0.75, r_ymax = 1.25, label = 'DG(+ID)/GM', outputDir = WORKPATH + 'harvested_'+opts.tag+'/')
+
+    ########################################
+
+    SI_eff_GM_pt_dxybin2 = getObject('plots_signal/th1fs.root', 'eff_GM_pt_dxybin2')
+    SI_eff_DG_pt_dxybin2 = getObject('plots_signal/th1fs.root', 'eff_DG_pt_dxybin2')
+    SI_eff_DGID_pt_dxybin2 = getObject('plots_signal/th1fs.root', 'eff_DGID_pt_dxybin2')
+
+    SI_EFF_pt_dxybin2 = Canvas.Canvas("SI_EFF_pt_dxybin2", 'png', 0.55, 0.78, 0.87, 0.9, 1) 
+    SI_EFF_pt_dxybin2.addRate(SI_eff_DG_pt_dxybin2, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
+    SI_EFF_pt_dxybin2.addRate(SI_eff_DGID_pt_dxybin2, 'AP,SAME', 'Displaced Global + ID', 'p', r.kBlue+1, True, 1, marker = 24)
+    SI_EFF_pt_dxybin2.addRate(SI_eff_GM_pt_dxybin2, 'AP, SAME', 'Standard Global', 'p', r.kRed-7, True, 2, marker = 24)
+    SI_EFF_pt_dxybin2.addLatex(0.9, 0.93, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.032, align = 31)
+    SI_EFF_pt_dxybin2.saveRatio(1, 0, 0, '', SI_eff_DGID_pt_dxybin2, SI_eff_GM_pt_dxybin2, r_ymin = 0.75, r_ymax = 1.5, label = 'DG(+ID)/GM', outputDir = WORKPATH + 'harvested_'+opts.tag+'/')
+
+    ########################################
+
+    SI_eff_GM_pt_dxybin3 = getObject('plots_signal/th1fs.root', 'eff_GM_pt_dxybin3')
+    SI_eff_DG_pt_dxybin3 = getObject('plots_signal/th1fs.root', 'eff_DG_pt_dxybin3')
+    SI_eff_DGID_pt_dxybin3 = getObject('plots_signal/th1fs.root', 'eff_DGID_pt_dxybin3')
+
+    SI_EFF_pt_dxybin3 = Canvas.Canvas("SI_EFF_pt_dxybin3", 'png', 0.55, 0.78, 0.87, 0.9, 1) 
+    SI_EFF_pt_dxybin3.addRate(SI_eff_DG_pt_dxybin3, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
+    SI_EFF_pt_dxybin3.addRate(SI_eff_DGID_pt_dxybin3, 'AP,SAME', 'Displaced Global + ID', 'p', r.kBlue+1, True, 1, marker = 24)
+    SI_EFF_pt_dxybin3.addRate(SI_eff_GM_pt_dxybin3, 'AP, SAME', 'Standard Global', 'p', r.kRed-7, True, 2, marker = 24)
+    SI_EFF_pt_dxybin3.addLatex(0.9, 0.93, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.032, align = 31)
+    SI_EFF_pt_dxybin3.saveRatio(1, 0, 0, '', SI_eff_DGID_pt_dxybin3, SI_eff_GM_pt_dxybin3, r_ymin = 1, r_ymax = 10, label = 'DG(+ID)/GM', outputDir = WORKPATH + 'harvested_'+opts.tag+'/')
+
+    
+    ########################################
+
+    SI_eff_GM_pt_dxybin4 = getObject('plots_signal/th1fs.root', 'eff_GM_pt_dxybin4')
+    SI_eff_DG_pt_dxybin4 = getObject('plots_signal/th1fs.root', 'eff_DG_pt_dxybin4')
+    SI_eff_DGID_pt_dxybin4 = getObject('plots_signal/th1fs.root', 'eff_DGID_pt_dxybin4')
+
+    SI_EFF_pt_dxybin4 = Canvas.Canvas("SI_EFF_pt_dxybin4", 'png', 0.55, 0.78, 0.87, 0.9, 1) 
+    SI_EFF_pt_dxybin4.addRate(SI_eff_DG_pt_dxybin4, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
+    SI_EFF_pt_dxybin4.addRate(SI_eff_DGID_pt_dxybin4, 'AP,SAME', 'Displaced Global + ID', 'p', r.kBlue+1, True, 1, marker = 24)
+    SI_EFF_pt_dxybin4.addRate(SI_eff_GM_pt_dxybin4, 'AP, SAME', 'Standard Global', 'p', r.kRed-7, True, 2, marker = 24)
+    SI_EFF_pt_dxybin4.addLatex(0.9, 0.93, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.032, align = 31)
+    SI_EFF_pt_dxybin4.saveRatio(1, 0, 0, '', SI_eff_DGID_pt_dxybin4, SI_eff_GM_pt_dxybin4, r_ymin = 0.5, r_ymax = 1.5, label = 'DG(+ID)/GM', outputDir = WORKPATH + 'harvested_'+opts.tag+'/')
+
+
+
+    ########################################
+
+    SI_recoDGID_genMu_Lz = getObject('plots_signal/th1fs.root', 'recoDGID_genMu_Lz')
+    SI_recoDG_genMu_Lz = getObject('plots_signal/th1fs.root', 'recoDG_genMu_Lz')
+    SI_recoGM_genMu_Lz = getObject('plots_signal/th1fs.root', 'recoGM_genMu_Lz')
+    SI_total_genMu_Lz = getObject('plots_signal/th1fs.root', 'total_genMu_Lz')
+    SI_recoDGID_genMu_Lz.Rebin(2)
     SI_recoDG_genMu_Lz.Rebin(2)
     SI_recoGM_genMu_Lz.Rebin(2)
     SI_total_genMu_Lz.Rebin(2)
@@ -136,11 +242,44 @@ if __name__ == "__main__":
     SI_eff_GM_Lz.SetTitle(';;')
     SI_eff_DG_Lz = r.TEfficiency(SI_recoDG_genMu_Lz, SI_total_genMu_Lz)
     SI_eff_DG_Lz.SetTitle(';'+SI_total_genMu_Lz.GetXaxis().GetTitle()+'; Efficiency')
+    SI_eff_DGID_Lz = r.TEfficiency(SI_recoDGID_genMu_Lz, SI_total_genMu_Lz)
+    SI_eff_DGID_Lz.SetTitle(';; Efficiency')
 
-    SI_EFF_Lz = Canvas.Canvas("SI_EFF_Lz", 'png', 0.62, 0.81, 0.87, 0.9, 1) 
-    SI_EFF_Lz.addRate(SI_eff_DG_Lz, 'AP', 'Displaced Global', 'p', r.kBlue+2, True, 0, marker = 24)
-    SI_EFF_Lz.addRate(SI_eff_GM_Lz, 'AP, SAME', 'Standard Global', 'p', r.kRed-7, True, 1, marker = 24)
+    SI_EFF_Lz = Canvas.Canvas("SI_EFF_Lz", 'png', 0.55, 0.78, 0.85, 0.9, 1) 
+    SI_EFF_Lz.addRate(SI_eff_DG_Lz, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
+    SI_EFF_Lz.addRate(SI_eff_DGID_Lz, 'AP,SAME', 'Displaced Global + ID', 'p', r.kBlue+1, True, 1, marker = 24)
+    SI_EFF_Lz.addRate(SI_eff_GM_Lz, 'AP, SAME', 'Standard Global', 'p', r.kRed-7, True, 2, marker = 24)
     SI_EFF_Lz.addLatex(0.9, 0.93, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.032, align = 31)
-    SI_EFF_Lz.saveRatio(1, 0, 0, '', SI_eff_DG_Lz, SI_eff_GM_Lz, r_ymin = 0.5, r_ymax = 4, label = 'DG/GM', outputDir = WORKPATH + 'harvested_'+opts.tag+'/')
+    SI_EFF_Lz.saveRatio(1, 0, 0, '', SI_eff_DGID_Lz, SI_eff_GM_Lz, r_ymin = 0.0, r_ymax = 8, label = 'DG(+ID)/GM', outputDir = WORKPATH + 'harvested_'+opts.tag+'/')
 
-    if not os.path.exists(WORKPATH + 'harvested_'+opts.tag+'/'): os.makedirs(WORKPATH + 'harvested_'+opts.tag+'/')
+    ########################################
+
+    SI_recoDGID_genMu_dz = getObject('plots_signal/th1fs.root', 'recoDGID_genMu_dz')
+    SI_recoDG_genMu_dz = getObject('plots_signal/th1fs.root', 'recoDG_genMu_dz')
+    SI_recoGM_genMu_dz = getObject('plots_signal/th1fs.root', 'recoGM_genMu_dz')
+    SI_total_genMu_dz = getObject('plots_signal/th1fs.root', 'total_genMu_dz')
+    SI_recoDGID_genMu_dz.Rebin(2)
+    SI_recoDG_genMu_dz.Rebin(2)
+    SI_recoGM_genMu_dz.Rebin(2)
+    SI_total_genMu_dz.Rebin(2)
+
+    SI_eff_GM_dz = r.TEfficiency(SI_recoGM_genMu_dz, SI_total_genMu_dz)
+    SI_eff_GM_dz.SetTitle(';;')
+    SI_eff_DG_dz = r.TEfficiency(SI_recoDG_genMu_dz, SI_total_genMu_dz)
+    SI_eff_DG_dz.SetTitle(';'+SI_total_genMu_dz.GetXaxis().GetTitle()+'; Efficiency')
+    SI_eff_DGID_dz = r.TEfficiency(SI_recoDGID_genMu_dz, SI_total_genMu_dz)
+    SI_eff_DGID_dz.SetTitle(';; Efficiency')
+
+    SI_EFF_dz = Canvas.Canvas("SI_EFF_dz", 'png', 0.55, 0.78, 0.85, 0.9, 1) 
+    SI_EFF_dz.addRate(SI_eff_DG_dz, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
+    SI_EFF_dz.addRate(SI_eff_DGID_dz, 'AP,SAME', 'Displaced Global + ID', 'p', r.kBlue+1, True, 1, marker = 24)
+    SI_EFF_dz.addRate(SI_eff_GM_dz, 'AP, SAME', 'Standard Global', 'p', r.kRed-7, True, 2, marker = 24)
+    SI_EFF_dz.addLatex(0.9, 0.93, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.032, align = 31)
+    SI_EFF_dz.saveRatio(1, 0, 0, '', SI_eff_DGID_dz, SI_eff_GM_dz, r_ymin = 0.0, r_ymax = 8, label = 'DG(+ID)/GM', outputDir = WORKPATH + 'harvested_'+opts.tag+'/')
+
+
+
+
+
+
+    #if not os.path.exists(WORKPATH + 'harvested_'+opts.tag+'/'): os.makedirs(WORKPATH + 'harvested_'+opts.tag+'/')
