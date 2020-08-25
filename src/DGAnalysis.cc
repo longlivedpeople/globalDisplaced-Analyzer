@@ -15,6 +15,8 @@ DGAnalysis::DGAnalysis(const edm::ParameterSet& iConfig)
    DisplacedGlobalToken_ = consumes<edm::View<reco::Track> >  (parameters.getParameter<edm::InputTag>("DisplacedGlobalCollection"));
    DisplacedStandaloneToken_ = consumes<edm::View<reco::Track> >  (parameters.getParameter<edm::InputTag>("DisplacedStandaloneCollection"));
    GlobalMuonToken_ = consumes<edm::View<reco::Track> >  (parameters.getParameter<edm::InputTag>("GlobalMuonCollection"));
+   JetToken_ = consumes<edm::View<pat::Jet> >  (parameters.getParameter<edm::InputTag>("JetCollection"));
+   GenJetToken_ = consumes<edm::View<reco::GenJet> >  (parameters.getParameter<edm::InputTag>("GenJetCollection"));
 
 }
 
@@ -148,6 +150,17 @@ void DGAnalysis::beginJob()
   tree_out->Branch("DSA_ndof", DSA_ndof, "DSA_ndof[nDSA]/F");
   tree_out->Branch("DSA_normChi2", DSA_normChi2, "DSA_normChi2[nDSA]/F");
 
+
+  tree_out->Branch("nJet", &nJet, "nJet/I");
+  tree_out->Branch("Jet_pt", Jet_pt, "Jet_pt[nJet]/F");
+  tree_out->Branch("Jet_eta", Jet_eta, "Jet_eta[nJet]/F");
+  tree_out->Branch("Jet_phi", Jet_phi, "Jet_phi[nJet]/F");
+
+  tree_out->Branch("nGenJet", &nGenJet, "nGenJet/I");
+  tree_out->Branch("GenJet_pt", GenJet_pt, "GenJet_pt[nGenJet]/F");
+  tree_out->Branch("GenJet_eta", GenJet_eta, "GenJet_eta[nGenJet]/F");
+  tree_out->Branch("GenJet_phi", GenJet_phi, "GenJet_phi[nGenJet]/F");
+
 }
 
 ////////
@@ -187,7 +200,7 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
    bool ValidPV = iEvent.getByToken(PVToken_, PVCollection_);
 
    bool ValidGenParticles = iEvent.getByToken(GenParticleToken_, GenParticleCollection_);
-  // if (!ValidGenParticles) { return; }
+   if (!ValidGenParticles) { return; }
 
    bool ValidDisplacedGlobal = iEvent.getByToken(DisplacedGlobalToken_, DisplacedGlobalCollection_);
    if (!ValidDisplacedGlobal) { return; }
@@ -197,6 +210,12 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
 
    bool ValidGlobalMuon = iEvent.getByToken(GlobalMuonToken_, GlobalMuonCollection_);
    if (!ValidGlobalMuon) { return; }
+
+   bool ValidJet = iEvent.getByToken(JetToken_, JetCollection_);
+   //if (!ValidJet) { return; }
+
+   bool ValidGenJet = iEvent.getByToken(GenJetToken_, GenJetCollection_);
+   //if (!ValidGenJet) { return; }
 
    iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",TransientTrackBuilder_);
 
@@ -331,6 +350,28 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
    nDSA = 0;
 
 
+   // -> Jets
+   for (Int_t i = 0; i < nJet; i++) {
+
+     Jet_pt[i] = 0.;
+     Jet_eta[i] = 0.;
+     Jet_phi[i] = 0.;
+
+   }
+   nJet = 0;
+
+
+   // -> GenJets
+   for (Int_t i = 0; i < nGenJet; i++) {
+
+     GenJet_pt[i] = 0.;
+     GenJet_eta[i] = 0.;
+     GenJet_phi[i] = 0.;
+
+   }
+   nGenJet = 0;
+
+
    //
    // -- Pre-analysis
    //
@@ -368,6 +409,8 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
    analyzeDisplacedGlobal(iEvent);
    analyzeDisplacedStandalone(iEvent);
    analyzeGlobalMuons(iEvent);
+   analyzeJets(iEvent);
+   analyzeGenJets(iEvent);
 
    if (ngenMu < 1 && nDG < 1 && nGM < 1) {return;}
 
@@ -577,6 +620,40 @@ void DGAnalysis::analyzeDisplacedStandalone(const edm::Event& iEvent)
 
    }
 
+}
+
+
+void DGAnalysis::analyzeJets(const edm::Event& iEvent)
+{
+
+   nJet = 0;
+
+   for (size_t i = 0; i < JetCollection_->size(); i++)
+   {
+      const pat::Jet &jet = (*JetCollection_)[i];
+      Jet_pt[nJet] = jet.pt();
+      Jet_eta[nJet] = jet.eta();
+      Jet_eta[nJet] = jet.phi();
+      
+      nJet++;
+   }
+}
+
+
+void DGAnalysis::analyzeGenJets(const edm::Event& iEvent)
+{
+
+   nGenJet = 0;
+
+   for (size_t i = 0; i < GenJetCollection_->size(); i++)
+   {
+      const reco::GenJet &jet = (*GenJetCollection_)[i];
+      GenJet_pt[nGenJet] = jet.pt();
+      GenJet_eta[nGenJet] = jet.eta();
+      GenJet_eta[nGenJet] = jet.phi();
+      
+      nGenJet++;
+   }
 }
 
 

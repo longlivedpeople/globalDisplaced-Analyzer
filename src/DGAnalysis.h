@@ -33,6 +33,11 @@
 #include "DataFormats/TrackReco/interface/Track.h"
 #include "DataFormats/TrackReco/interface/TrackFwd.h"
 
+// Jets
+#include "DataFormats/JetReco/interface/GenJet.h"
+#include "DataFormats/PatCandidates/interface/Jet.h"
+
+
 // STDLIB
 #include <string>
 #include <iostream>
@@ -61,6 +66,8 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       virtual void analyzeDisplacedGlobal(edm::Event const& e);
       virtual void analyzeGlobalMuons(edm::Event const& e);
       virtual void analyzeDisplacedStandalone(edm::Event const& e);
+      virtual void analyzeJets(edm::Event const& e);
+      virtual void analyzeGenJets(edm::Event const& e);
       virtual TrajectoryStateClosestToPoint computeTrajectory(const reco::Track &track);
 
 
@@ -95,6 +102,12 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       edm::EDGetTokenT<edm::View<reco::Track> > GlobalMuonToken_;
       edm::Handle<edm::View<reco::Track> > GlobalMuonCollection_;
 
+      // Jets
+      edm::EDGetTokenT<edm::View<reco::GenJet> > GenJetToken_;
+      edm::Handle<edm::View<reco::GenJet> > GenJetCollection_;
+
+      edm::EDGetTokenT<edm::View<pat::Jet> > JetToken_;
+      edm::Handle<edm::View<pat::Jet> > JetCollection_;
 
       // Transient track builder
       edm::ESHandle<TransientTrackBuilder> TransientTrackBuilder_;
@@ -214,6 +227,17 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       Float_t DSA_ndof[200] = {0};
       Float_t DSA_normChi2[200] = {0};
 
+      // Jets
+      Int_t nJet = 0;
+      Float_t Jet_pt[200] = {0};
+      Float_t Jet_eta[200] = {0};
+      Float_t Jet_phi[200] = {0};
+
+      // GenJets
+      Int_t nGenJet = 0;
+      Float_t GenJet_pt[200] = {0};
+      Float_t GenJet_eta[200] = {0};
+      Float_t GenJet_phi[200] = {0};
 
       // Output definition
       TFile *file_out;
