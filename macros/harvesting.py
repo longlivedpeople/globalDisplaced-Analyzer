@@ -70,10 +70,10 @@ if __name__ == "__main__":
     ########################################
 
     
-    SI_recoDG_genMu_Lxy = getObject('plots_signal/th1fs.root', 'recoDG_genMu_Lxy')
-    SI_recoDGID_genMu_Lxy = getObject('plots_signal/th1fs.root', 'recoDGID_genMu_Lxy')
-    SI_recoGM_genMu_Lxy = getObject('plots_signal/th1fs.root', 'recoGM_genMu_Lxy')
-    SI_total_genMu_Lxy = getObject('plots_signal/th1fs.root', 'total_genMu_Lxy')
+    SI_recoDG_genMu_Lxy = getObject('plots_signal_ptmin31/th1fs.root', 'recoDG_genMu_Lxy')
+    SI_recoDGID_genMu_Lxy = getObject('plots_signal_ptmin31/th1fs.root', 'recoDGID_genMu_Lxy')
+    SI_recoGM_genMu_Lxy = getObject('plots_signal_ptmin31/th1fs.root', 'recoGM_genMu_Lxy')
+    SI_total_genMu_Lxy = getObject('plots_signal_ptmin31/th1fs.root', 'total_genMu_Lxy')
     SI_recoDG_genMu_Lxy.Rebin(2)
     SI_recoDGID_genMu_Lxy.Rebin(2)
     SI_recoGM_genMu_Lxy.Rebin(2)
@@ -95,10 +95,10 @@ if __name__ == "__main__":
     
     ########################################
 
-    SI_recoDG_genMu_dxy = getObject('plots_signal/th1fs.root', 'recoDG_genMu_dxy')
-    SI_recoDGID_genMu_dxy = getObject('plots_signal/th1fs.root', 'recoDGID_genMu_dxy')
-    SI_recoGM_genMu_dxy = getObject('plots_signal/th1fs.root', 'recoGM_genMu_dxy')
-    SI_total_genMu_dxy = getObject('plots_signal/th1fs.root', 'total_genMu_dxy')
+    SI_recoDG_genMu_dxy = getObject('plots_signal_ptmin31/th1fs.root', 'recoDG_genMu_dxy')
+    SI_recoDGID_genMu_dxy = getObject('plots_signal_ptmin31/th1fs.root', 'recoDGID_genMu_dxy')
+    SI_recoGM_genMu_dxy = getObject('plots_signal_ptmin31/th1fs.root', 'recoGM_genMu_dxy')
+    SI_total_genMu_dxy = getObject('plots_signal_ptmin31/th1fs.root', 'total_genMu_dxy')
     SI_recoDG_genMu_dxy.Rebin(2)
     SI_recoDGID_genMu_dxy.Rebin(2)
     SI_recoGM_genMu_dxy.Rebin(2)
@@ -120,9 +120,9 @@ if __name__ == "__main__":
 
     ########################################
     
-    SI_eff_GM_pt_Lxybin1 = getObject('plots_signal/th1fs.root', 'eff_GM_pt_Lxybin1')
-    SI_eff_DG_pt_Lxybin1 = getObject('plots_signal/th1fs.root', 'eff_DG_pt_Lxybin1')
-    SI_eff_DGID_pt_Lxybin1 = getObject('plots_signal/th1fs.root', 'eff_DGID_pt_Lxybin1')
+    SI_eff_GM_pt_Lxybin1 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_GM_pt_Lxybin1')
+    SI_eff_DG_pt_Lxybin1 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_DG_pt_Lxybin1')
+    SI_eff_DGID_pt_Lxybin1 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_DGID_pt_Lxybin1')
 
     SI_EFF_pt_Lxybin1 = Canvas.Canvas("SI_EFF_pt_Lxybin1", 'png', 0.55, 0.78, 0.87, 0.9, 1) 
     SI_EFF_pt_Lxybin1.addRate(SI_eff_DG_pt_Lxybin1, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
@@ -133,9 +133,9 @@ if __name__ == "__main__":
 
     ########################################
 
-    SI_eff_GM_pt_Lxybin2 = getObject('plots_signal/th1fs.root', 'eff_GM_pt_Lxybin2')
-    SI_eff_DG_pt_Lxybin2 = getObject('plots_signal/th1fs.root', 'eff_DG_pt_Lxybin2')
-    SI_eff_DGID_pt_Lxybin2 = getObject('plots_signal/th1fs.root', 'eff_DGID_pt_Lxybin2')
+    SI_eff_GM_pt_Lxybin2 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_GM_pt_Lxybin2')
+    SI_eff_DG_pt_Lxybin2 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_DG_pt_Lxybin2')
+    SI_eff_DGID_pt_Lxybin2 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_DGID_pt_Lxybin2')
 
     SI_EFF_pt_Lxybin2 = Canvas.Canvas("SI_EFF_pt_Lxybin2", 'png', 0.55, 0.78, 0.87, 0.9, 1) 
     SI_EFF_pt_Lxybin2.addRate(SI_eff_DG_pt_Lxybin2, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
@@ -146,9 +146,9 @@ if __name__ == "__main__":
 
     ########################################
 
-    SI_eff_GM_pt_Lxybin3 = getObject('plots_signal/th1fs.root', 'eff_GM_pt_Lxybin3')
-    SI_eff_DG_pt_Lxybin3 = getObject('plots_signal/th1fs.root', 'eff_DG_pt_Lxybin3')
-    SI_eff_DGID_pt_Lxybin3 = getObject('plots_signal/th1fs.root', 'eff_DGID_pt_Lxybin3')
+    SI_eff_GM_pt_Lxybin3 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_GM_pt_Lxybin3')
+    SI_eff_DG_pt_Lxybin3 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_DG_pt_Lxybin3')
+    SI_eff_DGID_pt_Lxybin3 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_DGID_pt_Lxybin3')
 
     SI_EFF_pt_Lxybin3 = Canvas.Canvas("SI_EFF_pt_Lxybin3", 'png', 0.55, 0.78, 0.87, 0.9, 1) 
     SI_EFF_pt_Lxybin3.addRate(SI_eff_DG_pt_Lxybin3, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
@@ -160,9 +160,9 @@ if __name__ == "__main__":
     
     ########################################
 
-    SI_eff_GM_pt_Lxybin4 = getObject('plots_signal/th1fs.root', 'eff_GM_pt_Lxybin4')
-    SI_eff_DG_pt_Lxybin4 = getObject('plots_signal/th1fs.root', 'eff_DG_pt_Lxybin4')
-    SI_eff_DGID_pt_Lxybin4 = getObject('plots_signal/th1fs.root', 'eff_DGID_pt_Lxybin4')
+    SI_eff_GM_pt_Lxybin4 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_GM_pt_Lxybin4')
+    SI_eff_DG_pt_Lxybin4 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_DG_pt_Lxybin4')
+    SI_eff_DGID_pt_Lxybin4 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_DGID_pt_Lxybin4')
 
     SI_EFF_pt_Lxybin4 = Canvas.Canvas("SI_EFF_pt_Lxybin4", 'png', 0.55, 0.78, 0.87, 0.9, 1) 
     SI_EFF_pt_Lxybin4.addRate(SI_eff_DG_pt_Lxybin4, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
@@ -174,9 +174,9 @@ if __name__ == "__main__":
 
     ########################################
 
-    SI_eff_GM_pt_dxybin1 = getObject('plots_signal/th1fs.root', 'eff_GM_pt_dxybin1')
-    SI_eff_DG_pt_dxybin1 = getObject('plots_signal/th1fs.root', 'eff_DG_pt_dxybin1')
-    SI_eff_DGID_pt_dxybin1 = getObject('plots_signal/th1fs.root', 'eff_DGID_pt_dxybin1')
+    SI_eff_GM_pt_dxybin1 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_GM_pt_dxybin1')
+    SI_eff_DG_pt_dxybin1 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_DG_pt_dxybin1')
+    SI_eff_DGID_pt_dxybin1 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_DGID_pt_dxybin1')
 
     SI_EFF_pt_dxybin1 = Canvas.Canvas("SI_EFF_pt_dxybin1", 'png', 0.55, 0.78, 0.87, 0.9, 1) 
     SI_EFF_pt_dxybin1.addRate(SI_eff_DG_pt_dxybin1, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
@@ -187,9 +187,9 @@ if __name__ == "__main__":
 
     ########################################
 
-    SI_eff_GM_pt_dxybin2 = getObject('plots_signal/th1fs.root', 'eff_GM_pt_dxybin2')
-    SI_eff_DG_pt_dxybin2 = getObject('plots_signal/th1fs.root', 'eff_DG_pt_dxybin2')
-    SI_eff_DGID_pt_dxybin2 = getObject('plots_signal/th1fs.root', 'eff_DGID_pt_dxybin2')
+    SI_eff_GM_pt_dxybin2 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_GM_pt_dxybin2')
+    SI_eff_DG_pt_dxybin2 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_DG_pt_dxybin2')
+    SI_eff_DGID_pt_dxybin2 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_DGID_pt_dxybin2')
 
     SI_EFF_pt_dxybin2 = Canvas.Canvas("SI_EFF_pt_dxybin2", 'png', 0.55, 0.78, 0.87, 0.9, 1) 
     SI_EFF_pt_dxybin2.addRate(SI_eff_DG_pt_dxybin2, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
@@ -200,9 +200,9 @@ if __name__ == "__main__":
 
     ########################################
 
-    SI_eff_GM_pt_dxybin3 = getObject('plots_signal/th1fs.root', 'eff_GM_pt_dxybin3')
-    SI_eff_DG_pt_dxybin3 = getObject('plots_signal/th1fs.root', 'eff_DG_pt_dxybin3')
-    SI_eff_DGID_pt_dxybin3 = getObject('plots_signal/th1fs.root', 'eff_DGID_pt_dxybin3')
+    SI_eff_GM_pt_dxybin3 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_GM_pt_dxybin3')
+    SI_eff_DG_pt_dxybin3 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_DG_pt_dxybin3')
+    SI_eff_DGID_pt_dxybin3 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_DGID_pt_dxybin3')
 
     SI_EFF_pt_dxybin3 = Canvas.Canvas("SI_EFF_pt_dxybin3", 'png', 0.55, 0.78, 0.87, 0.9, 1) 
     SI_EFF_pt_dxybin3.addRate(SI_eff_DG_pt_dxybin3, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
@@ -214,9 +214,9 @@ if __name__ == "__main__":
     
     ########################################
 
-    SI_eff_GM_pt_dxybin4 = getObject('plots_signal/th1fs.root', 'eff_GM_pt_dxybin4')
-    SI_eff_DG_pt_dxybin4 = getObject('plots_signal/th1fs.root', 'eff_DG_pt_dxybin4')
-    SI_eff_DGID_pt_dxybin4 = getObject('plots_signal/th1fs.root', 'eff_DGID_pt_dxybin4')
+    SI_eff_GM_pt_dxybin4 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_GM_pt_dxybin4')
+    SI_eff_DG_pt_dxybin4 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_DG_pt_dxybin4')
+    SI_eff_DGID_pt_dxybin4 = getObject('plots_signal_ptmin31/th1fs.root', 'eff_DGID_pt_dxybin4')
 
     SI_EFF_pt_dxybin4 = Canvas.Canvas("SI_EFF_pt_dxybin4", 'png', 0.55, 0.78, 0.87, 0.9, 1) 
     SI_EFF_pt_dxybin4.addRate(SI_eff_DG_pt_dxybin4, 'AP', 'Displaced Global', 'p', r.kBlack, True, 0, marker = 24)
@@ -229,10 +229,10 @@ if __name__ == "__main__":
 
     ########################################
 
-    SI_recoDGID_genMu_Lz = getObject('plots_signal/th1fs.root', 'recoDGID_genMu_Lz')
-    SI_recoDG_genMu_Lz = getObject('plots_signal/th1fs.root', 'recoDG_genMu_Lz')
-    SI_recoGM_genMu_Lz = getObject('plots_signal/th1fs.root', 'recoGM_genMu_Lz')
-    SI_total_genMu_Lz = getObject('plots_signal/th1fs.root', 'total_genMu_Lz')
+    SI_recoDGID_genMu_Lz = getObject('plots_signal_ptmin31/th1fs.root', 'recoDGID_genMu_Lz')
+    SI_recoDG_genMu_Lz = getObject('plots_signal_ptmin31/th1fs.root', 'recoDG_genMu_Lz')
+    SI_recoGM_genMu_Lz = getObject('plots_signal_ptmin31/th1fs.root', 'recoGM_genMu_Lz')
+    SI_total_genMu_Lz = getObject('plots_signal_ptmin31/th1fs.root', 'total_genMu_Lz')
     SI_recoDGID_genMu_Lz.Rebin(2)
     SI_recoDG_genMu_Lz.Rebin(2)
     SI_recoGM_genMu_Lz.Rebin(2)
@@ -254,10 +254,10 @@ if __name__ == "__main__":
 
     ########################################
 
-    SI_recoDGID_genMu_dz = getObject('plots_signal/th1fs.root', 'recoDGID_genMu_dz')
-    SI_recoDG_genMu_dz = getObject('plots_signal/th1fs.root', 'recoDG_genMu_dz')
-    SI_recoGM_genMu_dz = getObject('plots_signal/th1fs.root', 'recoGM_genMu_dz')
-    SI_total_genMu_dz = getObject('plots_signal/th1fs.root', 'total_genMu_dz')
+    SI_recoDGID_genMu_dz = getObject('plots_signal_ptmin31/th1fs.root', 'recoDGID_genMu_dz')
+    SI_recoDG_genMu_dz = getObject('plots_signal_ptmin31/th1fs.root', 'recoDG_genMu_dz')
+    SI_recoGM_genMu_dz = getObject('plots_signal_ptmin31/th1fs.root', 'recoGM_genMu_dz')
+    SI_total_genMu_dz = getObject('plots_signal_ptmin31/th1fs.root', 'total_genMu_dz')
     SI_recoDGID_genMu_dz.Rebin(2)
     SI_recoDG_genMu_dz.Rebin(2)
     SI_recoGM_genMu_dz.Rebin(2)

@@ -428,7 +428,7 @@ class Canvas:
               tmp_ratio = tmp_num.Clone(tmp_hMC.GetName()+'_ratio')
               tmp_ratio.Divide(tmp_den)
           else:
-              tmp_ratio = tmp_data.Clone(tmp_hMC.GetName()+'_ratio')
+              tmp_ratio = hdata.Clone(tmp_hMC.GetName()+'_ratio')
               tmp_ratio.Divide(tmp_hMC)
           tmp_ratio.SetTitle("")
           tmp_ratio.GetYaxis().SetRangeUser(r_ymin, r_ymax);
@@ -507,7 +507,7 @@ class Canvas:
                   self.histos[i].GetYaxis().SetRangeUser(ymin, ymax)
                   #self.histos[i].SetMaximum(ymax)
 
-              if str(type(self.histos[i])) == "<class 'ROOT.TEfficiency'>" and 'colz' not in self.options[i] and 'COLZ' not in self.options[i]:
+              if 'TEfficiency' in str(type(self.histos[i])) and 'colz' not in self.options[i] and 'COLZ' not in self.options[i]:
                   self.makeRate(self.histos[i], self.options[i])                   
               else:
                   self.histos[i].Draw(self.options[i])

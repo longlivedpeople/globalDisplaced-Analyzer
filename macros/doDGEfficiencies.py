@@ -64,6 +64,7 @@ if __name__ == "__main__":
     dxy_sep = np.array([0.0, 1.0, 20.0, 60.0, 110.0])
     Lz_sep = np.array([0.0, 1.0, 60.0, 120.0, 280.0])
     dz_sep = np.array([0.0, 1.0, 60.0, 120.0, 280.0])
+    pt_sep = np.array([0.0, 50.0, 150.0, 300.0]) # supposed to end at infinity
     ptres_bin = np.linspace(-0.2, 0.2, 61)
     dxyres_bin = np.linspace(-0.1, 0.1, 61)
     
@@ -152,6 +153,10 @@ if __name__ == "__main__":
     res_GM_pt_dxybin2 = r.TH1F("res_GM_pt_dxybin2", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
     res_GM_pt_dxybin3 = r.TH1F("res_GM_pt_dxybin3", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
     res_GM_pt_dxybin4 = r.TH1F("res_GM_pt_dxybin4", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_GM_pt_ptbin1 = r.TH1F("res_GM_pt_ptbin1", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_GM_pt_ptbin2 = r.TH1F("res_GM_pt_ptbin2", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_GM_pt_ptbin3 = r.TH1F("res_GM_pt_ptbin3", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_GM_pt_ptbin4 = r.TH1F("res_GM_pt_ptbin4", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
 
 
     res_DG_pt = r.TH1F("res_DG_pt", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
@@ -163,6 +168,10 @@ if __name__ == "__main__":
     res_DG_pt_dxybin2 = r.TH1F("res_DG_pt_dxybin2", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
     res_DG_pt_dxybin3 = r.TH1F("res_DG_pt_dxybin3", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
     res_DG_pt_dxybin4 = r.TH1F("res_DG_pt_dxybin4", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_DG_pt_ptbin1 = r.TH1F("res_DG_pt_ptbin1", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_DG_pt_ptbin2 = r.TH1F("res_DG_pt_ptbin2", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_DG_pt_ptbin3 = r.TH1F("res_DG_pt_ptbin3", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_DG_pt_ptbin4 = r.TH1F("res_DG_pt_ptbin4", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
 
     res_DGID_pt = r.TH1F("res_DGID_pt", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
     res_DGID_pt_Lxybin1 = r.TH1F("res_DGID_pt_Lxybin1", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
@@ -173,6 +182,10 @@ if __name__ == "__main__":
     res_DGID_pt_dxybin2 = r.TH1F("res_DGID_pt_dxybin2", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
     res_DGID_pt_dxybin3 = r.TH1F("res_DGID_pt_dxybin3", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
     res_DGID_pt_dxybin4 = r.TH1F("res_DGID_pt_dxybin4", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_DGID_pt_ptbin1 = r.TH1F("res_DGID_pt_ptbin1", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_DGID_pt_ptbin2 = r.TH1F("res_DGID_pt_ptbin2", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_DGID_pt_ptbin3 = r.TH1F("res_DGID_pt_ptbin3", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
+    res_DGID_pt_ptbin4 = r.TH1F("res_DGID_pt_ptbin4", ";(p_{T}^{reco} - p_{T}^{gen})/p_{T}^{gen};Normalized muon yield", len(ptres_bin)-1, ptres_bin)
 
     res_GM_dxy = r.TH1F("res_GM_dxy", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
     res_GM_dxy_Lxybin1 = r.TH1F("res_GM_dxy_Lxybin1", ";(d_{xy}^{reco} - d_{xy}^{gen})/d_{xy}^{gen};Normalized muon yield", len(dxyres_bin)-1, dxyres_bin)
@@ -239,8 +252,8 @@ if __name__ == "__main__":
             Lxy = math.sqrt(vx**2 + vy**2)
             Lz = math.sqrt(vz**2)
 
-            if pt < 10: continue
-            if abs(eta) > 2.4: continue
+            if pt < 31: continue
+            if abs(eta) > 2: continue
 
             l = TVector3()
             l.SetPtEtaPhi(pt, eta, phi)
@@ -258,6 +271,8 @@ if __name__ == "__main__":
             deltaR = 9999.0
             index = -9
             for k in range(0, _tree.nGM):
+                if _tree.GM_pt[k] < 31: continue
+                if abs(_tree.GM_eta[k]) > 2: continue
                 re = TVector3()
                 re.SetPtEtaPhi(_tree.GM_pt[k], _tree.GM_eta[k], _tree.GM_phi[k])
                 if l.DeltaR(re) < deltaR:
@@ -279,6 +294,7 @@ if __name__ == "__main__":
                 res_GM_pt.Fill(ptres)
                 res_GM_dxy.Fill(dxyres)
 
+                # Lxy bins
                 if Lxy < Lxy_sep[1]:
                     res_GM_pt_Lxybin1.Fill(ptres)
                     res_GM_dxy_Lxybin1.Fill(dxyres)
@@ -296,6 +312,7 @@ if __name__ == "__main__":
                     res_GM_dxy_Lxybin4.Fill(dxyres)
                     eff_GM_pt_Lxybin4.Fill(True, pt)
 
+                # dxy bins
                 if dxy_abs < dxy_sep[1]:
                     res_GM_pt_dxybin1.Fill(ptres)
                     res_GM_dxy_dxybin1.Fill(dxyres)
@@ -312,6 +329,16 @@ if __name__ == "__main__":
                     res_GM_pt_dxybin4.Fill(ptres)
                     res_GM_dxy_dxybin4.Fill(dxyres)
                     eff_GM_pt_dxybin4.Fill(True, pt)
+
+                # pt bins
+                if pt < pt_sep[1]:
+                    res_GM_pt_ptbin1.Fill(ptres)
+                elif pt > pt_sep[1] and pt < pt_sep[2]:
+                    res_GM_pt_ptbin2.Fill(ptres)
+                elif pt > pt_sep[2] and pt < pt_sep[3]:
+                    res_GM_pt_ptbin3.Fill(ptres)
+                elif pt > pt_sep[3]:
+                    res_GM_pt_ptbin4.Fill(ptres)
 
             else:
 
@@ -341,6 +368,8 @@ if __name__ == "__main__":
             deltaR = 9999.0
             index = -9
             for k in range(0, _tree.nDG):
+                if _tree.DG_pt[k] < 31: continue
+                if abs(_tree.DG_eta[k]) > 2: continue
                 re = TVector3()
                 re.SetPtEtaPhi(_tree.DG_pt[k], _tree.DG_eta[k], _tree.DG_phi[k])
                 if l.DeltaR(re) < deltaR:
@@ -399,6 +428,16 @@ if __name__ == "__main__":
                     res_DG_dxy_dxybin4.Fill(dxyres)
                     eff_DG_pt_dxybin4.Fill(True, pt)
 
+                # pt bins
+                if pt < pt_sep[1]:
+                    res_DG_pt_ptbin1.Fill(ptres)
+                elif pt > pt_sep[1] and pt < pt_sep[2]:
+                    res_DG_pt_ptbin2.Fill(ptres)
+                elif pt > pt_sep[2] and pt < pt_sep[3]:
+                    res_DG_pt_ptbin3.Fill(ptres)
+                elif pt > pt_sep[3]:
+                    res_DG_pt_ptbin4.Fill(ptres)
+
             else:
 
                 if Lxy < Lxy_sep[1]:
@@ -426,11 +465,13 @@ if __name__ == "__main__":
             index = -9
             for k in range(0, _tree.nDG):
                 #print(_tree.DG_pt[k], _tree.DG_ptError[k]/_tree.DG_pt[k], _tree.DG_normChi2[k], _tree.DG_numberOfValidHits[k])
-                if _tree.DG_pt[k] < 10: continue
-                if _tree.DG_ptError[k]/_tree.DG_pt[k] > 0.4: continue
-                if _tree.DG_normChi2[k] > 3: continue
+                if _tree.DG_pt[k] < 31: continue
+                if abs(_tree.DG_eta[k]) > 2: continue
+                if _tree.DG_pt[k] < 31: continue
+                if _tree.DG_ptError[k]/_tree.DG_pt[k] > 0.3: continue
+                if _tree.DG_normChi2[k] > 10: continue
                 if _tree.DG_numberOfValidHits[k] < 22: continue
-                if abs(_tree.DG_eta[k]) > 2.4: continue
+                if abs(_tree.DG_eta[k]) > 2: continue
                 re = TVector3()
                 re.SetPtEtaPhi(_tree.DG_pt[k], _tree.DG_eta[k], _tree.DG_phi[k])
                 if l.DeltaR(re) < deltaR:
@@ -489,6 +530,16 @@ if __name__ == "__main__":
                     res_DGID_pt_dxybin4.Fill(ptres)
                     res_DGID_dxy_dxybin4.Fill(dxyres)
                     eff_DGID_pt_dxybin4.Fill(True, pt)
+
+                # pt bins
+                if pt < pt_sep[1]:
+                    res_DGID_pt_ptbin1.Fill(ptres)
+                elif pt > pt_sep[1] and pt < pt_sep[2]:
+                    res_DGID_pt_ptbin2.Fill(ptres)
+                elif pt > pt_sep[2] and pt < pt_sep[3]:
+                    res_DGID_pt_ptbin3.Fill(ptres)
+                elif pt > pt_sep[3]:
+                    res_DGID_pt_ptbin4.Fill(ptres)
 
             else:
 
@@ -641,6 +692,10 @@ if __name__ == "__main__":
     res_GM_pt_dxybin2.Write()
     res_GM_pt_dxybin3.Write()
     res_GM_pt_dxybin4.Write()
+    res_GM_pt_ptbin1.Write()
+    res_GM_pt_ptbin2.Write()
+    res_GM_pt_ptbin3.Write()
+    res_GM_pt_ptbin4.Write()
 
     res_DG_pt.Write()
     res_DG_pt_Lxybin1.Write()
@@ -651,6 +706,10 @@ if __name__ == "__main__":
     res_DG_pt_dxybin2.Write()
     res_DG_pt_dxybin3.Write()
     res_DG_pt_dxybin4.Write()
+    res_DG_pt_ptbin1.Write()
+    res_DG_pt_ptbin2.Write()
+    res_DG_pt_ptbin3.Write()
+    res_DG_pt_ptbin4.Write()
 
     res_DGID_pt.Write()
     res_DGID_pt_Lxybin1.Write()
@@ -661,6 +720,10 @@ if __name__ == "__main__":
     res_DGID_pt_dxybin2.Write()
     res_DGID_pt_dxybin3.Write()
     res_DGID_pt_dxybin4.Write()
+    res_DGID_pt_ptbin1.Write()
+    res_DGID_pt_ptbin2.Write()
+    res_DGID_pt_ptbin3.Write()
+    res_DGID_pt_ptbin4.Write()
 
     res_GM_dxy.Write()
     res_GM_dxy_Lxybin1.Write()

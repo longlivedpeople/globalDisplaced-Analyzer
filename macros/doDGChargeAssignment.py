@@ -57,7 +57,8 @@ if __name__ == "__main__":
     #Lxy_bin = np.array([0.0, 0.025, 0.5, 1.0, 2.0, 4.0, 8.0, 12.0, 16.0, 20., 30., 40., 50., 60., 70., 90., 110.0])
     #Lxy_bin = np.linspace(0.0, 110.0, 51)
     pt_bin = np.linspace(0.0, 300.0, 61)
-    ptSig_bin = np.linspace(0.0, 2.0, 50)
+    #ptSig_bin = np.concatenate(np.linspace(0.0, 2.0, 50))
+    ptSig_bin = np.array([0.0, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1.0, 1.4, 2.0])
     #pt_bin = np.concatenate((np.linspace(0, 125, 15), np.array([150, 175, 200, 250, 300, 400, 500])))
     eta_bin = np.linspace(-2.5, 2.5, 21)
     nvalid_bin = np.linspace(0, 90, 31)
@@ -213,8 +214,9 @@ if __name__ == "__main__":
                 #ndof     = _tree.DG_ndof[j]
                 normChi2 = _tree.DG_normChi2[j]
 
-                if abs(eta) > 2.4: continue # default
+                if abs(eta) > 2: continue # default
                 if opts.ptmin and pt < opts.ptmin: continue
+                if opts.sigmaptmax and ptSig > opts.sigmaptmax: continue
                 if opts.nhitmin and nvalid < opts.nhitmin: continue
                 if opts.normChi2max and normChi2 > opts.normChi2max: continue
 

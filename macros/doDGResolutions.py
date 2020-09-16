@@ -54,7 +54,7 @@ if __name__ == "__main__":
     ####   TEfficiency binning   ####
     #################################
     ptres_bin = np.linspace(-1, 1, 100)
-    sigmapt_sep = np.array([0.0, 0.4, 1.0])
+    sigmapt_sep = np.array([0.0, 0.5, 1.0])
     normChi2_sep = np.array([0.0, 5.0])
     sigmapt_bin = np.linspace(0, 5, 60)
     normChi2_bin = np.linspace(0, 15, 60)
@@ -122,7 +122,7 @@ if __name__ == "__main__":
                 #ndof     = _tree.DG_ndof[j]
                 normChi2 = _tree.DG_normChi2[j]
 
-                if abs(eta) > 2.4: continue # default
+                if abs(eta) > 2: continue # default
                 if opts.ptmin and pt < opts.ptmin: continue
                 if opts.nhitmin and nvalid < opts.nhitmin: continue
                 if opts.normChi2max and normChi2 > opts.normChi2max: continue

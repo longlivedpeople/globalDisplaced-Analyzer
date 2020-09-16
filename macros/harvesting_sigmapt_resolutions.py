@@ -75,8 +75,8 @@ if __name__ == "__main__":
     ####   Construct TEfficiencies   ####
     #####################################
 
-    # ptmin > 10, eta cut 
-    SI_DG_sigmapt = getObject('resolutions_signal_ptmin10_sigma0p2sep/th1fs.root', 'hist_DG_sigmapt') 
+    # ptmin > 31, eta cut 
+    SI_DG_sigmapt = getObject('resolutions_signal_ptmin31_sigma0p2sep/th1fs.root', 'hist_DG_sigmapt') 
     SI_DG_sigmapt.SetTitle(';DG #sigma_{p_{T}}/p_{T};DG yield')
     SI_DG_sigmapt.SetLineWidth(1)
     SI_DG_sigmapt.SetLineColor(r.kBlack)
@@ -87,9 +87,9 @@ if __name__ == "__main__":
     SI_DG_sigmapt_.addLatex(0.85, 0.8, '|#eta^{DG} < 2.4|, p_{T}^{DG} > 10 GeV', size = 0.03, align = 31)
     SI_DG_sigmapt_.save(0, 0, 1, '','', ymin = 0.1, ymax = 5000000, outputDir = WORKPATH + 'harvested_resols_'+opts.tag+'/')
 
-    SI_DG_sigmapt_pass = getObject('resolutions_signal_ptmin10_sigma0p4sep/th1fs.root', 'ptres_DG_sigmapt_bin1') 
-    SI_DG_sigmapt_nopass = getObject('resolutions_signal_ptmin10_sigma0p4sep/th1fs.root', 'ptres_DG_sigmapt_bin2') 
-    SI_DG_sigmapt_pass.SetTitle(';DG #sigma_{p_{T}}/p_{T};DG yield')
+    SI_DG_sigmapt_pass = getObject('resolutions_signal_ptmin31_sigma0p3sep/th1fs.root', 'ptres_DG_sigmapt_bin1') 
+    SI_DG_sigmapt_nopass = getObject('resolutions_signal_ptmin31_sigma0p3sep/th1fs.root', 'ptres_DG_sigmapt_bin2') 
+    SI_DG_sigmapt_pass.SetTitle(';(p_{T}^{reco}-p_{T}^{gen})/p^{gen}_{T};DG yield')
     SI_DG_sigmapt_nopass.SetTitle(';;')
     SI_DG_sigmapt_pass.SetLineWidth(2)
     SI_DG_sigmapt_nopass.SetLineWidth(2)
@@ -99,17 +99,17 @@ if __name__ == "__main__":
     SI_DG_sigmapt_nopass.Scale(1.0/SI_DG_sigmapt_nopass.Integral())
     SI_DG_sigmapt_pass.SetMaximum(0.4)
     SI_DG_sigmapt_cut = Canvas.Canvas("SI_DG_sigmapt_cut", 'png', 0.57, 0.67, 0.87, 0.76, 1)
-    SI_DG_sigmapt_cut.addHisto(SI_DG_sigmapt_pass, 'HIST', '#sigma_{p_{T}}/p_{T} < 0.4', 'l', '', 1, 0)
-    SI_DG_sigmapt_cut.addHisto(SI_DG_sigmapt_nopass, 'HIST,SAME', '#sigma_{p_{T}}/p_{T} > 0.4', 'l', '', 1, 0)
+    SI_DG_sigmapt_cut.addHisto(SI_DG_sigmapt_pass, 'HIST', '#sigma_{p_{T}}/p_{T} < 0.3', 'l', '', 1, 0)
+    SI_DG_sigmapt_cut.addHisto(SI_DG_sigmapt_nopass, 'HIST,SAME', '#sigma_{p_{T}}/p_{T} > 0.3', 'l', '', 1, 0)
     SI_DG_sigmapt_cut.addLatex(0.85, 0.85, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
-    SI_DG_sigmapt_cut.addLatex(0.85, 0.8, '|#eta^{DG} < 2.4|, p_{T}^{DG} > 10 GeV', size = 0.03, align = 31)
+    SI_DG_sigmapt_cut.addLatex(0.85, 0.8, '|#eta^{DG}| < 2|, p_{T}^{DG} > 31 GeV', size = 0.03, align = 31)
     SI_DG_sigmapt_cut.addLatex(0.9, 0.93, 'Distributions normalized to 1', font = 62, size = 0.033, align = 31)
     SI_DG_sigmapt_cut.save(1, 0, 0, '','', ymin = 0, outputDir = WORKPATH + 'harvested_resols_'+opts.tag+'/')
 
-    SI_ptres_DG_sigmapt_bin2_0p2 = getObject('resolutions_signal_ptmin10_sigma0p2sep/th1fs.root', 'ptres_DG_sigmapt_bin2')
-    SI_ptres_DG_sigmapt_bin2_0p3 = getObject('resolutions_signal_ptmin10_sigma0p3sep/th1fs.root', 'ptres_DG_sigmapt_bin2')
-    SI_ptres_DG_sigmapt_bin2_0p4 = getObject('resolutions_signal_ptmin10_sigma0p4sep/th1fs.root', 'ptres_DG_sigmapt_bin2')
-    SI_ptres_DG_sigmapt_bin2_0p5 = getObject('resolutions_signal_ptmin10_sigma0p5sep/th1fs.root', 'ptres_DG_sigmapt_bin2')
+    SI_ptres_DG_sigmapt_bin2_0p2 = getObject('resolutions_signal_ptmin31_sigma0p2sep/th1fs.root', 'ptres_DG_sigmapt_bin2')
+    SI_ptres_DG_sigmapt_bin2_0p3 = getObject('resolutions_signal_ptmin31_sigma0p3sep/th1fs.root', 'ptres_DG_sigmapt_bin2')
+    SI_ptres_DG_sigmapt_bin2_0p4 = getObject('resolutions_signal_ptmin31_sigma0p4sep/th1fs.root', 'ptres_DG_sigmapt_bin2')
+    SI_ptres_DG_sigmapt_bin2_0p5 = getObject('resolutions_signal_ptmin31_sigma0p5sep/th1fs.root', 'ptres_DG_sigmapt_bin2')
     SI_ptres_DG_sigmapt_bin2_0p2.SetTitle(';(p_{T}^{DG}-p_{T}^{gen})/p_{T}^{gen};DG yield')
     SI_ptres_DG_sigmapt_bin2_0p3.SetTitle(';;')
     SI_ptres_DG_sigmapt_bin2_0p4.SetTitle(';;')
@@ -125,12 +125,12 @@ if __name__ == "__main__":
 
     SI_ptres_DG_sigmapt_bin2_0p2.SetMaximum(SI_ptres_DG_sigmapt_bin2_0p2.GetMaximum()*1.6)
     SI_DG_sigmapt_bin2 = Canvas.Canvas("SI_ptres_DG_sigmapt_bin2", 'png', 0.54, 0.6, 0.85, 0.75, 1) 
-    SI_DG_sigmapt_bin2.addHisto(SI_ptres_DG_sigmapt_bin2_0p2, 'HIST', '#sigma_{p_{T}}/p_{T} > 0.2 (0.58%)', 'l', r.kBlack, 1, 0)
-    SI_DG_sigmapt_bin2.addHisto(SI_ptres_DG_sigmapt_bin2_0p3, 'HIST,SAME', '#sigma_{p_{T}}/p_{T} > 0.3 (0.29%)', 'l', r.kRed+2, 1, 1)
-    SI_DG_sigmapt_bin2.addHisto(SI_ptres_DG_sigmapt_bin2_0p4, 'HIST,SAME', '#sigma_{p_{T}}/p_{T} > 0.4 (0.20%)', 'l', r.kRed-4, 1, 2)
-    SI_DG_sigmapt_bin2.addHisto(SI_ptres_DG_sigmapt_bin2_0p5, 'HIST,SAME', '#sigma_{p_{T}}/p_{T} > 0.5 (0.15%)', 'l', r.kRed-7, 1, 3)
+    SI_DG_sigmapt_bin2.addHisto(SI_ptres_DG_sigmapt_bin2_0p2, 'HIST', '#sigma_{p_{T}}/p_{T} > 0.2 (0.34%)', 'l', r.kBlack, 1, 0)
+    SI_DG_sigmapt_bin2.addHisto(SI_ptres_DG_sigmapt_bin2_0p3, 'HIST,SAME', '#sigma_{p_{T}}/p_{T} > 0.3 (0.19%)', 'l', r.kRed+2, 1, 1)
+    SI_DG_sigmapt_bin2.addHisto(SI_ptres_DG_sigmapt_bin2_0p4, 'HIST,SAME', '#sigma_{p_{T}}/p_{T} > 0.4 (0.14%)', 'l', r.kRed-4, 1, 2)
+    SI_DG_sigmapt_bin2.addHisto(SI_ptres_DG_sigmapt_bin2_0p5, 'HIST,SAME', '#sigma_{p_{T}}/p_{T} > 0.5 (0.11%)', 'l', r.kRed-7, 1, 3)
     SI_DG_sigmapt_bin2.addLatex(0.85, 0.85, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.03, align = 31)
-    SI_DG_sigmapt_bin2.addLatex(0.85, 0.8, '|#eta^{DG} < 2.4|, p_{T}^{DG} > 10 GeV', size = 0.03, align = 31)
+    SI_DG_sigmapt_bin2.addLatex(0.85, 0.8, '|#eta^{DG}| < 2|, p_{T}^{DG} > 31 GeV', size = 0.03, align = 31)
     SI_DG_sigmapt_bin2.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_resols_'+opts.tag+'/', maxYnumbers = 3)
 
 
