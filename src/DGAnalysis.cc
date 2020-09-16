@@ -123,6 +123,17 @@ void DGAnalysis::beginJob()
   tree_out->Branch("DG_chi2", DG_chi2, "DG_chi2[nDG]/F");
   tree_out->Branch("DG_ndof", DG_ndof, "DG_ndof[nDG]/F");
   tree_out->Branch("DG_normChi2", DG_normChi2, "DG_normChi2[nDG]/F");
+  tree_out->Branch("DG_nPB", DG_nPB, "DG_nPB[nDG]/I");
+  tree_out->Branch("DG_nPE", DG_nPE, "DG_nPE[nDG]/I");
+  tree_out->Branch("DG_nTIB", DG_nTIB, "DG_nTIB[nDG]/I");
+  tree_out->Branch("DG_nTOB", DG_nTOB, "DG_nTOB[nDG]/I");
+  tree_out->Branch("DG_nTID", DG_nTID, "DG_nTID[nDG]/I");
+  tree_out->Branch("DG_nTEC", DG_nTEC, "DG_nTEC[nDG]/I");
+  tree_out->Branch("DG_nDT", DG_nDT, "DG_nDT[nDG]/I");
+  tree_out->Branch("DG_nCSC", DG_nCSC, "DG_nCSC[nDG]/I");
+  tree_out->Branch("DG_nRPC", DG_nRPC, "DG_nRPC[nDG]/I");
+  tree_out->Branch("DG_nGEM", DG_nGEM, "DG_nGEM[nDG]/I");
+  tree_out->Branch("DG_nME0", DG_nME0, "DG_nME0[nDG]/I");
 
 
   tree_out->Branch("nDSA", &nDSA, "nDSA/I");
@@ -317,6 +328,17 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
      DG_chi2[i] = 0.;
      DG_ndof[i] = 0.;
      DG_normChi2[i] = 0.;
+     DG_nPB[i] = 0;
+     DG_nPE[i] = 0;
+     DG_nTIB[i] = 0;
+     DG_nTOB[i] = 0;
+     DG_nTID[i] = 0;
+     DG_nTEC[i] = 0;
+     DG_nDT[i] = 0;
+     DG_nCSC[i] = 0;
+     DG_nRPC[i] = 0;
+     DG_nGEM[i] = 0;
+     DG_nME0[i] = 0;
    }
    nDG = 0;
    
@@ -370,6 +392,8 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
 
    }
    nGenJet = 0;
+
+
 
 
    //
@@ -532,6 +556,65 @@ void DGAnalysis::analyzeDisplacedGlobal(const edm::Event& iEvent)
       DG_dz0[nDG] = muon.dz();
       DG_dz0Error[nDG] = muon.dzError();
       DG_Iz[nDG] = fabs(DG_dz[nDG]/DG_dzError[nDG]);
+
+      // Check the recHits of the track (if available)
+      //const reco::HitPattern &hitpat = muon.hitPattern_;
+      int nPB = 0;
+      int nPE = 0;
+      int nTIB = 0;
+      int nTOB = 0;
+      int nTID = 0;
+      int nTEC = 0;
+      int nDT = 0;
+      int nCSC = 0;
+      int nRPC = 0;
+      int nGEM = 0;
+      int nME0 = 0;
+
+      for (auto hit = muon.recHitsBegin(); hit != muon.recHitsEnd(); hit++)
+      {
+
+         DetId idet = (*hit)->geographicalId(); // get the detector
+         //std::cout << (idet.subdetId() == MuonSubdetId::DT) << std::endl;
+         //std::cout << idet.det() << "\t" << (idet.subdetId()) << "\t" <<(idet.subdetId() == MuonSubdetId::DT) << std::endl;
+ 
+         if (idet.det() == 1){
+
+            if ( idet.subdetId() == 1 ) {nPB++;}
+            else if( idet.subdetId() == 2 ) {nPE++;}
+            else if( idet.subdetId() == 3 ) {nTIB++;}
+            else if( idet.subdetId() == 4 ) {nTOB++;}
+            else if( idet.subdetId() == 5 ) {nTID++;}
+            else if( idet.subdetId() == 6) {nTEC++;}
+
+         } else if (idet.det() == 2){
+
+            if ( idet.subdetId() == 1 ) {nDT++;}
+            else if( idet.subdetId() == 2 ) {nCSC++;}
+            else if( idet.subdetId() == 3 ) {nRPC++;}
+            else if( idet.subdetId() == 4 ) {nGEM++;}
+            else if( idet.subdetId() == 5 ) {nME0++;}
+
+         }
+
+      }
+
+     DG_nPB[nDG] = nPB;
+     DG_nPE[nDG] = nPE;
+     DG_nTIB[nDG] = nTIB;
+     DG_nTOB[nDG] = nTOB;
+     DG_nTID[nDG] = nTID;
+     DG_nTEC[nDG] = nTEC;
+     DG_nDT[nDG] = nDT;
+     DG_nCSC[nDG] = nCSC;
+     DG_nRPC[nDG] = nRPC;
+     DG_nGEM[nDG] = nGEM;
+     DG_nME0[nDG] = nME0;
+
+
+      //std::cout << "Valid: " << muon.found() << muon.numberOfValidHits() << std::endl;
+      //std::cout << "Lost: " << muon.lost() << muon.numberOfLostHits() << std::endl;
+
 
       nDG++;
 

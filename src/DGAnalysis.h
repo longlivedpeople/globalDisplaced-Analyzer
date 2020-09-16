@@ -174,6 +174,17 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       Float_t DG_chi2[200] = {0};
       Float_t DG_ndof[200] = {0};
       Float_t DG_normChi2[200] = {0};
+      Int_t DG_nPB[200] = {0};
+      Int_t DG_nPE[200] = {0};
+      Int_t DG_nTIB[200] = {0};
+      Int_t DG_nTOB[200] = {0};
+      Int_t DG_nTID[200] = {0};
+      Int_t DG_nTEC[200] = {0};
+      Int_t DG_nDT[200] = {0};
+      Int_t DG_nCSC[200] = {0};
+      Int_t DG_nRPC[200] = {0};
+      Int_t DG_nGEM[200] = {0};
+      Int_t DG_nME0[200] = {0};
 
       // Global Muons
       Int_t nGM = 0;
