@@ -36,6 +36,7 @@ if __name__ == "__main__":
     parser.add_option('-t', '--tag', action='store', type=str, dest='tag', default='', help='Output tag')
     parser.add_option('-f', '--filename', action='store', type=str, dest='filename', default='', help='Path to file')
     parser.add_option('-m', '--nmax', action='store', type=int, dest='nmax', default=0, help='Path to file')
+    parser.add_option('--etamax', action='store', type=float, dest='etamax', default=0.0, help='etamax')
     parser.add_option('--ptmin', action='store', type=float, dest='ptmin', default=0.0, help='ptmin')
     parser.add_option('--nhitmin', action='store', type=int, dest='nhitmin', default=0, help='ptmin')
     parser.add_option('--sigmaptmax', action='store', type=float, dest='sigmaptmax', default=0, help='sigmaptmax')
@@ -66,6 +67,8 @@ if __name__ == "__main__":
     #dxy_bin = np.linspace(0, 30, 31)
     dxySep_bin = np.array([0.0, 1.0, 20.0, 100.0])
     dxy_bin = np.linspace(0, 100, 80)
+    muonhit_bin = np.linspace(0, 10, 11)
+    trackerhit_bin = np.linspace(0, 70, 71)
 
     #############################
     ####   Book Histograms   ####
@@ -82,6 +85,10 @@ if __name__ == "__main__":
     total_DG_numberOfValidHits = r.TH1F("total_DG_numberOfValidHits", ";Number of valid hits;Muons", len(nvalid_bin)-1, nvalid_bin)
     total_DG_normChi2 = r.TH1F("total_DG_normChi2", ";Muon #chi^{2};Muons", len(normChi2_bin)-1, normChi2_bin)
     total_DG_dxy = r.TH1F("total_DG_dxy", ";Reconstructed d_{xy} (cm);Muons", len(dxy_bin)-1, dxy_bin)
+    total_DG_nTR = r.TH1F("total_DG_nTR", ";Number of tracker hits;DG yield", len(trackerhit_bin)-1, trackerhit_bin)
+    total_DG_nDT = r.TH1F("total_DG_nDT", ";Number of DT hits;DG yield", len(muonhit_bin)-1, muonhit_bin)
+    total_DG_nRPC = r.TH1F("total_DG_nRPC", ";Number of RPC hits;DG yield", len(muonhit_bin)-1, muonhit_bin)
+    total_DG_nCSC = r.TH1F("total_DG_nCSC", ";Number of CSC hits;DG yield", len(muonhit_bin)-1, muonhit_bin)
 
     #### Total histograms (bin1):
     total_DG_pt_bin1 = r.TH1F("total_DG_pt_bin1", ";Reconstructed #mu p_{T} (GeV);Muons", len(pt_bin)-1, pt_bin)
@@ -113,6 +120,10 @@ if __name__ == "__main__":
     matched_DG_numberOfValidHits = r.TH1F("matched_DG_numberOfValidHits", ";Number of valid hits;Muons", len(nvalid_bin)-1, nvalid_bin)
     matched_DG_normChi2 = r.TH1F("matched_DG_normChi2", ";Muon #chi^{2};Muons", len(normChi2_bin)-1, normChi2_bin)
     matched_DG_dxy = r.TH1F("matched_DG_dxy", ";Reconstructed d_{xy} (cm);Muons", len(dxy_bin)-1, dxy_bin)
+    matched_DG_nTR = r.TH1F("matched_DG_nTR", ";Number of tracker hits;DG yield", len(trackerhit_bin)-1, trackerhit_bin)
+    matched_DG_nDT = r.TH1F("matched_DG_nDT", ";Number of DT hits;DG yield", len(muonhit_bin)-1, muonhit_bin)
+    matched_DG_nRPC = r.TH1F("matched_DG_nRPC", ";Number of RPC hits;DG yield", len(muonhit_bin)-1, muonhit_bin)
+    matched_DG_nCSC = r.TH1F("matched_DG_nCSC", ";Number of CSC hits;DG yield", len(muonhit_bin)-1, muonhit_bin)
 
 
     #### Matched histograms (bin1):
@@ -144,6 +155,10 @@ if __name__ == "__main__":
     unmatched_DG_numberOfValidHits = r.TH1F("unmatched_DG_numberOfValidHits", ";Number of valid hits;Muons", len(nvalid_bin)-1, nvalid_bin)
     unmatched_DG_normChi2 = r.TH1F("unmatched_DG_normChi2", ";Muon #chi^{2};Muons", len(normChi2_bin)-1, normChi2_bin)
     unmatched_DG_dxy = r.TH1F("unmatched_DG_dxy", ";Reconstructed d_{xy} (cm);Muons", len(dxy_bin)-1, dxy_bin)
+    unmatched_DG_nTR = r.TH1F("unmatched_DG_nTR", ";Number of tracker hits;DG yield", len(trackerhit_bin)-1, trackerhit_bin)
+    unmatched_DG_nDT = r.TH1F("unmatched_DG_nDT", ";Number of DT hits;DG yield", len(muonhit_bin)-1, muonhit_bin)
+    unmatched_DG_nRPC = r.TH1F("unmatched_DG_nRPC", ";Number of RPC hits;DG yield", len(muonhit_bin)-1, muonhit_bin)
+    unmatched_DG_nCSC = r.TH1F("unmatched_DG_nCSC", ";Number of CSC hits;DG yield", len(muonhit_bin)-1, muonhit_bin)
 
     #### Unmatched histograms (bin1):
     unmatched_DG_pt_bin1 = r.TH1F("unmatched_DG_pt_bin1", ";Reconstructed #mu p_{T} (GeV);Muons", len(pt_bin)-1, pt_bin)
@@ -214,9 +229,13 @@ if __name__ == "__main__":
                 chi2     = _tree.DG_chi2[j]
                 #ndof     = _tree.DG_ndof[j]
                 normChi2 = _tree.DG_normChi2[j]
+                nTR = _tree.DG_nPB[j] + _tree.DG_nPE[j] + _tree.DG_nTIB[j] + _tree.DG_nTOB[j] + _tree.DG_nTID[j] + _tree.DG_nTEC[j]
+                nRPC = _tree.DG_nRPC[j]
+                nCSC = _tree.DG_nCSC[j]
+                nDT = _tree.DG_nDT[j]
 
                 #if abs(eta) > 2: continue # default
-                if abs(eta) > 2.4: continue # default
+                if opts.etamax and  abs(eta) > opts.etamax: continue # default
                 if opts.ptmin and pt < opts.ptmin: continue
                 if opts.nhitmin and nvalid < opts.nhitmin: continue
                 if opts.normChi2max and normChi2 > opts.normChi2max: continue
@@ -231,6 +250,10 @@ if __name__ == "__main__":
                 total_DG_dxy.Fill(dxy)
                 total_DG_numberOfValidHits.Fill(nvalid)
                 total_DG_normChi2.Fill(normChi2)
+                total_DG_nTR.Fill(nTR)
+                total_DG_nRPC.Fill(nRPC)
+                total_DG_nDT.Fill(nDT)
+                total_DG_nCSC.Fill(nCSC)
 
                 if dxy < dxySep_bin[1]:
                     total_DG_pt_bin1.Fill(pt)
@@ -272,6 +295,10 @@ if __name__ == "__main__":
                     matched_DG_normChi2.Fill(normChi2)
                     pfake_DG_normChi2.Fill(False, normChi2)
                     matched_DG_sigmaptVSdxy.Fill(abs(dxy), ptSig)
+                    matched_DG_nTR.Fill(nTR)
+                    matched_DG_nRPC.Fill(nRPC)
+                    matched_DG_nDT.Fill(nDT)
+                    matched_DG_nCSC.Fill(nCSC)
 
                     if dxy < dxySep_bin[1]:
                         matched_DG_pt_bin1.Fill(pt)
@@ -299,6 +326,10 @@ if __name__ == "__main__":
                     unmatched_DG_numberOfValidHits.Fill(nvalid)
                     unmatched_DG_normChi2.Fill(normChi2)
                     pfake_DG_normChi2.Fill(True, normChi2)
+                    unmatched_DG_nTR.Fill(nTR)
+                    unmatched_DG_nRPC.Fill(nRPC)
+                    unmatched_DG_nDT.Fill(nDT)
+                    unmatched_DG_nCSC.Fill(nCSC)
 
                     if dxy < dxySep_bin[1]:
                         unmatched_DG_pt_bin1.Fill(pt)
@@ -327,6 +358,10 @@ if __name__ == "__main__":
     fake_DG_eta = r.TEfficiency(unmatched_DG_eta, total_DG_eta)
     fake_DG_numberOfValidHits = r.TEfficiency(unmatched_DG_numberOfValidHits, total_DG_numberOfValidHits)
     fake_DG_normChi2 = r.TEfficiency(unmatched_DG_normChi2, total_DG_normChi2)
+    fake_DG_nTR = r.TEfficiency(unmatched_DG_nTR, total_DG_nTR)
+    fake_DG_nCSC = r.TEfficiency(unmatched_DG_nCSC, total_DG_nCSC)
+    fake_DG_nRPC = r.TEfficiency(unmatched_DG_nRPC, total_DG_nRPC)
+    fake_DG_nDT = r.TEfficiency(unmatched_DG_nDT, total_DG_nDT)
 
     fake_DG_pt_bin1 = r.TEfficiency(unmatched_DG_pt_bin1, total_DG_pt_bin1)
     fake_DG_ptSig_bin1 = r.TEfficiency(unmatched_DG_ptSig_bin1, total_DG_ptSig_bin1)
@@ -360,6 +395,10 @@ if __name__ == "__main__":
     total_DG_dxy.Write()
     total_DG_numberOfValidHits.Write()
     total_DG_normChi2.Write()
+    total_DG_nTR.Write()
+    total_DG_nRPC.Write()
+    total_DG_nDT.Write()
+    total_DG_nCSC.Write()
 
     total_DG_pt_bin1.Write()
     total_DG_ptSig_bin1.Write()
@@ -385,6 +424,10 @@ if __name__ == "__main__":
     matched_DG_dxy.Write()
     matched_DG_numberOfValidHits.Write()
     matched_DG_normChi2.Write()
+    matched_DG_nTR.Write()
+    matched_DG_nRPC.Write()
+    matched_DG_nDT.Write()
+    matched_DG_nCSC.Write()
 
     matched_DG_pt_bin1.Write()
     matched_DG_ptSig_bin1.Write()
@@ -410,6 +453,10 @@ if __name__ == "__main__":
     unmatched_DG_dxy.Write()
     unmatched_DG_numberOfValidHits.Write()
     unmatched_DG_normChi2.Write()
+    unmatched_DG_nTR.Write()
+    unmatched_DG_nRPC.Write()
+    unmatched_DG_nDT.Write()
+    unmatched_DG_nCSC.Write()
 
     unmatched_DG_pt_bin1.Write()
     unmatched_DG_ptSig_bin1.Write()
@@ -436,6 +483,10 @@ if __name__ == "__main__":
     fake_DG_normChi2.Write()
     pfake_DG_normChi2.Write()
     fake_DG_dxy.Write()
+    fake_DG_nTR.Write()
+    fake_DG_nRPC.Write()
+    fake_DG_nCSC.Write()
+    fake_DG_nDT.Write()
 
     fake_DG_pt_bin1.Write()
     fake_DG_ptSig_bin1.Write()
