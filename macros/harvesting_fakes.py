@@ -77,6 +77,21 @@ def getObject(filename, key):
     return _hcopy
 
 
+def rebinAxis(eff, axis):
+
+    totals = eff.GetTotalHistogram()
+    passed = eff.GetPassedHistogram()
+    totals_rebin = totals.Rebin(len(axis)-1, totals.GetName()+'_rebined', axis)
+    passed_rebin = passed.Rebin(len(axis)-1, passed.GetName()+'_rebined', axis)
+    neweff = r.TEfficiency(passed_rebin, totals_rebin)
+
+    c1 = r.TCanvas()
+    neweff.Draw('AP')
+#    c1.SaveAs('Pruebita.png')
+
+    return(neweff)
+
+
 
 if __name__ == "__main__":
 
@@ -95,142 +110,319 @@ if __name__ == "__main__":
 
 
 
-    #####################################
-    ####   Construct TEfficiencies   ####
-    #####################################
+    #############################################
+    ####   Number of hits in muon chambers   ####
+    #############################################
 
-    # pT spectra in signal in stacked histogram
-    SI_matched_DG_pt = getObject('fakes_signal_nocut_eta2/th1fs.root', 'matched_DG_pt')
-    SI_unmatched_DG_pt = getObject('fakes_signal_nocut_eta2/th1fs.root', 'unmatched_DG_pt')
-    SI_matched_DG_pt.SetTitle(';Reconstructed DG p_{T} (GeV);')
-    SI_DG_pt = doFakeStack(SI_matched_DG_pt, SI_unmatched_DG_pt, fakedown = True)
-    SI_DG_pt_ = Canvas.Canvas("SI_DG_pt_stacked_eta2", 'png', 0.52, 0.81, 0.87, 0.9, 1) 
-    SI_DG_pt_.addStack(SI_DG_pt, 'HIST', 1, 0)
-    SI_DG_pt_.addLatex(0.41, 0.75, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.03, align = 11, font = 62)
-    SI_DG_pt_.addLatex(0.41, 0.71, '|#eta^{DG}| < 2', size = 0.03, align = 11)
-    SI_DG_pt_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/', maxYnumbers = 4)
+    nMU_bin = np.linspace(0, 15, 16)
 
-    # Fake rate vs pT (signal and background)
-    SI_fake_DG_pt = getObject('fakes_signal_nocut_eta2/th1fs.root', 'total_DG_pt_clone')
-    DY_fake_DG_pt = getObject('fakes_DY2M_nocut_eta2/th1fs.root', 'total_DG_pt_clone')
-    SI_fake_DG_pt.SetTitle(';DG p_{T} (GeV);DG Fake rate')
-    DY_fake_DG_pt.SetTitle(';;')
-    SI_fake_DG_pt_ = Canvas.Canvas("SI_fake_DG_pt_nocuts_eta2", 'png', 0.15, 0.81, 0.5, 0.9, 1)
-    SI_fake_DG_pt_.addRate(DY_fake_DG_pt, 'AP', 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', 'p', r.kRed+2, True, 0, marker = 24)
-    SI_fake_DG_pt_.addRate(SI_fake_DG_pt, 'AP, SAME', 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', 'p', r.kBlue+2, True, 1, marker = 24)
-    SI_fake_DG_pt_.addLatex(0.9, 0.93, '|#eta^{DG}| < 2|', size = 0.03, align = 31)
-    SI_fake_DG_pt_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
+    # nMU spectra in signal in stacked histogram
+    matched_DG_nMU = getObject('fakes_Drell-Yan_pt_eta_sigmapt_chi10_nOut10_nTOT20/th1fs.root', 'matched_DG_nMU')
+    unmatched_DG_nMU = getObject('fakes_Drell-Yan_pt_eta_sigmapt_chi10_nOut10_nTOT20/th1fs.root', 'unmatched_DG_nMU')
 
-    # pt cuts comparison
-    SI_fake_DG_eta_nocut = getObject('fakes_signal_nocut_eta2/th1fs.root', 'total_DG_eta_clone')
-    SI_fake_DG_eta_ptmin10 = getObject('fakes_signal_ptmin10_eta2/th1fs.root', 'total_DG_eta_clone')
-    SI_fake_DG_eta_ptmin31 = getObject('fakes_signal_ptmin31/th1fs.root', 'total_DG_eta_clone')
-    SI_fake_DG_eta_ = Canvas.Canvas("SI_Fake_DG_eta", 'png', 0.65, 0.65, 0.87, 0.8, 1)
-    SI_fake_DG_eta_.addRate(SI_fake_DG_eta_nocut, 'AP', 'No p_{T}^{DG} cut', 'p', r.kBlack, True, 0, marker = 26)
-    SI_fake_DG_eta_.addRate(SI_fake_DG_eta_ptmin10, 'AP, SAME', 'p_{T}^{DG} > 10 GeV', 'p', r.kBlue-7, True, 1, marker = 25)
-    #SI_fake_DG_eta_.addRate(SI_fake_DG_eta_ptmin15, 'AP, SAME', 'p_{T}^{DG} > 15 GeV', 'p', r.kBlue-4, True, 2, marker = 26)
-    SI_fake_DG_eta_.addRate(SI_fake_DG_eta_ptmin31, 'AP, SAME', 'p_{T}^{DG} > 31 GeV', 'p', r.kBlue+2, True, 2, marker = 24)
-    SI_fake_DG_eta_.addLatex(0.87, 0.85, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.03, align = 31, font = 62)
-    SI_fake_DG_eta_.addLatex(0.82, 0.85, '|#eta^{DG}| < 2|', size = 0.03, align = 31)
-    SI_fake_DG_eta_.save(1, 0, 1, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
+    matched_DG_nMU = matched_DG_nMU.Rebin(len(nMU_bin)-1, matched_DG_nMU.GetName() + '_rebined', nMU_bin)
+    unmatched_DG_nMU = unmatched_DG_nMU.Rebin(len(nMU_bin)-1, matched_DG_nMU.GetName() + '_rebined', nMU_bin)
 
-    SI_fake_DG_dxy_nocut = getObject('fakes_signal_nocut_eta2/th1fs.root', 'total_DG_dxy_clone')
-    SI_fake_DG_dxy_ptmin10 = getObject('fakes_signal_ptmin10_eta2/th1fs.root', 'total_DG_dxy_clone')
-    SI_fake_DG_dxy_ptmin31 = getObject('fakes_signal_ptmin31/th1fs.root', 'total_DG_dxy_clone')
-    #SI_fake_DG_dxy_ptmin15 = getObject('fakes_signal_ptmin15/th1fs.root', 'total_DG_dxy_clone')
-    SI_fake_DG_dxy_nocut.SetTitle(';DG |d_{xy}| (cm);Fake rate')
-    SI_fake_DG_dxy_ptmin10.SetTitle(';;')
-    #SI_fake_DG_dxy_ptmin15.SetTitle(';;')
-    SI_fake_DG_dxy_ = Canvas.Canvas("SI_Fake_DG_dxy", 'png', 0.15, 0.73, 0.4, 0.88, 1)
-    SI_fake_DG_dxy_.addRate(SI_fake_DG_dxy_nocut, 'AP', 'No p_{T}^{DG} cut', 'p', r.kBlack, True, 0, marker = 26)
-    SI_fake_DG_dxy_.addRate(SI_fake_DG_dxy_ptmin10, 'AP, SAME', 'p_{T}^{DG} > 10 GeV', 'p', r.kBlue-7, True, 1, marker = 25)
-    SI_fake_DG_dxy_.addRate(SI_fake_DG_dxy_ptmin31, 'AP, SAME', 'p_{T}^{DG} > 31 GeV', 'p', r.kBlue+2, True, 2, marker = 24)
-    SI_fake_DG_dxy_.addLatex(0.17, 0.68, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.03, align = 11, font = 62)
-    SI_fake_DG_pt_.addLatex(0.17, 0.63, '|#eta^{DG}| < 2|', size = 0.03, align = 11)
-    SI_fake_DG_dxy_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
+    matched_DG_nMU.SetTitle(';Number of hits in Muon Chambers; dGlobal yield')
+    DG_nMU = doFakeStack(matched_DG_nMU, unmatched_DG_nMU, fakedown = False)
+    DG_nMU.SetMaximum(100.0*DG_nMU.GetMaximum())
+    DG_nMU.SetMinimum(0.1)
+    DG_nMU_ = Canvas.Canvas("nMU_optimization", 'png', 0.52, 0.81, 0.87, 0.9, 1) 
+    DG_nMU_.addStack(DG_nMU, 'HIST', 1, 0)
+    DG_nMU_.addLatex(0.41, 0.75, 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', size = 0.03, align = 11, font = 62)
+    DG_nMU_.addLatex(0.41, 0.71, 'TBD', size = 0.03, align = 11)
+    DG_nMU_.save(1, 0, 1, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/', maxYnumbers = 4)
 
-    # ptmin31
-    SI_matched_DG_nvalid = getObject('fakes_signal_ptmin31/th1fs.root', 'matched_DG_numberOfValidHits')
-    SI_unmatched_DG_nvalid = getObject('fakes_signal_ptmin31/th1fs.root', 'unmatched_DG_numberOfValidHits')
-    SI_DG_nvalid = doFakeStack(SI_matched_DG_nvalid, SI_unmatched_DG_nvalid)
-    SI_DG_nvalid_ = Canvas.Canvas("SI_DG_nvalid", 'png', 0.52, 0.81, 0.87, 0.9, 1)
-    SI_DG_nvalid_.addStack(SI_DG_nvalid, 'HIST', 1, 0)
-    SI_DG_nvalid_.addLatex(0.41, 0.75, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.03, align = 11)
-    SI_DG_nvalid_.addLatex(0.41, 0.71, 'p_{T}^{DG} > 10 GeV, |#eta^{DG}| < 2.4', size = 0.03, align = 11)
-    SI_DG_nvalid_.save(1, 0, 1, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
+    # Fake rate vs nMU
+    fake_DG_nMU = getObject('fakes_Drell-Yan_pt_eta_sigmapt_chi10_nOut10_nTOT20/th1fs.root', 'total_DG_nMU_clone')
+    fake_DG_nMU.SetTitle(';Number of hits in Muon Chambers; Fake fraction')
+    fake_DG_nMU = rebinAxis(fake_DG_nMU, nMU_bin)
 
-    SI_matched_DG_normChi2 = getObject('fakes_signal_ptmin31/th1fs.root', 'matched_DG_normChi2')
-    SI_unmatched_DG_normChi2 = getObject('fakes_signal_ptmin31/th1fs.root', 'unmatched_DG_normChi2')
-    SI_DG_normChi2 = doFakeStack(SI_matched_DG_normChi2, SI_unmatched_DG_normChi2)
-    SI_DG_normChi2.SetMinimum(10)
-    SI_DG_normChi2.SetMaximum(1e7)
-    SI_DG_normChi2_ = Canvas.Canvas("SI_DG_normChi2", 'png', 0.52, 0.81, 0.87, 0.9, 1)
-    SI_DG_normChi2_.addStack(SI_DG_normChi2, 'HIST', 1, 0)
-    SI_DG_normChi2_.addLatex(0.41, 0.75, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', size = 0.03, align = 11)
-    SI_DG_normChi2_.addLatex(0.41, 0.71, 'p_{T}^{DG} > 10 GeV, |#eta^{DG}| < 2.4', size = 0.03, align = 11)
-    SI_DG_normChi2_.save(1, 0, 1, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
+    fake_DG_nMU_ = Canvas.Canvas("nMU_fake", 'png', 0.15, 0.81, 0.5, 0.9, 1)
+    fake_DG_nMU_.addRate(fake_DG_nMU, 'AP', 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', 'p', r.kRed, True, 0, marker = 24)
+    fake_DG_nMU_.addLatex(0.85, 0.85, 'p_{T} > 10 GeV', size = 0.03, align = 31)
+    fake_DG_nMU_.addLatex(0.85, 0.81, '|#eta| < 2.4', size = 0.03, align = 31)
+    fake_DG_nMU_.addLatex(0.85, 0.77, '#sigma_{p_{T}}/p_{T} < 0.3', size = 0.03, align = 31)
+    fake_DG_nMU_.addLatex(0.85, 0.73, '#chi^{2}/ndof < 10', size = 0.03, align = 31)
+    fake_DG_nMU_.addLatex(0.85, 0.69, 'N outer tracker hits >= 10', size = 0.03, align = 31)
+    fake_DG_nMU_.addLatex(0.85, 0.65, 'N total hits >= 20', size = 0.03, align = 31)
+    fake_DG_nMU_.addLatex(0.9, 0.93, 'Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', size = 0.03, align = 31, font = 62)
+    fake_DG_nMU_.addLine(3.0, 0, 3.0, 1.2, r.kBlue, thickness = 1)
+    fake_DG_nMU_.save(0, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
 
-    DY_fake_DG_pt = getObject('fakes_DY2M_ptmin31/th1fs.root', 'total_DG_pt_clone')
-    SI_fake_DG_pt_bin1 = getObject('fakes_signal_ptmin31/th1fs.root', 'total_DG_pt_bin1_clone')
-    SI_fake_DG_pt_bin2 = getObject('fakes_signal_ptmin31/th1fs.root', 'total_DG_pt_bin2_clone')
-    SI_fake_DG_pt_bin3 = getObject('fakes_signal_ptmin31/th1fs.root', 'total_DG_pt_bin3_clone')
-    SI_fake_DG_pt_bin1.SetTitle(';DG p_{T} (GeV);Fake rate')
-    SI_fake_DG_pt_bin2.SetTitle(';;')
-    SI_fake_DG_pt_bin3.SetTitle(';;')
-    SI_fake_DG_pt_bins_ = Canvas.Canvas("SI_fake_DG_pt31_bins", 'png', 0.31, 0.73, 0.53, 0.88, 1)
-    SI_fake_DG_pt_bins_.addRate(DY_fake_DG_pt, 'AP', 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', 'p', r.kRed+2, True, 0, marker = 24)
-    SI_fake_DG_pt_bins_.addRate(SI_fake_DG_pt_bin1, 'AP,SAME', 'H#rightarrowXX#rightarrow4l (All masses): |d_{xy}| < 1 cm', 'p', r.kBlue-9, True, 1, marker = 24)
-    SI_fake_DG_pt_bins_.addRate(SI_fake_DG_pt_bin2, 'AP,SAME', 'H#rightarrowXX#rightarrow4l (All masses): 1 < |d_{xy}| < 20 cm', 'p', r.kBlue-4, True, 2, marker = 25)
-    SI_fake_DG_pt_bins_.addRate(SI_fake_DG_pt_bin3, 'AP,SAME', 'H#rightarrowXX#rightarrow4l (All masses): |d_{xy}| > 20 cm', 'p', r.kBlack, True, 3, marker = 26)
-    SI_fake_DG_pt_bins_.addLatex(0.9, 0.94, 'p_{T}^{DG} > 10 GeV, |#eta^{DG}| < 2.4', size = 0.03, align = 31)
-    SI_fake_DG_pt_bins_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
+    # Fake rate vs nMU
+    fake_DG_nMU = getObject('fakes_Drell-Yan_pt_eta_sigmapt_chi7p5_nOut10_nTOT20/th1fs.root', 'total_DG_nMU_clone')
+    fake_DG_nMU.SetTitle(';Number of hits in Muon Chambers; Fake fraction')
+    fake_DG_nMU = rebinAxis(fake_DG_nMU, nMU_bin)
 
-    DY_fake_DG_nvalid = getObject('fakes_DY2M_ptmin31/th1fs.root', 'total_DG_numberOfValidHits_clone')
-    SI_fake_DG_nvalid_bin1 = getObject('fakes_signal_ptmin31/th1fs.root', 'total_DG_numberOfValidHits_bin1_clone')
-    SI_fake_DG_nvalid_bin2 = getObject('fakes_signal_ptmin31/th1fs.root', 'total_DG_numberOfValidHits_bin2_clone')
-    SI_fake_DG_nvalid_bin3 = getObject('fakes_signal_ptmin31/th1fs.root', 'total_DG_numberOfValidHits_bin3_clone')
-    DY_fake_DG_nvalid.SetTitle(';DG N_{hits} (total DG hits);Fake rate')
-    SI_fake_DG_nvalid_bin1.SetTitle(';;')
-    SI_fake_DG_nvalid_bin2.SetTitle(';;')
-    SI_fake_DG_nvalid_bin3.SetTitle(';;')
-    SI_fake_DG_nvalid_bins_ = Canvas.Canvas("SI_fake_DG_31_nvalid_bins", 'png', 0.31, 0.73, 0.53, 0.88, 1)
-    SI_fake_DG_nvalid_bins_.addRate(DY_fake_DG_nvalid, 'AP', 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', 'p', r.kRed+2, True, 0, marker = 24)
-    SI_fake_DG_nvalid_bins_.addRate(SI_fake_DG_nvalid_bin1, 'AP,SAME', 'H#rightarrowXX#rightarrow4l (All masses): |d_{xy}| < 1 cm', 'p', r.kBlue-9, True, 1, marker = 24)
-    SI_fake_DG_nvalid_bins_.addRate(SI_fake_DG_nvalid_bin2, 'AP,SAME', 'H#rightarrowXX#rightarrow4l (All masses): 1 < |d_{xy}| < 20 cm', 'p', r.kBlue-4, True, 2, marker = 25)
-    SI_fake_DG_nvalid_bins_.addRate(SI_fake_DG_nvalid_bin3, 'AP,SAME', 'H#rightarrowXX#rightarrow4l (All masses): |d_{xy}| > 20 cm', 'p', r.kBlack, True, 3, marker = 26)
-    SI_fake_DG_nvalid_bins_.addLatex(0.9, 0.94, 'p_{T}^{DG} > 10 GeV, |#eta^{DG}| < 2.4', size = 0.03, align = 31)
-    SI_fake_DG_nvalid_bins_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
+    fake_DG_nMU_ = Canvas.Canvas("nMU_chi7p5_fake", 'png', 0.15, 0.81, 0.5, 0.9, 1)
+    fake_DG_nMU_.addRate(fake_DG_nMU, 'AP', 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', 'p', r.kRed, True, 0, marker = 24)
+    fake_DG_nMU_.addLatex(0.85, 0.85, 'p_{T} > 10 GeV', size = 0.03, align = 31)
+    fake_DG_nMU_.addLatex(0.85, 0.81, '|#eta| < 2.4', size = 0.03, align = 31)
+    fake_DG_nMU_.addLatex(0.85, 0.77, '#sigma_{p_{T}}/p_{T} < 0.3', size = 0.03, align = 31)
+    fake_DG_nMU_.addLatex(0.85, 0.73, '#chi^{2}/ndof < 7.5', size = 0.03, align = 31)
+    fake_DG_nMU_.addLatex(0.85, 0.69, 'N outer tracker hits >= 10', size = 0.03, align = 31)
+    fake_DG_nMU_.addLatex(0.85, 0.65, 'N total hits >= 20', size = 0.03, align = 31)
+    fake_DG_nMU_.addLatex(0.9, 0.93, 'Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', size = 0.03, align = 31, font = 62)
+    fake_DG_nMU_.addLine(3.0, 0, 3.0, 1.2, r.kBlue, thickness = 1)
+    fake_DG_nMU_.save(0, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
 
-    DY_fake_DG_normChi2 = getObject('fakes_DY2M_ptmin31/th1fs.root', 'total_DG_normChi2_clone')
-    SI_fake_DG_normChi2_bin1 = getObject('fakes_signal_ptmin31/th1fs.root', 'total_DG_normChi2_bin1_clone')
-    SI_fake_DG_normChi2_bin2 = getObject('fakes_signal_ptmin31/th1fs.root', 'total_DG_normChi2_bin2_clone')
-    SI_fake_DG_normChi2_bin3 = getObject('fakes_signal_ptmin31/th1fs.root', 'total_DG_normChi2_bin3_clone')
-    DY_fake_DG_normChi2.SetTitle(';DG #chi^{2}/ndof;Fake rate')
-    SI_fake_DG_normChi2_bin1.SetTitle(';;')
-    SI_fake_DG_normChi2_bin2.SetTitle(';;')
-    SI_fake_DG_normChi2_bin3.SetTitle(';;')
-    SI_fake_DG_normChi2_bins_ = Canvas.Canvas("SI_fake_DG_31_normChi2_bins", 'png', 0.31, 0.73, 0.53, 0.88, 1)
-    SI_fake_DG_normChi2_bins_.addRate(DY_fake_DG_normChi2, 'AP', 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', 'p', r.kRed+2, True, 0, marker = 24)
-    SI_fake_DG_normChi2_bins_.addRate(SI_fake_DG_normChi2_bin1, 'AP,SAME', 'H#rightarrowXX#rightarrow4l (All masses): |d_{xy}| < 1 cm', 'p', r.kBlue-9, True, 1, marker = 24)
-    SI_fake_DG_normChi2_bins_.addRate(SI_fake_DG_normChi2_bin2, 'AP,SAME', 'H#rightarrowXX#rightarrow4l (All masses): 1 < |d_{xy}| < 20 cm', 'p', r.kBlue-4, True, 2, marker = 25)
-    SI_fake_DG_normChi2_bins_.addRate(SI_fake_DG_normChi2_bin3, 'AP,SAME', 'H#rightarrowXX#rightarrow4l (All masses): |d_{xy}| > 20 cm', 'p', r.kBlack, True, 3, marker = 26)
-    SI_fake_DG_normChi2_bins_.addLatex(0.9, 0.94, 'p_{T}^{DG} > 10 GeV, |#eta^{DG}| < 2.4', size = 0.03, align = 31)
-    SI_fake_DG_normChi2_bins_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
 
-    DY_fake_DG_sigmapt = getObject('fakes_DY2M_ptmin31/th1fs.root', 'total_DG_ptSig_clone')
-    SI_fake_DG_sigmapt = getObject('fakes_signal_ptmin31/th1fs.root', 'total_DG_ptSig_clone')
-    DY_fake_DG_sigmapt.SetTitle(';DG #sigma_{p_{T}}/p_{T};Fake rate')
-    SI_fake_DG_sigmapt.SetTitle(';;')
-    SI_fake_DG_sigmapt_ = Canvas.Canvas("SI_fake_DG_31_sigmapt_bins", 'png', 0.31, 0.81, 0.53, 0.88, 1)
-    SI_fake_DG_sigmapt_.addRate(DY_fake_DG_sigmapt, 'AP', 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', 'p', r.kRed+2, True, 0, marker = 24)
-    SI_fake_DG_sigmapt_.addRate(SI_fake_DG_sigmapt, 'AP, SAME', 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', 'p', r.kBlue+2, True, 1, marker = 24)
-    SI_fake_DG_sigmapt_.addLatex(0.9, 0.94, 'p_{T}^{DG} > 31 GeV, |#eta^{DG}| < 2', size = 0.03, align = 31)
-    SI_fake_DG_sigmapt_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
+    ##########################################
+    ####   Number of outer tracker hits   ####
+    ##########################################
 
-    SI_hist2D_DG_sigmaptVSdxy = getObject('fakes_signal_ptmin31/th1fs.root', 'matched_DG_sigmaptVSdxy')
-    SI_hist2D_DG_sigmaptVSdxy.GetZaxis().SetLabelSize(0.028)
-    SI_hist2D_DG_sigmaptVSdxy_ = Canvas.Canvas("SI_hist2D_DG_sigmaptVSdxy", 'png', 0.31, 0.81, 0.53, 0.88, 1)
-    SI_hist2D_DG_sigmaptVSdxy_.addHisto(SI_hist2D_DG_sigmaptVSdxy, 'COLZ', '', 'l', '', 1, 0)
-    SI_hist2D_DG_sigmaptVSdxy_.save(0, 0, 0, '','', zlog = True, outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
+    nOutTR_bin = np.linspace(0, 32, 33)
 
+    # nOutTR spectra in signal in stacked histogram
+    matched_DG_nOutTR = getObject('fakes_Drell-Yan_pt_eta_sigmapt_chi10_nMU3_nTOT20/th1fs.root', 'matched_DG_nOutTR')
+    unmatched_DG_nOutTR = getObject('fakes_Drell-Yan_pt_eta_sigmapt_chi10_nMU3_nTOT20/th1fs.root', 'unmatched_DG_nOutTR')
+
+    matched_DG_nOutTR = matched_DG_nOutTR.Rebin(len(nOutTR_bin)-1, matched_DG_nOutTR.GetName() + '_rebined', nOutTR_bin)
+    unmatched_DG_nOutTR = unmatched_DG_nOutTR.Rebin(len(nOutTR_bin)-1, matched_DG_nOutTR.GetName() + '_rebined', nOutTR_bin)
+
+    matched_DG_nOutTR.SetTitle(';Number of hits in outer tracker; dGlobal yield')
+    DG_nOutTR = doFakeStack(matched_DG_nOutTR, unmatched_DG_nOutTR, fakedown = False)
+    DG_nOutTR.SetMaximum(100.0*DG_nOutTR.GetMaximum())
+    DG_nOutTR.SetMinimum(0.1)
+    DG_nOutTR_ = Canvas.Canvas("nOutTR_optimization", 'png', 0.52, 0.81, 0.87, 0.9, 1) 
+    DG_nOutTR_.addStack(DG_nOutTR, 'HIST', 1, 0)
+    DG_nOutTR_.addLatex(0.41, 0.75, 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', size = 0.03, align = 11, font = 62)
+    DG_nOutTR_.addLatex(0.41, 0.71, 'TBD', size = 0.03, align = 11)
+    DG_nOutTR_.save(1, 0, 1, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/', maxYnumbers = 4)
+
+    # Fake rate vs nOutTR
+    fake_DG_nOutTR = getObject('fakes_Drell-Yan_pt_eta_sigmapt_chi10_nMU3_nTOT20/th1fs.root', 'total_DG_nOutTR_clone')
+    fake_DG_nOutTR.SetTitle(';Number of hits in outer tracker; Fake fraction')
+    fake_DG_nOutTR = rebinAxis(fake_DG_nOutTR, nOutTR_bin)
+
+    fake_DG_nOutTR_ = Canvas.Canvas("nOutTR_fake", 'png', 0.15, 0.81, 0.5, 0.9, 1)
+    fake_DG_nOutTR_.addRate(fake_DG_nOutTR, 'AP', 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', 'p', r.kRed, True, 0, marker = 24)
+    fake_DG_nOutTR_.addLatex(0.85, 0.85, 'p_{T} > 10 GeV', size = 0.03, align = 31)
+    fake_DG_nOutTR_.addLatex(0.85, 0.81, '|#eta| < 2.4', size = 0.03, align = 31)
+    fake_DG_nOutTR_.addLatex(0.85, 0.77, '#sigma_{p_{T}}/p_{T} < 0.3', size = 0.03, align = 31)
+    fake_DG_nOutTR_.addLatex(0.85, 0.73, '#chi^{2}/ndof < 10', size = 0.03, align = 31)
+    fake_DG_nOutTR_.addLatex(0.85, 0.69, 'N muon hits >= 3', size = 0.03, align = 31)
+    fake_DG_nOutTR_.addLatex(0.85, 0.65, 'N total hits >= 20', size = 0.03, align = 31)
+    fake_DG_nOutTR_.addLatex(0.9, 0.93, 'Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', size = 0.03, align = 31, font = 62)
+    fake_DG_nOutTR_.addLine(10.0, 0, 10.0, 1.2, r.kBlue, thickness = 1)
+    fake_DG_nOutTR_.save(0, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
+
+
+    # Fake rate vs nOutTR (chi 7.5)
+    fake_DG_nOutTR = getObject('fakes_Drell-Yan_pt_eta_sigmapt_chi7p5_nMU3_nTOT20/th1fs.root', 'total_DG_nOutTR_clone')
+    fake_DG_nOutTR.SetTitle(';Number of hits in outer tracker; Fake fraction')
+    fake_DG_nOutTR = rebinAxis(fake_DG_nOutTR, nOutTR_bin)
+
+    fake_DG_nOutTR_ = Canvas.Canvas("nOutTR_chi7p5_fake", 'png', 0.15, 0.81, 0.5, 0.9, 1)
+    fake_DG_nOutTR_.addRate(fake_DG_nOutTR, 'AP', 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', 'p', r.kRed, True, 0, marker = 24)
+    fake_DG_nOutTR_.addLatex(0.85, 0.85, 'p_{T} > 10 GeV', size = 0.03, align = 31)
+    fake_DG_nOutTR_.addLatex(0.85, 0.81, '|#eta| < 2.4', size = 0.03, align = 31)
+    fake_DG_nOutTR_.addLatex(0.85, 0.77, '#sigma_{p_{T}}/p_{T} < 0.3', size = 0.03, align = 31)
+    fake_DG_nOutTR_.addLatex(0.85, 0.73, '#chi^{2}/ndof < 7.5', size = 0.03, align = 31)
+    fake_DG_nOutTR_.addLatex(0.85, 0.69, 'N muon hits >= 3', size = 0.03, align = 31)
+    fake_DG_nOutTR_.addLatex(0.85, 0.65, 'N total hits >= 20', size = 0.03, align = 31)
+    fake_DG_nOutTR_.addLatex(0.9, 0.93, 'Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', size = 0.03, align = 31, font = 62)
+    fake_DG_nOutTR_.addLine(10.0, 0, 10.0, 1.2, r.kBlue, thickness = 1)
+    fake_DG_nOutTR_.save(0, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
+
+
+
+    ##################################
+    ####   Number of total hits   ####
+    ##################################
+
+    numberOfValidHits_bin = np.linspace(0, 74, 75)
+
+    # numberOfValidHits spectra in signal in stacked histogram
+    matched_DG_numberOfValidHits = getObject('fakes_Drell-Yan_pt_eta_sigmapt_chi10_nMU3_nOut10/th1fs.root', 'matched_DG_numberOfValidHits')
+    unmatched_DG_numberOfValidHits = getObject('fakes_Drell-Yan_pt_eta_sigmapt_chi10_nMU3_nOut10/th1fs.root', 'unmatched_DG_numberOfValidHits')
+
+    matched_DG_numberOfValidHits = matched_DG_numberOfValidHits.Rebin(len(numberOfValidHits_bin)-1, matched_DG_numberOfValidHits.GetName() + '_rebined', numberOfValidHits_bin)
+    unmatched_DG_numberOfValidHits = unmatched_DG_numberOfValidHits.Rebin(len(numberOfValidHits_bin)-1, matched_DG_numberOfValidHits.GetName() + '_rebined', numberOfValidHits_bin)
+
+    matched_DG_numberOfValidHits.SetTitle(';Number of total hits; dGlobal yield')
+    DG_numberOfValidHits = doFakeStack(matched_DG_numberOfValidHits, unmatched_DG_numberOfValidHits, fakedown = False)
+    DG_numberOfValidHits.SetMaximum(100.0*DG_numberOfValidHits.GetMaximum())
+    DG_numberOfValidHits.SetMinimum(0.1)
+    DG_numberOfValidHits_ = Canvas.Canvas("numberOfValidHits_optimization", 'png', 0.52, 0.81, 0.87, 0.9, 1) 
+    DG_numberOfValidHits_.addStack(DG_numberOfValidHits, 'HIST', 1, 0)
+    DG_numberOfValidHits_.addLatex(0.41, 0.75, 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', size = 0.03, align = 11, font = 62)
+    DG_numberOfValidHits_.addLatex(0.41, 0.71, 'TBD', size = 0.03, align = 11)
+    DG_numberOfValidHits_.save(1, 0, 1, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/', maxYnumbers = 4)
+
+    # Fake rate vs numberOfValidHits
+    fake_DG_numberOfValidHits = getObject('fakes_Drell-Yan_pt_eta_sigmapt_chi10_nMU3_nOut10/th1fs.root', 'total_DG_numberOfValidHits_clone')
+    fake_DG_numberOfValidHits.SetTitle(';Number of total hits; Fake fraction')
+    fake_DG_numberOfValidHits = rebinAxis(fake_DG_numberOfValidHits, numberOfValidHits_bin)
+
+    fake_DG_numberOfValidHits_ = Canvas.Canvas("numberOfValidHits_fake", 'png', 0.15, 0.81, 0.5, 0.9, 1)
+    fake_DG_numberOfValidHits_.addRate(fake_DG_numberOfValidHits, 'AP', 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', 'p', r.kRed, True, 0, marker = 24)
+    fake_DG_numberOfValidHits_.addLatex(0.85, 0.85, 'p_{T} > 10 GeV', size = 0.03, align = 31)
+    fake_DG_numberOfValidHits_.addLatex(0.85, 0.81, '|#eta| < 2.4', size = 0.03, align = 31)
+    fake_DG_numberOfValidHits_.addLatex(0.85, 0.77, '#sigma_{p_{T}}/p_{T} < 0.3', size = 0.03, align = 31)
+    fake_DG_numberOfValidHits_.addLatex(0.85, 0.73, '#chi^{2}/ndof < 10', size = 0.03, align = 31)
+    fake_DG_numberOfValidHits_.addLatex(0.85, 0.65, 'N outer tracker hits >= 10', size = 0.03, align = 31)
+    fake_DG_numberOfValidHits_.addLatex(0.85, 0.69, 'N muon hits >= 3', size = 0.03, align = 31)
+    fake_DG_numberOfValidHits_.addLine(20.0, 0, 20.0, 1.2, r.kBlue, thickness = 1)
+    fake_DG_numberOfValidHits_.addLatex(0.9, 0.93, 'Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', size = 0.03, align = 31, font = 62)
+    fake_DG_numberOfValidHits_.save(0, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
+
+    # Fake rate vs numberOfValidHits (chi 7.5)
+    fake_DG_numberOfValidHits = getObject('fakes_Drell-Yan_pt_eta_sigmapt_chi7p5_nMU3_nOut10/th1fs.root', 'total_DG_numberOfValidHits_clone')
+    fake_DG_numberOfValidHits.SetTitle(';Number of total hits; Fake fraction')
+    fake_DG_numberOfValidHits = rebinAxis(fake_DG_numberOfValidHits, numberOfValidHits_bin)
+
+    fake_DG_numberOfValidHits_ = Canvas.Canvas("numberOfValidHits_chi7p5_fake", 'png', 0.15, 0.81, 0.5, 0.9, 1)
+    fake_DG_numberOfValidHits_.addRate(fake_DG_numberOfValidHits, 'AP', 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', 'p', r.kRed, True, 0, marker = 24)
+    fake_DG_numberOfValidHits_.addLatex(0.85, 0.85, 'p_{T} > 10 GeV', size = 0.03, align = 31)
+    fake_DG_numberOfValidHits_.addLatex(0.85, 0.81, '|#eta| < 2.4', size = 0.03, align = 31)
+    fake_DG_numberOfValidHits_.addLatex(0.85, 0.77, '#sigma_{p_{T}}/p_{T} < 0.3', size = 0.03, align = 31)
+    fake_DG_numberOfValidHits_.addLatex(0.85, 0.73, '#chi^{2}/ndof < 7.5', size = 0.03, align = 31)
+    fake_DG_numberOfValidHits_.addLatex(0.85, 0.65, 'N outer tracker hits >= 10', size = 0.03, align = 31)
+    fake_DG_numberOfValidHits_.addLatex(0.85, 0.69, 'N muon hits >= 3', size = 0.03, align = 31)
+    fake_DG_numberOfValidHits_.addLine(20.0, 0, 20.0, 1.2, r.kBlue, thickness = 1)
+    fake_DG_numberOfValidHits_.addLatex(0.9, 0.93, 'Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', size = 0.03, align = 31, font = 62)
+    fake_DG_numberOfValidHits_.save(0, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
+
+
+
+    ####################################
+    ####   Normalized chi squared   ####
+    ####################################
+
+    normChi2_bin = np.linspace(0, 32, 33)
+
+    # normChi2 spectra in signal in stacked histogram
+    matched_DG_normChi2 = getObject('fakes_Drell-Yan_pt_eta_sigmapt_nMU3_nOut10_nTOT20/th1fs.root', 'matched_DG_normChi2')
+    unmatched_DG_normChi2 = getObject('fakes_Drell-Yan_pt_eta_sigmapt_nMU3_nOut10_nTOT20/th1fs.root', 'unmatched_DG_normChi2')
+
+    #matched_DG_normChi2 = matched_DG_normChi2.Rebin(len(normChi2_bin)-1, matched_DG_normChi2.GetName() + '_rebined', normChi2_bin)
+    #unmatched_DG_normChi2 = unmatched_DG_normChi2.Rebin(len(normChi2_bin)-1, matched_DG_normChi2.GetName() + '_rebined', normChi2_bin)
+
+    matched_DG_normChi2.SetTitle(';dGlobal #chi^{2}/ndof; dGlobal yield')
+    DG_normChi2 = doFakeStack(matched_DG_normChi2, unmatched_DG_normChi2, fakedown = False)
+    DG_normChi2.SetMaximum(100.0*DG_normChi2.GetMaximum())
+    DG_normChi2.SetMinimum(0.1)
+    DG_normChi2_ = Canvas.Canvas("normChi2_optimization", 'png', 0.52, 0.81, 0.87, 0.9, 1) 
+    DG_normChi2_.addStack(DG_normChi2, 'HIST', 1, 0)
+    DG_normChi2_.addLatex(0.41, 0.75, 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', size = 0.03, align = 11, font = 62)
+    DG_normChi2_.addLatex(0.41, 0.71, 'TBD', size = 0.03, align = 11)
+    DG_normChi2_.save(1, 0, 1, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/', maxYnumbers = 4)
+
+    # Fake rate vs normChi2
+    fake_DG_normChi2 = getObject('fakes_Drell-Yan_pt_eta_sigmapt_nMU3_nOut10_nTOT20/th1fs.root', 'total_DG_normChi2_clone')
+    fake_DG_normChi2.SetTitle(';dGlobal #chi^{2}/ndof; Fake fraction')
+    #fake_DG_normChi2 = rebinAxis(fake_DG_normChi2, normChi2_bin)
+
+    fake_DG_normChi2_ = Canvas.Canvas("normChi2_fake", 'png', 0.15, 0.81, 0.5, 0.9, 1)
+    fake_DG_normChi2_.addRate(fake_DG_normChi2, 'AP', 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', 'p', r.kRed, True, 0, marker = 24)
+    fake_DG_normChi2_.addLatex(0.85, 0.85, 'p_{T} > 10 GeV', size = 0.03, align = 31)
+    fake_DG_normChi2_.addLatex(0.85, 0.81, '|#eta| < 2.4', size = 0.03, align = 31)
+    fake_DG_normChi2_.addLatex(0.85, 0.77, '#sigma_{p_{T}}/p_{T} < 0.3', size = 0.03, align = 31)
+    fake_DG_normChi2_.addLatex(0.85, 0.73, 'N outer tracker hits >= 10', size = 0.03, align = 31)
+    fake_DG_normChi2_.addLatex(0.85, 0.69, 'N muon hits >= 3', size = 0.03, align = 31)
+    fake_DG_normChi2_.addLatex(0.85, 0.65, 'N total hits >= 20', size = 0.03, align = 31)
+    fake_DG_normChi2_.addLatex(0.9, 0.93, 'Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', size = 0.03, align = 31, font = 62)
+    fake_DG_normChi2_.addLine(7.5, 0, 7.5, 1.2, r.kBlue, thickness = 1)
+    fake_DG_normChi2_.save(0, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/')
+
+
+    #########################################
+    ####   Reconstructed pT resolution   ####
+    #########################################
+
+    ptSig_bin = np.logspace(-3, 2, 50)
+    for n in range(0, len(ptSig_bin)): print(n, ptSig_bin[n])
+    ptSig_bin = np.concatenate((ptSig_bin[:25], ptSig_bin[[28]], ptSig_bin[[34]], ptSig_bin[[-1]]))
+
+    # ptSig spectra in signal in stacked histogram
+    matched_DG_ptSig = getObject('fakes_Drell-Yan_pt_eta_chi10_nMU3_nOut10_nTOT20/th1fs.root', 'matched_DG_ptSig')
+    unmatched_DG_ptSig = getObject('fakes_Drell-Yan_pt_eta_chi10_nMU3_nOut10_nTOT20/th1fs.root', 'unmatched_DG_ptSig')
+
+    #matched_DG_ptSig = matched_DG_ptSig.Rebin(len(ptSig_bin)-1, matched_DG_ptSig.GetName() + '_rebined', ptSig_bin)
+    #unmatched_DG_ptSig = unmatched_DG_ptSig.Rebin(len(ptSig_bin)-1, matched_DG_ptSig.GetName() + '_rebined', ptSig_bin)
+
+    matched_DG_ptSig.SetTitle(';dGlobal #sigma_{p_{T}}/p_{T}; dGlobal yield')
+    DG_ptSig = doFakeStack(matched_DG_ptSig, unmatched_DG_ptSig, fakedown = False)
+    DG_ptSig.SetMaximum(100.0*DG_ptSig.GetMaximum())
+    DG_ptSig.SetMinimum(0.1)
+    DG_ptSig_ = Canvas.Canvas("ptSig_optimization", 'png', 0.52, 0.81, 0.87, 0.9, 1) 
+    DG_ptSig_.addStack(DG_ptSig, 'HIST', 1, 0)
+    DG_ptSig_.addLatex(0.41, 0.75, 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', size = 0.03, align = 11, font = 62)
+    DG_ptSig_.addLatex(0.41, 0.71, 'TBD', size = 0.03, align = 11)
+    DG_ptSig_.save(1, 0, 1, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/', xlog = True)
+
+    # Fake rate vs ptSig
+    fake_DG_ptSig = getObject('fakes_Drell-Yan_pt_eta_chi10_nMU3_nOut10_nTOT20/th1fs.root', 'total_DG_ptSig_clone')
+    fake_DG_ptSig.SetTitle(';dGlobal #sigma_{p_{T}}/p_{T}; Fake fraction')
+    fake_DG_ptSig = rebinAxis(fake_DG_ptSig, ptSig_bin)
+
+    fake_DG_ptSig_ = Canvas.Canvas("ptSig_fake", 'png', 0.15, 0.81, 0.5, 0.9, 1)
+    fake_DG_ptSig_.addRate(fake_DG_ptSig, 'AP', 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', 'p', r.kRed, True, 0, marker = 24)
+    fake_DG_ptSig_.addLatex(0.85, 0.85, 'p_{T} > 10 GeV', size = 0.03, align = 31)
+    fake_DG_ptSig_.addLatex(0.85, 0.81, '|#eta| < 2.4', size = 0.03, align = 31)
+    fake_DG_ptSig_.addLatex(0.85, 0.77, '#chi^{2}/ndof < 10', size = 0.03, align = 31)
+    fake_DG_ptSig_.addLatex(0.85, 0.73, 'N outer tracker hits >= 10', size = 0.03, align = 31)
+    fake_DG_ptSig_.addLatex(0.85, 0.69, 'N muon hits >= 3', size = 0.03, align = 31)
+    fake_DG_ptSig_.addLatex(0.85, 0.65, 'N total hits >= 20', size = 0.03, align = 31)
+    fake_DG_ptSig_.addLine(0.3, 0, 0.3, 1.2, r.kBlue, thickness = 1)
+    fake_DG_ptSig_.addLatex(0.9, 0.93, 'Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', size = 0.03, align = 31, font = 62)
+    fake_DG_ptSig_.save(0, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/', xlog = True)
+
+    # Fake rate vs ptSig (7.5 chi)
+    fake_DG_ptSig = getObject('fakes_Drell-Yan_pt_eta_chi7p5_nMU3_nOut10_nTOT20/th1fs.root', 'total_DG_ptSig_clone')
+    fake_DG_ptSig.SetTitle(';dGlobal #sigma_{p_{T}}/p_{T}; Fake fraction')
+    fake_DG_ptSig = rebinAxis(fake_DG_ptSig, ptSig_bin)
+
+    fake_DG_ptSig_ = Canvas.Canvas("ptSig_chi7p5_fake", 'png', 0.15, 0.81, 0.5, 0.9, 1)
+    fake_DG_ptSig_.addRate(fake_DG_ptSig, 'AP', 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', 'p', r.kRed, True, 0, marker = 24)
+    fake_DG_ptSig_.addLatex(0.85, 0.85, 'p_{T} > 10 GeV', size = 0.03, align = 31)
+    fake_DG_ptSig_.addLatex(0.85, 0.81, '|#eta| < 2.4', size = 0.03, align = 31)
+    fake_DG_ptSig_.addLatex(0.85, 0.77, '#chi^{2}/ndof < 7.5', size = 0.03, align = 31)
+    fake_DG_ptSig_.addLatex(0.85, 0.73, 'N outer tracker hits >= 10', size = 0.03, align = 31)
+    fake_DG_ptSig_.addLatex(0.85, 0.69, 'N muon hits >= 3', size = 0.03, align = 31)
+    fake_DG_ptSig_.addLatex(0.85, 0.65, 'N total hits >= 20', size = 0.03, align = 31)
+    fake_DG_ptSig_.addLine(0.3, 0, 0.3, 1.2, r.kBlue, thickness = 1)
+    fake_DG_ptSig_.addLatex(0.9, 0.93, 'Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', size = 0.03, align = 31, font = 62)
+    fake_DG_ptSig_.save(0, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/', xlog = True)
+
+
+
+    # ----> Total Fake rate vs pt (7.5 chi)
+    fake_DG_pt = getObject('fakes_Drell-Yan_eta_sigmapt_chi7p5_nMU3_nOut10_nTOT20/th1fs.root', 'total_DG_pt_clone')
+    fake_DG_pt.SetTitle(';dGlobal p_{T}; Fake fraction')
+    #fake_DG_pt = rebinAxis(fake_DG_pt, pt_bin)
+
+    fake_DG_pt_ = Canvas.Canvas("pt_chi7p5_fake", 'png', 0.15, 0.81, 0.5, 0.9, 1)
+    fake_DG_pt_.addRate(fake_DG_pt, 'AP', 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', 'p', r.kRed, True, 0, marker = 24)
+    fake_DG_pt_.addLatex(0.85, 0.85, '|#eta| < 2.4', size = 0.03, align = 31)
+    fake_DG_pt_.addLatex(0.85, 0.81, '#sigma_{p_{T}}/p_{T} < 0.3', size = 0.03, align = 31)
+    fake_DG_pt_.addLatex(0.85, 0.77, '#chi^{2}/ndof < 7.5', size = 0.03, align = 31)
+    fake_DG_pt_.addLatex(0.85, 0.73, 'N outer tracker hits >= 10', size = 0.03, align = 31)
+    fake_DG_pt_.addLatex(0.85, 0.69, 'N muon hits >= 3', size = 0.03, align = 31)
+    fake_DG_pt_.addLatex(0.85, 0.65, 'N total hits >= 20', size = 0.03, align = 31)
+    fake_DG_pt_.addLine(10.0, 0, 10.0, 1.2, r.kBlue, thickness = 1)
+    fake_DG_pt_.addLatex(0.9, 0.93, 'Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', size = 0.03, align = 31, font = 62)
+    fake_DG_pt_.addLine(10.0, 0, 10.0, 1.2, r.kBlue, thickness = 1)
+    fake_DG_pt_.save(0, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/', xlog = False)
+
+
+    # ----> Total Fake rate vs eta (7.5 chi)
+    fake_DG_eta = getObject('fakes_Drell-Yan_pt_sigmapt_chi7p5_nMU3_nOut10_nTOT20/th1fs.root', 'total_DG_eta_clone')
+    fake_DG_eta.SetTitle(';dGlobal #eta; Fake fraction')
+    #fake_DG_eta = rebinAxis(fake_DG_eta, eta_bin)
+
+    fake_DG_eta_ = Canvas.Canvas("eta_chi7p5_fake", 'png', 0.15, 0.81, 0.5, 0.9, 1)
+    fake_DG_eta_.addRate(fake_DG_eta, 'AP', 'Monte Carlo: Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', 'p', r.kRed, True, 0, marker = 24)
+    fake_DG_eta_.addLatex(0.85, 0.85, 'p_T > 10 GeV', size = 0.03, align = 31)
+    fake_DG_eta_.addLatex(0.85, 0.81, '#sigma_{p_{T}}/p_{T} < 0.3', size = 0.03, align = 31)
+    fake_DG_eta_.addLatex(0.85, 0.77, '#chi^{2}/ndof < 7.5', size = 0.03, align = 31)
+    fake_DG_eta_.addLatex(0.85, 0.73, 'N outer tracker hits >= 10', size = 0.03, align = 31)
+    fake_DG_eta_.addLatex(0.85, 0.69, 'N muon hits >= 3', size = 0.03, align = 31)
+    fake_DG_eta_.addLatex(0.85, 0.65, 'N total hits >= 20', size = 0.03, align = 31)
+    fake_DG_eta_.addLatex(0.9, 0.93, 'Z/#gamma*#rightarrowl#bar{l} (DYJetsToLL_M-50)', size = 0.03, align = 31, font = 62)
+    fake_DG_eta_.addLine(2.4, 0, 2.4, 1.2, r.kBlue, thickness = 1)
+    fake_DG_eta_.addLine(-2.4, 0, -2.4, 1.2, r.kBlue, thickness = 1)
+    fake_DG_eta_.save(0, 0, 0, '','', outputDir = WORKPATH + 'harvested_fakes_'+opts.tag+'/', xlog = False)
 

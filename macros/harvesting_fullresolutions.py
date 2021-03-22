@@ -99,6 +99,10 @@ if __name__ == "__main__":
     SI_allMU_pt_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_pt_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_pt_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_pt', SI_DG_pt.GetMean(), SI_DG_pt.GetMeanError(), SI_DG_pt.GetStdDev(), SI_DG_pt.GetStdDevError())
+    print('res_DGID_pt', SI_DGID_pt.GetMean(), SI_DGID_pt.GetMeanError(), SI_DGID_pt.GetStdDev(), SI_DGID_pt.GetStdDevError())
+    print('res_GM_pt', SI_GM_pt.GetMean(), SI_GM_pt.GetMeanError(), SI_GM_pt.GetStdDev(), SI_GM_pt.GetStdDevError())
+
 
     #####################################
 
@@ -125,6 +129,9 @@ if __name__ == "__main__":
     SI_allMU_dxy_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_dxy_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_dxy_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_dxy', SI_DG_dxy.GetMean(), SI_DG_dxy.GetMeanError(), SI_DG_dxy.GetStdDev(), SI_DG_dxy.GetStdDevError())
+    print('res_DGID_dxy', SI_DGID_dxy.GetMean(), SI_DGID_dxy.GetMeanError(), SI_DGID_dxy.GetStdDev(), SI_DGID_dxy.GetStdDevError())
+    print('res_GM_dxy', SI_GM_dxy.GetMean(), SI_GM_dxy.GetMeanError(), SI_GM_dxy.GetStdDev(), SI_GM_dxy.GetStdDevError())
 
 
     #####################################
@@ -154,6 +161,9 @@ if __name__ == "__main__":
     SI_allMU_pt_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_pt_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_pt_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_pt_Lxybin1', SI_DG_pt.GetMean(), SI_DG_pt.GetMeanError(), SI_DG_pt.GetStdDev(), SI_DG_pt.GetStdDevError())
+    print('res_DGID_pt_Lxybin1', SI_DGID_pt.GetMean(), SI_DGID_pt.GetMeanError(), SI_DGID_pt.GetStdDev(), SI_DGID_pt.GetStdDevError())
+    print('res_GM_pt_Lxybin1', SI_GM_pt.GetMean(), SI_GM_pt.GetMeanError(), SI_GM_pt.GetStdDev(), SI_GM_pt.GetStdDevError())
 
     #####################################
 
@@ -180,6 +190,9 @@ if __name__ == "__main__":
     SI_allMU_pt_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_pt_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_pt_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_pt_Lxybin2', SI_DG_pt.GetMean(), SI_DG_pt.GetMeanError(), SI_DG_pt.GetStdDev(), SI_DG_pt.GetStdDevError())
+    print('res_DGID_pt_Lxybin2', SI_DGID_pt.GetMean(), SI_DGID_pt.GetMeanError(), SI_DGID_pt.GetStdDev(), SI_DGID_pt.GetStdDevError())
+    print('res_GM_pt_Lxybin2', SI_GM_pt.GetMean(), SI_GM_pt.GetMeanError(), SI_GM_pt.GetStdDev(), SI_GM_pt.GetStdDevError())
 
 
 
@@ -208,6 +221,9 @@ if __name__ == "__main__":
     SI_allMU_pt_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_pt_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_pt_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_pt_Lxybin3', SI_DG_pt.GetMean(), SI_DG_pt.GetMeanError(), SI_DG_pt.GetStdDev(), SI_DG_pt.GetStdDevError())
+    print('res_DGID_pt_Lxybin3', SI_DGID_pt.GetMean(), SI_DGID_pt.GetMeanError(), SI_DGID_pt.GetStdDev(), SI_DGID_pt.GetStdDevError())
+    print('res_GM_pt_Lxybin3', SI_GM_pt.GetMean(), SI_GM_pt.GetMeanError(), SI_GM_pt.GetStdDev(), SI_GM_pt.GetStdDevError())
 
 
     #####################################
@@ -235,6 +251,9 @@ if __name__ == "__main__":
     SI_allMU_pt_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_pt_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_pt_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_pt_Lxybin4', SI_DG_pt.GetMean(), SI_DG_pt.GetMeanError(), SI_DG_pt.GetStdDev(), SI_DG_pt.GetStdDevError())
+    print('res_DGID_pt_Lxybin4', SI_DGID_pt.GetMean(), SI_DGID_pt.GetMeanError(), SI_DGID_pt.GetStdDev(), SI_DGID_pt.GetStdDevError())
+    print('res_GM_pt_Lxybin4', SI_GM_pt.GetMean(), SI_GM_pt.GetMeanError(), SI_GM_pt.GetStdDev(), SI_GM_pt.GetStdDevError())
 
 
     #####################################
@@ -267,6 +286,9 @@ if __name__ == "__main__":
     SI_allMU_pt_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_pt_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_pt_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_pt_dxybin1', SI_DG_pt.GetMean(), SI_DG_pt.GetMeanError(), SI_DG_pt.GetStdDev(), SI_DG_pt.GetStdDevError())
+    print('res_DGID_pt_dxybin1', SI_DGID_pt.GetMean(), SI_DGID_pt.GetMeanError(), SI_DGID_pt.GetStdDev(), SI_DGID_pt.GetStdDevError())
+    print('res_GM_pt_dxybin1', SI_GM_pt.GetMean(), SI_GM_pt.GetMeanError(), SI_GM_pt.GetStdDev(), SI_GM_pt.GetStdDevError())
 
     #####################################
 
@@ -293,14 +315,17 @@ if __name__ == "__main__":
     SI_allMU_pt_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_pt_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_pt_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_pt_dxybin2', SI_DG_pt.GetMean(), SI_DG_pt.GetMeanError(), SI_DG_pt.GetStdDev(), SI_DG_pt.GetStdDevError())
+    print('res_DGID_pt_dxybin2', SI_DGID_pt.GetMean(), SI_DGID_pt.GetMeanError(), SI_DGID_pt.GetStdDev(), SI_DGID_pt.GetStdDevError())
+    print('res_GM_pt_dxybin2', SI_GM_pt.GetMean(), SI_GM_pt.GetMeanError(), SI_GM_pt.GetStdDev(), SI_GM_pt.GetStdDevError())
 
 
 
     #####################################
 
-    SI_DG_pt = getObject('plots_signal_ptmin31_eta2/th1fs.root', 'res_DG_pt_dxybin3') 
-    SI_DGID_pt = getObject('plots_signal_ptmin31_eta2/th1fs.root', 'res_DGID_pt_dxybin3') 
-    SI_GM_pt = getObject('plots_signal_ptmin31_eta2/th1fs.root', 'res_GM_pt_dxybin3') 
+    SI_DG_pt = getObject('plots_signal_altdxybin/th1fs.root', 'res_DG_pt_dxybin3') 
+    SI_DGID_pt = getObject('plots_signal_altdxybin/th1fs.root', 'res_DGID_pt_dxybin3') 
+    SI_GM_pt = getObject('plots_signal_altdxybin/th1fs.root', 'res_GM_pt_dxybin3') 
     SI_DG_pt.Scale(1.0/SI_DG_pt.Integral())
     SI_GM_pt.Scale(1.0/SI_GM_pt.Integral())
     SI_DGID_pt.Scale(1.0/SI_DGID_pt.Integral())
@@ -321,6 +346,9 @@ if __name__ == "__main__":
     SI_allMU_pt_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_pt_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_pt_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_pt_dxybin3', SI_DG_pt.GetMean(), SI_DG_pt.GetMeanError(), SI_DG_pt.GetStdDev(), SI_DG_pt.GetStdDevError())
+    print('res_DGID_pt_dxybin3', SI_DGID_pt.GetMean(), SI_DGID_pt.GetMeanError(), SI_DGID_pt.GetStdDev(), SI_DGID_pt.GetStdDevError())
+    print('res_GM_pt_dxybin3', SI_GM_pt.GetMean(), SI_GM_pt.GetMeanError(), SI_GM_pt.GetStdDev(), SI_GM_pt.GetStdDevError())
 
 
     #####################################
@@ -348,6 +376,9 @@ if __name__ == "__main__":
     SI_allMU_pt_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_pt_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_pt_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_pt_dxybin4', SI_DG_pt.GetMean(), SI_DG_pt.GetMeanError(), SI_DG_pt.GetStdDev(), SI_DG_pt.GetStdDevError())
+    print('res_DGID_pt_dxybin4', SI_DGID_pt.GetMean(), SI_DGID_pt.GetMeanError(), SI_DGID_pt.GetStdDev(), SI_DGID_pt.GetStdDevError())
+    print('res_GM_pt_dxybin4', SI_GM_pt.GetMean(), SI_GM_pt.GetMeanError(), SI_GM_pt.GetStdDev(), SI_GM_pt.GetStdDevError())
 
 
     #####################################
@@ -380,6 +411,9 @@ if __name__ == "__main__":
     SI_allMU_dxy_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_dxy_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_dxy_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_dxy_Lxybin1', SI_DG_dxy.GetMean(), SI_DG_dxy.GetMeanError(), SI_DG_dxy.GetStdDev(), SI_DG_dxy.GetStdDevError())
+    print('res_DGID_dxy_Lxybin1', SI_DGID_dxy.GetMean(), SI_DGID_dxy.GetMeanError(), SI_DGID_dxy.GetStdDev(), SI_DGID_dxy.GetStdDevError())
+    print('res_GM_dxy_Lxybin1', SI_GM_dxy.GetMean(), SI_GM_dxy.GetMeanError(), SI_GM_dxy.GetStdDev(), SI_GM_dxy.GetStdDevError())
 
     #####################################
 
@@ -406,6 +440,9 @@ if __name__ == "__main__":
     SI_allMU_dxy_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_dxy_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_dxy_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_dxy_Lxybin2', SI_DG_dxy.GetMean(), SI_DG_dxy.GetMeanError(), SI_DG_dxy.GetStdDev(), SI_DG_dxy.GetStdDevError())
+    print('res_DGID_dxy_Lxybin2', SI_DGID_dxy.GetMean(), SI_DGID_dxy.GetMeanError(), SI_DGID_dxy.GetStdDev(), SI_DGID_dxy.GetStdDevError())
+    print('res_GM_dxy_Lxybin2', SI_GM_dxy.GetMean(), SI_GM_dxy.GetMeanError(), SI_GM_dxy.GetStdDev(), SI_GM_dxy.GetStdDevError())
 
 
 
@@ -434,6 +471,9 @@ if __name__ == "__main__":
     SI_allMU_dxy_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_dxy_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_dxy_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_dxy_Lxybin3', SI_DG_dxy.GetMean(), SI_DG_dxy.GetMeanError(), SI_DG_dxy.GetStdDev(), SI_DG_dxy.GetStdDevError())
+    print('res_DGID_dxy_Lxybin3', SI_DGID_dxy.GetMean(), SI_DGID_dxy.GetMeanError(), SI_DGID_dxy.GetStdDev(), SI_DGID_dxy.GetStdDevError())
+    print('res_GM_dxy_Lxybin3', SI_GM_dxy.GetMean(), SI_GM_dxy.GetMeanError(), SI_GM_dxy.GetStdDev(), SI_GM_dxy.GetStdDevError())
 
 
     #####################################
@@ -461,6 +501,9 @@ if __name__ == "__main__":
     SI_allMU_dxy_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_dxy_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_dxy_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_dxy_Lxybin4', SI_DG_dxy.GetMean(), SI_DG_dxy.GetMeanError(), SI_DG_dxy.GetStdDev(), SI_DG_dxy.GetStdDevError())
+    print('res_DGID_dxy_Lxybin4', SI_DGID_dxy.GetMean(), SI_DGID_dxy.GetMeanError(), SI_DGID_dxy.GetStdDev(), SI_DGID_dxy.GetStdDevError())
+    print('res_GM_dxy_Lxybin4', SI_GM_dxy.GetMean(), SI_GM_dxy.GetMeanError(), SI_GM_dxy.GetStdDev(), SI_GM_dxy.GetStdDevError())
 
 
     #####################################
@@ -493,6 +536,9 @@ if __name__ == "__main__":
     SI_allMU_dxy_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_dxy_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_dxy_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_dxy_dxybin1', SI_DG_dxy.GetMean(), SI_DG_dxy.GetMeanError(), SI_DG_dxy.GetStdDev(), SI_DG_dxy.GetStdDevError())
+    print('res_DGID_dxy_dxybin1', SI_DGID_dxy.GetMean(), SI_DGID_dxy.GetMeanError(), SI_DGID_dxy.GetStdDev(), SI_DGID_dxy.GetStdDevError())
+    print('res_GM_dxy_dxybin1', SI_GM_dxy.GetMean(), SI_GM_dxy.GetMeanError(), SI_GM_dxy.GetStdDev(), SI_GM_dxy.GetStdDevError())
 
     #####################################
 
@@ -519,6 +565,9 @@ if __name__ == "__main__":
     SI_allMU_dxy_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_dxy_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_dxy_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_dxy_dxybin2', SI_DG_dxy.GetMean(), SI_DG_dxy.GetMeanError(), SI_DG_dxy.GetStdDev(), SI_DG_dxy.GetStdDevError())
+    print('res_DGID_dxy_dxybin2', SI_DGID_dxy.GetMean(), SI_DGID_dxy.GetMeanError(), SI_DGID_dxy.GetStdDev(), SI_DGID_dxy.GetStdDevError())
+    print('res_GM_dxy_dxybin2', SI_GM_dxy.GetMean(), SI_GM_dxy.GetMeanError(), SI_GM_dxy.GetStdDev(), SI_GM_dxy.GetStdDevError())
 
 
 
@@ -547,6 +596,9 @@ if __name__ == "__main__":
     SI_allMU_dxy_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_dxy_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_dxy_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_dxy_dxybin3', SI_DG_dxy.GetMean(), SI_DG_dxy.GetMeanError(), SI_DG_dxy.GetStdDev(), SI_DG_dxy.GetStdDevError())
+    print('res_DGID_dxy_dxybin3', SI_DGID_dxy.GetMean(), SI_DGID_dxy.GetMeanError(), SI_DGID_dxy.GetStdDev(), SI_DGID_dxy.GetStdDevError())
+    print('res_GM_dxy_dxybin3', SI_GM_dxy.GetMean(), SI_GM_dxy.GetMeanError(), SI_GM_dxy.GetStdDev(), SI_GM_dxy.GetStdDevError())
 
 
     #####################################
@@ -574,6 +626,9 @@ if __name__ == "__main__":
     SI_allMU_dxy_.addLatex(0.85, 0.87, 'Monte Carlo: H#rightarrowXX#rightarrow4l (All masses)', font = 62, size = 0.03, align = 31)
     SI_allMU_dxy_.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_allMU_dxy_.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DG_dxy_dxybin4', SI_DG_dxy.GetMean(), SI_DG_dxy.GetMeanError(), SI_DG_dxy.GetStdDev(), SI_DG_dxy.GetStdDevError())
+    print('res_DGID_dxy_dxybin4', SI_DGID_dxy.GetMean(), SI_DGID_dxy.GetMeanError(), SI_DGID_dxy.GetStdDev(), SI_DGID_dxy.GetStdDevError())
+    print('res_GM_dxy_dxybin4', SI_GM_dxy.GetMean(), SI_GM_dxy.GetMeanError(), SI_GM_dxy.GetStdDev(), SI_GM_dxy.GetStdDevError())
 
 
     #####################################
@@ -675,6 +730,10 @@ if __name__ == "__main__":
     SI_DGID_ptbin.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} > 31 GeV', size = 0.03, align = 31)
     SI_DGID_ptbin.addLatex(0.9, 0.93, 'Displaced Global Muons (+ ID)', font = 62, size = 0.03, align = 31)
     SI_DGID_ptbin.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DGID_pt_ptbin1', SI_DGID_pt1.GetMean(), SI_DGID_pt1.GetMeanError(), SI_DGID_pt1.GetStdDev(), SI_DGID_pt1.GetStdDevError())
+    print('res_DGID_pt_ptbin2', SI_DGID_pt2.GetMean(), SI_DGID_pt2.GetMeanError(), SI_DGID_pt2.GetStdDev(), SI_DGID_pt2.GetStdDevError())
+    print('res_DGID_pt_ptbin3', SI_DGID_pt3.GetMean(), SI_DGID_pt3.GetMeanError(), SI_DGID_pt3.GetStdDev(), SI_DGID_pt3.GetStdDevError())
+    print('res_DGID_pt_ptbin4', SI_DGID_pt4.GetMean(), SI_DGID_pt4.GetMeanError(), SI_DGID_pt4.GetStdDev(), SI_DGID_pt4.GetStdDevError())
 
 
     ## -> Pt bin 1: All collections
@@ -701,6 +760,9 @@ if __name__ == "__main__":
     SI_allMu_ptbin1.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} #in [31, 50] GeV', size = 0.03, align = 31)
     SI_allMu_ptbin1.addLatex(0.9, 0.94, 'p_{T} bin 1: p_{T} #in [31, 50] GeV', font = 62, size = 0.03, align = 31)
     SI_allMu_ptbin1.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DGID_pt_ptbin1', SI_DGID_pt1.GetMean(), SI_DGID_pt1.GetMeanError(), SI_DGID_pt1.GetStdDev(), SI_DGID_pt1.GetStdDevError())
+    print('res_DG_pt_ptbin1', SI_DG_pt1.GetMean(), SI_DG_pt1.GetMeanError(), SI_DG_pt1.GetStdDev(), SI_DG_pt1.GetStdDevError())
+    print('res_GM_pt_ptbin1', SI_GM_pt1.GetMean(), SI_GM_pt1.GetMeanError(), SI_GM_pt1.GetStdDev(), SI_GM_pt1.GetStdDevError())
 
 
 
@@ -728,6 +790,9 @@ if __name__ == "__main__":
     SI_allMu_ptbin2.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} #in [50, 150] GeV', size = 0.03, align = 31)
     SI_allMu_ptbin2.addLatex(0.9, 0.94, 'p_{T} bin 2: p_{T} #in [50, 150] GeV', font = 62, size = 0.03, align = 31)
     SI_allMu_ptbin2.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DGID_pt_ptbin2', SI_DGID_pt2.GetMean(), SI_DGID_pt2.GetMeanError(), SI_DGID_pt2.GetStdDev(), SI_DGID_pt2.GetStdDevError())
+    print('res_DG_pt_ptbin2', SI_DG_pt2.GetMean(), SI_DG_pt2.GetMeanError(), SI_DG_pt2.GetStdDev(), SI_DG_pt2.GetStdDevError())
+    print('res_GM_pt_ptbin2', SI_GM_pt2.GetMean(), SI_GM_pt2.GetMeanError(), SI_GM_pt2.GetStdDev(), SI_GM_pt2.GetStdDevError())
 
 
     ## -> Pt bin 3: All collections
@@ -754,6 +819,9 @@ if __name__ == "__main__":
     SI_allMu_ptbin3.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} #in [150, 300] GeV', size = 0.03, align = 31)
     SI_allMu_ptbin3.addLatex(0.9, 0.94, 'p_{T} bin 3: p_{T} #in [150, 300] GeV', font = 62, size = 0.03, align = 31)
     SI_allMu_ptbin3.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DGID_pt_ptbin3', SI_DGID_pt3.GetMean(), SI_DGID_pt3.GetMeanError(), SI_DGID_pt3.GetStdDev(), SI_DGID_pt3.GetStdDevError())
+    print('res_DG_pt_ptbin3', SI_DG_pt3.GetMean(), SI_DG_pt3.GetMeanError(), SI_DG_pt3.GetStdDev(), SI_DG_pt3.GetStdDevError())
+    print('res_GM_pt_ptbin3', SI_GM_pt3.GetMean(), SI_GM_pt3.GetMeanError(), SI_GM_pt3.GetStdDev(), SI_GM_pt3.GetStdDevError())
 
 
     ## -> Pt bin 4: All collections
@@ -780,6 +848,9 @@ if __name__ == "__main__":
     SI_allMu_ptbin4.addLatex(0.85, 0.82, '|#eta^{gen}| < 2, p_{T}^{gen} #in [300, #infty) GeV', size = 0.03, align = 31)
     SI_allMu_ptbin4.addLatex(0.9, 0.94, 'p_{T} bin 4: p_{T} #in [300, #infty) GeV', font = 62, size = 0.03, align = 31)
     SI_allMu_ptbin4.save(1, 0, 0, '','', outputDir = WORKPATH + 'harvested_fullresols_'+opts.tag+'/')
+    print('res_DGID_pt_ptbin4', SI_DGID_pt1.GetMean(), SI_DGID_pt1.GetMeanError(), SI_DGID_pt1.GetStdDev(), SI_DGID_pt1.GetStdDevError())
+    print('res_DG_pt_ptbin4', SI_DG_pt1.GetMean(), SI_DG_pt1.GetMeanError(), SI_DG_pt1.GetStdDev(), SI_DG_pt1.GetStdDevError())
+    print('res_GM_pt_ptbin4', SI_GM_pt1.GetMean(), SI_GM_pt1.GetMeanError(), SI_GM_pt1.GetStdDev(), SI_GM_pt1.GetStdDevError())
 
 
 

@@ -3,7 +3,7 @@ config = Configuration()
 
 config.section_('General')
 config.General.transferLogs = True
-config.General.requestName = 'DYJetsToLL_M-50_DGNTuple_rsb'
+config.General.requestName = 'DYJetsToLL_M-50_DGNTuple'
 config.General.instance = 'prod'
 
 config.section_('JobType')

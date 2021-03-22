@@ -19,22 +19,9 @@ process.maxEvents = cms.untracked.PSet(
 process.source = cms.Source(
     "PoolSource",
     fileNames = cms.untracked.vstring(
-       'file:/eos/user/f/fernance/LLPNTuples/Central/modifiedDY/EXO-RunIISummer16MiniAODv3-08121_320.root',       
-       'file:/eos/user/f/fernance/LLPNTuples/Central/modifiedDY/EXO-RunIISummer16MiniAODv3-08121_321.root',       
-       'file:/eos/user/f/fernance/LLPNTuples/Central/modifiedDY/EXO-RunIISummer16MiniAODv3-08121_322.root',       
-       'file:/eos/user/f/fernance/LLPNTuples/Central/modifiedDY/EXO-RunIISummer16MiniAODv3-08121_324.root',       
-       'file:/eos/user/f/fernance/LLPNTuples/Central/modifiedDY/EXO-RunIISummer16MiniAODv3-08121_325.root',       
-       'file:/eos/user/f/fernance/LLPNTuples/Central/modifiedDY/EXO-RunIISummer16MiniAODv3-08121_326.root',       
-       'file:/eos/user/f/fernance/LLPNTuples/Central/modifiedDY/EXO-RunIISummer16MiniAODv3-08121_327.root',       
-       'file:/eos/user/f/fernance/LLPNTuples/Central/modifiedDY/EXO-RunIISummer16MiniAODv3-08121_328.root',       
-       'file:/eos/user/f/fernance/LLPNTuples/Central/modifiedDY/EXO-RunIISummer16MiniAODv3-08121_329.root',       
-       'file:/eos/user/f/fernance/LLPNTuples/Central/modifiedDY/EXO-RunIISummer16MiniAODv3-08121_987.root',       
-       'file:/eos/user/f/fernance/LLPNTuples/Central/modifiedDY/EXO-RunIISummer16MiniAODv3-08121_1000.root',       
-       'file:/eos/user/f/fernance/LLPNTuples/Central/modifiedDY/EXO-RunIISummer16MiniAODv3-08121_1001.root',       
-       'file:/eos/user/f/fernance/LLPNTuples/Central/modifiedDY/EXO-RunIISummer16MiniAODv3-08121_1002.root',       
-       'file:/eos/user/f/fernance/LLPNTuples/Central/modifiedDY/EXO-RunIISummer16MiniAODv3-08121_1003.root',       
-       'file:/eos/user/f/fernance/LLPNTuples/Central/modifiedDY/EXO-RunIISummer16MiniAODv3-08121_1004.root'       
-    )
+#    'file:/eos/user/f/fernance/LLP_Analysis/miniAOD_extended/DY_test/EXO-RunIISummer16MiniAODv3-08121_325.root')
+#    'das://DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18DRPremix-102X_upgrade2018_realistic_v15-v1/AODSIM')
+    '/store/mc/RunIIAutumn18DRPremix/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/102X_upgrade2018_realistic_v15-v1/00000/00303F79-7EDF-1648-AA56-058F2F50A006.root')
 )
 
 

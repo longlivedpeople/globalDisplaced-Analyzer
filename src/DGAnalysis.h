@@ -27,6 +27,11 @@
 #include "TrackingTools/TransientTrack/interface/TransientTrack.h"
 #include "DataFormats/VertexReco/interface/Vertex.h"
 #include "RecoVertex/VertexPrimitives/interface/TransientVertex.h"
+#include "FWCore/Common/interface/TriggerNames.h"
+#include "DataFormats/Common/interface/TriggerResults.h"
+#include "DataFormats/PatCandidates/interface/TriggerObjectStandAlone.h"
+#include "DataFormats/PatCandidates/interface/PackedTriggerPrescales.h"
+
 
 // DisplacedGlobal handling
 #include "DataFormats/Common/interface/Handle.h"
@@ -69,6 +74,7 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       virtual void analyzeJets(edm::Event const& e);
       virtual void analyzeGenJets(edm::Event const& e);
       virtual TrajectoryStateClosestToPoint computeTrajectory(const reco::Track &track);
+      std::string getPathVersion(const edm:: TriggerNames &names, const std::string &rawPath);
 
 
       edm::ParameterSet parameters;
@@ -77,6 +83,10 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       //
       // --- Tokens and Handles
       //
+
+      // HLT
+      edm::EDGetTokenT<edm::TriggerResults>  TriggerBitsToken_;
+      edm::Handle<edm::TriggerResults> triggerBits_;
 
       // PU summary
       edm::EDGetTokenT<std::vector<PileupSummaryInfo> >  PUSummaryToken_;
@@ -121,6 +131,10 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       Int_t eventId = 0;
       Int_t luminosityBlock = 0;
       Int_t run = 0;
+
+      // HLT
+      bool Flag_HLT_IsoMu24 = false;
+
 
       // Pileup
       Int_t nPU = 0;
@@ -185,6 +199,13 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       Int_t DG_nRPC[200] = {0};
       Int_t DG_nGEM[200] = {0};
       Int_t DG_nME0[200] = {0};
+      Int_t DG_muonStations[200] = {0};
+      Int_t DG_muonHits[200] = {0};
+      Int_t DG_outerTrackerHits[200] = {0};
+      Int_t DG_trackerHits[200] = {0};
+      Int_t DG_totalHits[200] = {0};
+      Int_t DG_DTHits[200] = {0};
+      Int_t DG_CSCHits[200] = {0};
 
       // Global Muons
       Int_t nGM = 0;

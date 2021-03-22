@@ -229,10 +229,16 @@ if __name__ == "__main__":
                 chi2     = _tree.DG_chi2[j]
                 #ndof     = _tree.DG_ndof[j]
                 normChi2 = _tree.DG_normChi2[j]
+                """
                 nTR = _tree.DG_nPB[j] + _tree.DG_nPE[j] + _tree.DG_nTIB[j] + _tree.DG_nTOB[j] + _tree.DG_nTID[j] + _tree.DG_nTEC[j]
                 nRPC = _tree.DG_nRPC[j]
                 nCSC = _tree.DG_nCSC[j]
                 nDT = _tree.DG_nDT[j]
+                """
+                nTR = 0
+                nRPC = 0
+                nCSC = 0
+                nDT = 0
 
                 #if abs(eta) > 2: continue # default
                 if opts.etamax and  abs(eta) > opts.etamax: continue # default

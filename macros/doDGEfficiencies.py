@@ -59,9 +59,9 @@ if __name__ == "__main__":
     Lxy_logbin = np.logspace(0.0, 3.0, 101)
     #pt_bin = np.concatenate((np.linspace(0, 125, 15), np.array([150, 175, 200, 250, 300, 400, 500])))
     pt_bin = np.linspace(0.0, 300.0, 80) # 100, 60 for DY
-    eta_bin = np.linspace(-5.0, 5.0, 40)
+    eta_bin = np.linspace(-5.0, 5.0, 101)
     Lxy_sep = np.array([0.0, 1.0, 20.0, 60.0, 110.0])
-    dxy_sep = np.array([0.0, 1.0, 20.0, 60.0, 110.0])
+    dxy_sep = np.array([0.0, 1.0, 20.0, 30.0, 110.0])
     Lz_sep = np.array([0.0, 1.0, 60.0, 120.0, 280.0])
     dz_sep = np.array([0.0, 1.0, 60.0, 120.0, 280.0])
     pt_sep = np.array([0.0, 50.0, 150.0, 300.0]) # supposed to end at infinity
@@ -471,7 +471,6 @@ if __name__ == "__main__":
                 if _tree.DG_ptError[k]/_tree.DG_pt[k] > 0.3: continue
                 if _tree.DG_normChi2[k] > 10: continue
                 if _tree.DG_numberOfValidHits[k] < 22: continue
-                if abs(_tree.DG_eta[k]) > 2: continue
                 re = TVector3()
                 re.SetPtEtaPhi(_tree.DG_pt[k], _tree.DG_eta[k], _tree.DG_phi[k])
                 if l.DeltaR(re) < deltaR:

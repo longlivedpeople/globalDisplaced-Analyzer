@@ -9,6 +9,7 @@ DGAnalysis::DGAnalysis(const edm::ParameterSet& iConfig)
 
    parameters = iConfig;
 
+   TriggerBitsToken_ = consumes<edm::TriggerResults> (parameters.getParameter<edm::InputTag>("bits"));
    PUSummaryToken_ = consumes<std::vector<PileupSummaryInfo> > (parameters.getParameter<edm::InputTag>("PileUpSummary"));
    PVToken_ = consumes<edm::View<reco::Vertex> > (parameters.getParameter<edm::InputTag>("PVCollection"));
    GenParticleToken_ = consumes<edm::View<reco::GenParticle> >  (parameters.getParameter<edm::InputTag>("GenParticleCollection"));
@@ -49,6 +50,8 @@ void DGAnalysis::beginJob()
   tree_out->Branch("eventId", &eventId, "eventId/I");
   tree_out->Branch("luminosityBlock", &luminosityBlock, "luminosityBlock/I");
   tree_out->Branch("run", &run, "run/I");
+
+  tree_out->Branch("Flag_HLT_IsoMu24", &Flag_HLT_IsoMu24, "Flag_HLT_IsoMu24/O");
 
   tree_out->Branch("nPU", &nPU, "nPU/I");
   tree_out->Branch("nPUTrue", &nPUTrue, "nPUTrue/I");
@@ -134,6 +137,12 @@ void DGAnalysis::beginJob()
   tree_out->Branch("DG_nRPC", DG_nRPC, "DG_nRPC[nDG]/I");
   tree_out->Branch("DG_nGEM", DG_nGEM, "DG_nGEM[nDG]/I");
   tree_out->Branch("DG_nME0", DG_nME0, "DG_nME0[nDG]/I");
+  tree_out->Branch("DG_muonStations", DG_muonStations, "DG_muonStations[nDG]/I");
+  tree_out->Branch("DG_muonHits", DG_muonHits, "DG_muonHits[nDG]/I");
+  tree_out->Branch("DG_outerTrackerHits", DG_outerTrackerHits, "DG_outerTrackerHits[nDG]/I");
+  tree_out->Branch("DG_totalHits", DG_totalHits, "DG_totalHits[nDG]/I");
+  tree_out->Branch("DG_DTHits", DG_DTHits, "DG_DTHits[nDG]/I");
+  tree_out->Branch("DG_CSCHits", DG_CSCHits, "DG_CSCHits[nDG]/I");
 
 
   tree_out->Branch("nDSA", &nDSA, "nDSA/I");
@@ -206,6 +215,8 @@ void DGAnalysis::fillDescriptions(edm::ConfigurationDescriptions& descriptions) 
 void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
 
+   bool ValidTriggerBits = iEvent.getByToken(TriggerBitsToken_, triggerBits_);
+
    bool ValidPUSummary = iEvent.getByToken(PUSummaryToken_, puInfoH_);
 
    bool ValidPV = iEvent.getByToken(PVToken_, PVCollection_);
@@ -241,6 +252,10 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
    eventId = 0;
    luminosityBlock = 0;
    run = 0;
+
+   // -> HLT
+   Flag_HLT_IsoMu24 = false;
+
 
    // -> Pileup
    nPU = 0;
@@ -339,6 +354,13 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
      DG_nRPC[i] = 0;
      DG_nGEM[i] = 0;
      DG_nME0[i] = 0;
+     DG_muonStations[i] = 0;
+     DG_muonHits[i] = 0;
+     DG_outerTrackerHits[i] = 0;
+     DG_trackerHits[i] = 0;
+     DG_totalHits[i] = 0;
+     DG_DTHits[i] = 0;
+     DG_CSCHits[i] = 0;
    }
    nDG = 0;
    
@@ -420,6 +442,13 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
          continue;
       }
    }
+
+
+   //
+   // -- HLT analysis
+   //
+   const edm::TriggerNames &names = iEvent.triggerNames(*triggerBits_); 
+   Flag_HLT_IsoMu24 = triggerBits_->accept(names.triggerIndex(getPathVersion(names, "HLT_IsoMu24_v")));
 
 
    //
@@ -544,6 +573,13 @@ void DGAnalysis::analyzeDisplacedGlobal(const edm::Event& iEvent)
       DG_chi2[nDG] = muon.chi2();
       DG_ndof[nDG] = muon.ndof();
       DG_normChi2[nDG] = muon.normalizedChi2();
+      DG_muonStations[nDG] = muon.hitPattern().muonStationsWithValidHits();
+      DG_muonHits[nDG] = muon.hitPattern().numberOfValidMuonHits();
+      DG_outerTrackerHits[nDG] = muon.hitPattern().numberOfValidStripHits();
+      DG_trackerHits[nDG] = muon.hitPattern().numberOfValidTrackerHits();
+      DG_totalHits[nDG] = muon.hitPattern().numberOfValidHits();
+      DG_CSCHits[nDG] = muon.hitPattern().numberOfValidMuonCSCHits();
+      DG_DTHits[nDG] = muon.hitPattern().numberOfValidMuonDTHits();
     
       TrajectoryStateClosestToPoint traj = computeTrajectory(muon);
       DG_dxy[nDG] = traj.perigeeParameters().transverseImpactParameter();
@@ -751,6 +787,25 @@ TrajectoryStateClosestToPoint DGAnalysis::computeTrajectory(const reco::Track &t
    TrajectoryStateClosestToPoint  traj = tk.trajectoryStateClosestToPoint(vert);
 
    return traj;
+
+}
+
+std::string DGAnalysis::getPathVersion(const edm:: TriggerNames &names, const std::string &rawPath) {
+
+  std::string version;
+  std::string finalPath;
+
+  for (int s = 0; s < 20; s++) {
+
+    version = rawPath + std::to_string(s);
+    if (names.size() != names.triggerIndex(version)) {
+      finalPath = version;
+      break;
+    }
+
+  }
+
+  return finalPath;
 
 }
 
