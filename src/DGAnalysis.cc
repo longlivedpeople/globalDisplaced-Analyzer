@@ -13,6 +13,7 @@ DGAnalysis::DGAnalysis(const edm::ParameterSet& iConfig)
    PUSummaryToken_ = consumes<std::vector<PileupSummaryInfo> > (parameters.getParameter<edm::InputTag>("PileUpSummary"));
    PVToken_ = consumes<edm::View<reco::Vertex> > (parameters.getParameter<edm::InputTag>("PVCollection"));
    GenParticleToken_ = consumes<edm::View<reco::GenParticle> >  (parameters.getParameter<edm::InputTag>("GenParticleCollection"));
+   TrackToken_ = consumes<edm::View<reco::Track> >  (parameters.getParameter<edm::InputTag>("TrackCollection"));
    DisplacedGlobalToken_ = consumes<edm::View<reco::Track> >  (parameters.getParameter<edm::InputTag>("DisplacedGlobalCollection"));
    DisplacedStandaloneToken_ = consumes<edm::View<reco::Track> >  (parameters.getParameter<edm::InputTag>("DisplacedStandaloneCollection"));
    GlobalMuonToken_ = consumes<edm::View<reco::Track> >  (parameters.getParameter<edm::InputTag>("GlobalMuonCollection"));
@@ -223,6 +224,8 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
 
    bool ValidGenParticles = iEvent.getByToken(GenParticleToken_, GenParticleCollection_);
    if (!ValidGenParticles) { return; }
+
+   bool ValidTracks = iEvent.getByToken(TrackToken_, TrackCollection_);
 
    bool ValidDisplacedGlobal = iEvent.getByToken(DisplacedGlobalToken_, DisplacedGlobalCollection_);
    if (!ValidDisplacedGlobal) { return; }
@@ -455,10 +458,16 @@ void DGAnalysis::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup
    // -- Main analysis
    //
 
+
    // -> MC truth:
    analyzeGenParticles(iEvent);
 
+   std::cout << ">> Tracks: " << std::endl;
+   if (ValidTracks) analyzeTracks(iEvent);
+   std::cout << "\n" << std::endl;
+
    // -> Muon analysis:
+   std::cout << ">> DisplacedGlobals: " << std::endl;
    analyzeDisplacedGlobal(iEvent);
    analyzeDisplacedStandalone(iEvent);
    analyzeGlobalMuons(iEvent);
@@ -551,6 +560,21 @@ void DGAnalysis::analyzeGenParticles(const edm::Event& iEvent)
 }
 
 
+void DGAnalysis::analyzeTracks(const edm::Event& iEvent)
+{
+
+   for (size_t i = 0; i < TrackCollection_->size(); i++)
+   {
+
+      const reco::Track &track = (*TrackCollection_)[i];
+
+      std::cout << "pt: " << track.pt() << " ;  eta: " << track.eta() << " ;  phi: " << track.phi() << std::endl;
+
+   }
+
+}
+
+
 void DGAnalysis::analyzeDisplacedGlobal(const edm::Event& iEvent)
 {
 
@@ -559,7 +583,9 @@ void DGAnalysis::analyzeDisplacedGlobal(const edm::Event& iEvent)
    for (size_t i = 0; i < DisplacedGlobalCollection_->size(); i++)
    {
 
+
       const reco::Track &muon = (*DisplacedGlobalCollection_)[i];
+      std::cout << "pt: " << muon.pt() << " ;  eta: " << muon.eta() << " ;  phi: " << muon.phi() << std::endl;
       DG_pt[nDG] = muon.pt();
       DG_ptError[nDG] = muon.ptError();
       DG_eta[nDG] = muon.eta();

@@ -68,6 +68,7 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       virtual void endJob() override;
 
       virtual void analyzeGenParticles(edm::Event const& e);
+      virtual void analyzeTracks(edm::Event const& e);
       virtual void analyzeDisplacedGlobal(edm::Event const& e);
       virtual void analyzeGlobalMuons(edm::Event const& e);
       virtual void analyzeDisplacedStandalone(edm::Event const& e);
@@ -99,6 +100,10 @@ class DGAnalysis : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       // MC truth
       edm::EDGetTokenT<edm::View<reco::GenParticle> >  GenParticleToken_;
       edm::Handle<edm::View<reco::GenParticle> > GenParticleCollection_;
+
+      // General tracks
+      edm::EDGetTokenT<edm::View<reco::Track> > TrackToken_;
+      edm::Handle<edm::View<reco::Track> > TrackCollection_;
 
       // Displaced Global Muons
       edm::EDGetTokenT<edm::View<reco::Track> > DisplacedGlobalToken_;
